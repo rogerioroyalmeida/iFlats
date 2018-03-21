@@ -1,0 +1,3 @@
+# iFlats
+
+All rights reserved
