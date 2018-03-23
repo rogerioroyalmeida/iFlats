@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, ToastController } from 'ionic-angular';
 import { NgForm } from '@angular/forms';
-import { Usuario } from '../../providers/login/usuario';
+import { Usuario } from '../../model/usuario';
 import { LoginService } from '../../providers/login/login-service';
 import { HomePage } from '../home/home';
 

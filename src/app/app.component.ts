@@ -36,8 +36,8 @@ export class MyApp {
         this.rootPage = HomePage;
         authObserver.unsubscribe();
       } else {
-        this.rootPage = LoginPage;
-        authObserver.unsubscribe();
+        //this.rootPage = LoginPage;
+        //authObserver.unsubscribe();
       }
     });
   }

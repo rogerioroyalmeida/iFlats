@@ -1,19 +1,14 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the ImoveisPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-imoveis',
   templateUrl: 'imoveis.html',
 })
 export class ImoveisPage {
+
+  url = 'http://192.168.15.6:3000/flats';
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
