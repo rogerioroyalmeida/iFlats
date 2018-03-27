@@ -14,6 +14,8 @@ import { ResetsenhaPage } from '../resetsenha/resetsenha';
 })
 export class LoginPage {
   usuario: Usuario = new Usuario();
+  email: any;
+  senha: any;
   @ViewChild('form') form: NgForm;
 
   constructor(
@@ -34,7 +36,9 @@ export class LoginPage {
     if (this.form.form.valid) {
       this.loginService.signIn(this.usuario)
         .then(() => {
-          this.navCtrl.setRoot(HomePage);
+          this.email = this.usuario.getEmail();
+          this.senha = this.usuario.getSenha();
+          this.navCtrl.setRoot(HomePage, {usuario: this.usuario});
         })
         .catch((error: any) => {
           let toast = this.toastCtrl.create({ duration: 3000, position: 'bottom' });

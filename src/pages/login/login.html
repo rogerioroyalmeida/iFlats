@@ -1,45 +1,36 @@
-<ion-header>
-  <ion-navbar color="primary">
-    <ion-title>
-      Login
-    </ion-title>
-  </ion-navbar>
-</ion-header>
 
-<ion-content padding>
 
-  <form #form="ngForm" novalidate>
-    <ion-list>
 
-      <ion-item>
-        <ion-label stacked>E-mail</ion-label>
-        <ion-input type="text" name="email" [(ngModel)]="usuario.email" #email="ngModel" required></ion-input>
-      </ion-item>
-      <ion-item *ngIf="email.errors && (email.dirty || email.touched)" class="text-danger">
-        O campo é obrigatório
-      </ion-item>
+<form #form="ngForm" novalidate padding>
+  <ion-list>
 
-      <ion-item>
-        <ion-label stacked>Senha</ion-label>
-        <ion-input type="password" name="password" [(ngModel)]="usuario.password" #password="ngModel" required></ion-input>
-      </ion-item>
-      <ion-item *ngIf="password.errors && (password.dirty || password.touched)" class="text-danger">
-        O campo é obrigatório
-      </ion-item>
+    <ion-item>
+      <ion-label stacked>E-mail</ion-label>
+      <ion-input type="text" name="email" [(ngModel)]="usuario.email" #email="ngModel" required></ion-input>
+    </ion-item>
+    <ion-item *ngIf="email.errors && (email.dirty || email.touched)" class="text-danger">
+      O campo é obrigatório
+    </ion-item>
 
-    </ion-list>
+    <ion-item>
+      <ion-label stacked>Senha</ion-label>
+      <ion-input type="password" name="password" [(ngModel)]="usuario.senha" #password="ngModel" required></ion-input>
+    </ion-item>
+    <ion-item *ngIf="password.errors && (password.dirty || password.touched)" class="text-danger">
+      O campo é obrigatório
+    </ion-item>
 
-    <button ion-button block (click)="signIn()">
-        Entrar
-      </button>
-  </form>
+  </ion-list>
 
-  <button ion-button block clear margin-top (click)="resetPassword()">
-    Esqueci minha senha
+  <button ion-button block (click)="signIn()">
+    Entrar
   </button>
+</form>
 
-  <button ion-button block clear (click)="createAccount()">
-    Criar conta
-  </button>
+<button ion-button block clear margin-top (click)="resetPassword()">
+  Esqueci minha senha
+</button>
 
-</ion-content>
+<button ion-button block clear (click)="createAccount()">
+  Criar conta
+</button>
