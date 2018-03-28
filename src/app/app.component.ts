@@ -7,7 +7,7 @@ import { LoginService } from '../providers/login/login-service';
 
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
-import { ListImoveisPage } from '../pages/list-imoveis/list-imoveis';
+import { ListFlatsPage } from '../pages/list-flats/list-flats';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 import { CadastroUsuarioPage } from '../pages/cadastrousuario/cadastrousuario';
@@ -84,10 +84,10 @@ export class MyApp {
       title: 'Ações do Usuario',
       buttons: [
         {
-          text: 'Cadastrar Imoveis',
+          text: 'Painel de Flats',
           role: 'destructive',
           handler: () => {
-            this.nav.push(ListImoveisPage);
+            this.nav.push(ListFlatsPage);
           }
         },{
           text: 'Cancel',

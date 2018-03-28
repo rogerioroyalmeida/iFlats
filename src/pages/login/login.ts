@@ -4,7 +4,6 @@ import { NgForm } from '@angular/forms';
 import { Usuario } from '../../model/usuario';
 import { LoginService } from '../../providers/login/login-service';
 import { HomePage } from '../home/home';
-import { CadastroUsuarioPage } from '../cadastrousuario/cadastrousuario';
 import { ResetsenhaPage } from '../resetsenha/resetsenha';
 
 @IonicPage()
@@ -22,10 +21,6 @@ export class LoginPage {
     public navCtrl: NavController,
     private toastCtrl: ToastController,
     private loginService: LoginService) {
-  }
-
-  createAccount() {
-    this.navCtrl.push(CadastroUsuarioPage);
   }
 
   resetPassword() {

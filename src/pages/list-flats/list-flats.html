@@ -1,0 +1,13 @@
+
+<ion-content padding-top margin-top>
+  <form #form="ngForm" padding novalidate>
+    <ion-list inset>
+      <button ion-item *ngFor="let item of flats" (click)="itemSelected(item)">
+        {{ item }}
+      </button> 
+    </ion-list>
+    <div>
+      <button ion-button block clear margin-top (click)="abrirCadastro()">Add</button>
+    </div>
+  </form>
+</ion-content>

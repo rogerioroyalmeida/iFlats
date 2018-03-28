@@ -27,7 +27,7 @@ export class FlatGeral extends Flat {
     }
 
     public getCodigoFlat() {
-        return this.codigoFlat;
+        return super.getCodigoFlat();
     }
 
     public getDtCadastroFlatGeral() {

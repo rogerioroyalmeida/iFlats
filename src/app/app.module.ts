@@ -9,8 +9,8 @@ import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { CadastroUsuarioPage } from '../pages/cadastrousuario/cadastrousuario';
 import { ResetsenhaPage } from '../pages/resetsenha/resetsenha';
-import { ListImoveisPage } from '../pages/list-imoveis/list-imoveis';
-import { CadImoveisPage } from '../pages/cad-imoveis/cad-imoveis';
+import { ListFlatsPage } from '../pages/list-flats/list-flats';
+import { CadFlatsPage } from '../pages/cad-flats/cad-flats';
 import { LoginService } from '../providers/login/login-service';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -31,8 +31,8 @@ const firebaseConfig = {
     LoginPage,
     CadastroUsuarioPage,
     ResetsenhaPage,
-    ListImoveisPage,
-    CadImoveisPage
+    ListFlatsPage,
+    CadFlatsPage
   ],
   imports: [
     BrowserModule,
@@ -47,8 +47,8 @@ const firebaseConfig = {
     LoginPage,
     CadastroUsuarioPage,
     ResetsenhaPage,
-    ListImoveisPage,
-    CadImoveisPage
+    ListFlatsPage,
+    CadFlatsPage
   ],
   providers: [
     StatusBar,
