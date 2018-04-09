@@ -286,157 +286,97 @@
       </ion-grid>
     </div>
 
-    <h3 padding>Características do Flat</h3>
-    <div padding margin novalidate style="border: 1px solid rgb(0, 0, 0);">
-      <h5 padding style="font-weight: bold;">Geral</h5>
-      <ion-grid>
+    <div *ngIf="exibeCaracteristica">
+      <h3 padding>Características do Flat</h3>
+      <div padding margin novalidate style="border: 1px solid rgb(0, 0, 0);">
+        <h5 padding style="font-weight: bold;">Geral</h5>
         <ion-list>
-          <ion-item *ngFor="let item of listGeral">
-             {{item}}
+          <ion-item *ngFor="let item of listGeral" (ionFocus)="focNomeGeral = true" (ionBlur)="focNomeGeral = false">
+            <ion-input value="{{item.nome}}" placeholder="Digite"></ion-input>
           </ion-item>
-
-          <ion-item *ngIf='toggleNew'>
-            <ion-input [(ngModel)]='newItem' placeholder="Task .. "></ion-input>
-            <button (click)='saveNew(newItem)'>Save</button>
-            <button danger (click)='cancelNew()'>Cancel</button>
+          <ion-item *ngIf="focNomeGeral">
+            Ex: Aquecedor, Ar-condicionado, Hidromassagem
+          </ion-item>
+          <ion-item>
+            <button ion-button (click)="saveNewGeral()">Nova</button>
           </ion-item>
         </ion-list>
-      </ion-grid>
 
-      <h5 padding style="font-weight: bold;">Cozinha</h5>
-      <ion-grid>
+        <h5 padding style="font-weight: bold;">Cozinha</h5>
         <ion-list>
-          <ion-row>
-            <ion-col col-4>
-              <ion-item>
-                <ion-label>Aspirador</ion-label>
-                <ion-checkbox></ion-checkbox>
-              </ion-item>
-            </ion-col>
-            <ion-col col-4>
-              <ion-item>
-                <ion-label>Cafeteira</ion-label>
-                <ion-checkbox></ion-checkbox>
-              </ion-item>
-            </ion-col>
-            <ion-col col-4>
-              <ion-item>
-                <ion-label>Chaleira</ion-label>
-                <ion-checkbox></ion-checkbox>
-              </ion-item>
-            </ion-col>
-          </ion-row>
+          <ion-item *ngFor="let item of listCozinha" (ionFocus)="focNomeCozinha = true" (ionBlur)="focNomeCozinha = false">
+            <ion-input value="{{item.nome}}" placeholder="Digite"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="focNomeCozinha">
+            Ex: Aspirador, Cafeteira, Chaleira
+          </ion-item>
+          <ion-item>
+            <button ion-button (click)="saveNewCozinha()">Nova</button>
+          </ion-item>
         </ion-list>
-      </ion-grid>
 
-      <h5 padding style="font-weight: bold;">Entretenimento</h5>
-      <ion-grid>
-        <ion-list>
-          <ion-row>
-            <ion-col col-4>
-              <ion-item>
-                <ion-label>DVD</ion-label>
-                <ion-checkbox></ion-checkbox>
-              </ion-item>
-            </ion-col>
-            <ion-col col-4>
-              <ion-item>
-                <ion-label>Livros</ion-label>
-                <ion-checkbox></ion-checkbox>
-              </ion-item>
-            </ion-col>
-            <ion-col col-4>
-              <ion-item>
-                <ion-label>Jogos de mesa</ion-label>
-                <ion-checkbox></ion-checkbox>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-        </ion-list>
-      </ion-grid>
+        <h5 padding style="font-weight: bold;">Entretenimento</h5>
 
-      <h5 padding style="font-weight: bold;">Instalações</h5>
-      <ion-grid>
         <ion-list>
-          <ion-row>
-            <ion-col col-4>
-              <ion-item>
-                <ion-label>Estacionamento</ion-label>
-                <ion-checkbox></ion-checkbox>
-              </ion-item>
-            </ion-col>
-            <ion-col col-4>
-              <ion-item>
-                <ion-label>Garagem</ion-label>
-                <ion-checkbox></ion-checkbox>
-              </ion-item>
-            </ion-col>
-            <ion-col col-4>
-              <ion-item>
-                <ion-label>Churrasqueira</ion-label>
-                <ion-checkbox></ion-checkbox>
-              </ion-item>
-            </ion-col>
-          </ion-row>
+          <ion-item *ngFor="let item of listEnt" (ionFocus)="focNomeEnt = true" (ionBlur)="focNomeEnt = false">
+            <ion-input value="{{item.nome}}" placeholder="Digite"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="focNomeEnt">
+            Ex: DVD, Livros, Jogos de mesa
+          </ion-item>
+          <ion-item>
+            <button ion-button (click)="saveNewEnt()">Nova</button>
+          </ion-item>
         </ion-list>
-      </ion-grid>
 
-      <h5 padding style="font-weight: bold;">Equipamento</h5>
-      <ion-grid>
-        <ion-list>
-          <ion-row>
-            <ion-col col-4>
-              <ion-item>
-                <ion-label>Bicicleta</ion-label>
-                <ion-checkbox></ion-checkbox>
-              </ion-item>
-            </ion-col>
-            <ion-col col-4>
-              <ion-item>
-                <ion-label>Salão de jardim</ion-label>
-                <ion-checkbox></ion-checkbox>
-              </ion-item>
-            </ion-col>
-            <ion-col col-4>
-              <ion-item>
-                <ion-label>Espriguiçadeiras</ion-label>
-                <ion-checkbox></ion-checkbox>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-        </ion-list>
-      </ion-grid>
+        <h5 padding style="font-weight: bold;">Instalações</h5>
 
-      <h5 padding style="font-weight: bold;">Serviços</h5>
-      <ion-grid>
         <ion-list>
-          <ion-row>
-            <ion-col col-4>
-              <ion-item>
-                <ion-label>Aluguel de roupa de cama</ion-label>
-                <ion-checkbox></ion-checkbox>
-              </ion-item>
-            </ion-col>
-            <ion-col col-4>
-              <ion-item>
-                <ion-label>Caseiro</ion-label>
-                <ion-checkbox></ion-checkbox>
-              </ion-item>
-            </ion-col>
-            <ion-col col-4>
-              <ion-item>
-                <ion-label>Limpeza incluída</ion-label>
-                <ion-checkbox></ion-checkbox>
-              </ion-item>
-            </ion-col>
-          </ion-row>
+          <ion-item *ngFor="let item of listInst" (ionFocus)="focNomeInst = true" (ionBlur)="focNomeInst = false">
+            <ion-input value="{{item.nome}}" placeholder="Digite"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="focNomeInst">
+            Ex: Estacionamento, Garagem, Churrasqueira
+          </ion-item>
+          <ion-item>
+            <button ion-button (click)="saveNewInst()">Nova</button>
+          </ion-item>
         </ion-list>
-      </ion-grid>
+
+        <h5 padding style="font-weight: bold;">Equipamento</h5>
+
+        <ion-list>
+          <ion-item *ngFor="let item of listEquip" (ionFocus)="focNomeEquip = true" (ionBlur)="focNomeEquip = false">
+            <ion-input value="{{item.nome}}" placeholder="Digite"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="focNomeEquip">
+            Ex: Bicicleta, Salão de jardim, Espriguiçadeiras
+          </ion-item>
+          <ion-item>
+            <button ion-button (click)="saveNewEquip()">Nova</button>
+          </ion-item>
+        </ion-list>
+
+        <h5 padding style="font-weight: bold;">Serviços</h5>
+
+        <ion-list>
+          <ion-item *ngFor="let item of listServ" (ionFocus)="focNomeServ = true" (ionBlur)="focNomeServ = false">
+            <ion-input value="{{item.nome}}" placeholder="Digite"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="focNomeServ">
+            Ex: Aluguel de roupa de cama, Caseiro, Limpeza incluída
+          </ion-item>
+          <ion-item>
+            <button ion-button (click)="saveNewServ()">Nova</button>
+          </ion-item>
+        </ion-list>
+
+      </div>
 
     </div>
 
     <div style="padding-left: 600px; padding-right: 600px; padding-bottom: 20px; padding-top: 20px;">
-      <button ion-button block large round>Salvar</button>
+      <button ion-button block large round (click)="salvarFlat()">Salvar</button>
     </div>
   </form>
 </ion-content>
