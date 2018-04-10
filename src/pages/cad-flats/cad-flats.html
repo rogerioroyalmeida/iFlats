@@ -55,238 +55,240 @@
       </ion-grid>
     </div>
 
-    <h3 padding>Descrição do Flat</h3>
-    <div padding margin novalidate style="border: 1px solid rgb(0, 0, 0);">
-      <ion-grid>
-        <ion-row>
-          <ion-col col-3>
-            <ion-label stacked>Condomínio?</ion-label>
-            <ion-list radio-group name="snCondominio" [(ngModel)]="flat.snCondominio">
-              <ion-grid>
-                <ion-row>
-                  <ion-col col-4>
-                    <ion-item>
-                      <ion-label>Sim</ion-label>
-                      <ion-radio value="s"></ion-radio>
-                    </ion-item>
-                  </ion-col>
-                  <ion-col col-4>
-                      <ion-item>
-                        <ion-label>Não</ion-label>
-                        <ion-radio value="n"></ion-radio>
-                      </ion-item>
-                    </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-list>
-          </ion-col>
-          <ion-col col-3>
-
-            <ion-label stacked>Internet?</ion-label>
-            <ion-list radio-group name="snInternet" [(ngModel)]="flat.snInternet">
-              <ion-grid>
-                <ion-row>
-                  <ion-col col-4>
-                    <ion-item>
-                      <ion-label>Sim</ion-label>
-                      <ion-radio value="s"></ion-radio>
-                    </ion-item>
-                  </ion-col>
-                  <ion-col col-4>
-                      <ion-item>
-                        <ion-label>Não</ion-label>
-                        <ion-radio value="n"></ion-radio>
-                      </ion-item>
-                    </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-list>
-          </ion-col>
-          
-          <ion-col col-3>
-            <ion-label stacked>Crianças?</ion-label>
-            <ion-list radio-group name="snCriancas" [(ngModel)]="flat.snCriancas">
-              <ion-grid>
-                <ion-row>
-                  <ion-col col-4>
-                    <ion-item>
-                      <ion-label>Sim</ion-label>
-                      <ion-radio value="s"></ion-radio>
-                    </ion-item>
-                  </ion-col>
-                  <ion-col col-4>
-                      <ion-item>
-                        <ion-label>Não</ion-label>
-                        <ion-radio value="n"></ion-radio>
-                      </ion-item>
-                    </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-list>
-          </ion-col>
-
-          <ion-col col-3>
-
-            <ion-label stacked>Pessoas com mobilidade reduzida?</ion-label>
-            <ion-list radio-group name="snMobilidadeReduzida" [(ngModel)]="flat.snMobilidadeReduzida">
-              <ion-grid>
-                <ion-row>
-                  <ion-col col-4>
-                    <ion-item>
-                      <ion-label>Sim</ion-label>
-                      <ion-radio value="s"></ion-radio>
-                    </ion-item>
-                  </ion-col>
-                  <ion-col col-4>
-                      <ion-item>
-                        <ion-label>Não</ion-label>
-                        <ion-radio value="n"></ion-radio>
-                      </ion-item>
-                    </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-list>
-
-          </ion-col>
-
-        </ion-row>
-
-        <ion-row>
-          <ion-col col-3>
-            <ion-label stacked>Fumantes?</ion-label>
-            <ion-list radio-group name="snFumantes" [(ngModel)]="flat.snFumantes">
-              <ion-grid>
-                <ion-row>
-                  <ion-col col-4>
-                    <ion-item>
-                      <ion-label>Sim</ion-label>
-                      <ion-radio value="s"></ion-radio>
-                    </ion-item>
-                  </ion-col>
-                  <ion-col col-4>
-                      <ion-item>
-                        <ion-label>Não</ion-label>
-                        <ion-radio value="n"></ion-radio>
-                      </ion-item>
-                    </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-list>
-          </ion-col>
-
-          <ion-col col-3>
-            <ion-label stacked>Animais?</ion-label>
-            <ion-list radio-group name="snAnimais" [(ngModel)]="flat.snAnimais">
-              <ion-grid>
-                <ion-row>
-                  <ion-col col-4>
-                    <ion-item>
-                      <ion-label>Sim</ion-label>
-                      <ion-radio value="s"></ion-radio>
-                    </ion-item>
-                  </ion-col>
-                  <ion-col col-4>
-                      <ion-item>
-                        <ion-label>Não</ion-label>
-                        <ion-radio value="n"></ion-radio>
-                      </ion-item>
-                    </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-list>
-          </ion-col>
-
-          <ion-col col-3>
-            <ion-label stacked>Festas / Eventos?</ion-label>
-            <ion-list radio-group name="snFestas" [(ngModel)]="flat.snFestas">
-              <ion-grid>
-                <ion-row>
-                  <ion-col col-4>
-                    <ion-item>
-                      <ion-label>Sim</ion-label>
-                      <ion-radio value="s"></ion-radio>
-                    </ion-item>
-                  </ion-col>
-                  <ion-col col-4>
-                      <ion-item>
-                        <ion-label>Não</ion-label>
-                        <ion-radio value="n"></ion-radio>
-                      </ion-item>
-                    </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-list>
-          </ion-col>
-
-          <ion-col col-3>
-            <ion-label stacked>Longos períodos?</ion-label>
-            <ion-list radio-group name="snLongoPrazo" [(ngModel)]="flat.snLongoPrazo">
-              <ion-grid>
-                <ion-row>
-                  <ion-col col-4>
-                    <ion-item>
-                      <ion-label>Sim</ion-label>
-                      <ion-radio value="s"></ion-radio>
-                    </ion-item>
-                  </ion-col>
-                  <ion-col col-4>
-                      <ion-item>
-                        <ion-label>Não</ion-label>
-                        <ion-radio value="n"></ion-radio>
-                      </ion-item>
-                    </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-list>
-          </ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col col-4>
-            <ion-label stacked>Número de Quartos</ion-label>
-            <ion-input type="number" placeholder="0" name="nrQuartos" [(ngModel)]="flat.nrQuartos" required></ion-input>
-          </ion-col>
-          <ion-col col-4>
-            <ion-label stacked>Número de Banheiros</ion-label>
-            <ion-input type="number" placeholder="0" min="0" max="60" name="nrBanheiros" [(ngModel)]="flat.nrBanheiros" required></ion-input>
-          </ion-col>
-          <ion-col col-4>
-            <ion-label stacked>Número máximo de pessoas</ion-label>
-            <ion-input type="number" placeholder="0" min="0" max="10" name="nrMaxPessoas" [(ngModel)]="flat.nrMaxPessoas" required></ion-input>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col col-4>
-            <ion-label stacked>Área do Flat (m2)</ion-label>
-            <ion-input type="number" placeholder="0" name="nrAreaFlat" [(ngModel)]="flat.nrAreaFlat" required></ion-input>
-          </ion-col>
-          <ion-col col-4>
-            <ion-label stacked>Valor básico da diária (R$)</ion-label>
-            <ion-input type="number" placeholder="0" name="vlBasicoDiaria" [(ngModel)]="flat.vlBasicoDiaria" required></ion-input>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col col-12>
-            <ion-label stacked>Título do Anúncio</ion-label>
-            <ion-input type="text" placeholder="Digite o título" name="dsTituloAnuncio" [(ngModel)]="flat.dsTituloAnuncio" required></ion-input>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col col-12>
-              <ion-label stacked>Descrição do Flat</ion-label>
-              <ion-textarea type="text" placeholder="Digite a descrição" name="dsFlat" [(ngModel)]="flat.dsFlat" required></ion-textarea>
-            </ion-col>
-          </ion-row>
-        <ion-row>
-          <ion-col col-12>
-            <ion-label stacked>Regras do Flat</ion-label>
-            <ion-textarea type="text" placeholder="Digite as regras" name="dsRegras" [(ngModel)]="flat.dsRegras" required></ion-textarea>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </div>
+    <a class="button button-outline button-positive" (click)="exibCarac()" style="margin-left: 15px;">{{ textoInformacoes }}</a>
 
     <div *ngIf="exibeCaracteristica">
+      <h3 padding>Descrição do Flat</h3>
+      <div padding margin novalidate style="border: 1px solid rgb(0, 0, 0);">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-3>
+              <ion-label stacked>Condomínio?</ion-label>
+              <ion-list radio-group name="snCondominio" [(ngModel)]="flat.snCondominio">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col col-4>
+                      <ion-item>
+                        <ion-label>Sim</ion-label>
+                        <ion-radio value="s"></ion-radio>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col col-4>
+                        <ion-item>
+                          <ion-label>Não</ion-label>
+                          <ion-radio value="n"></ion-radio>
+                        </ion-item>
+                      </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-list>
+            </ion-col>
+            <ion-col col-3>
+
+              <ion-label stacked>Internet?</ion-label>
+              <ion-list radio-group name="snInternet" [(ngModel)]="flat.snInternet">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col col-4>
+                      <ion-item>
+                        <ion-label>Sim</ion-label>
+                        <ion-radio value="s"></ion-radio>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col col-4>
+                        <ion-item>
+                          <ion-label>Não</ion-label>
+                          <ion-radio value="n"></ion-radio>
+                        </ion-item>
+                      </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-list>
+            </ion-col>
+            
+            <ion-col col-3>
+              <ion-label stacked>Crianças?</ion-label>
+              <ion-list radio-group name="snCriancas" [(ngModel)]="flat.snCriancas">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col col-4>
+                      <ion-item>
+                        <ion-label>Sim</ion-label>
+                        <ion-radio value="s"></ion-radio>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col col-4>
+                        <ion-item>
+                          <ion-label>Não</ion-label>
+                          <ion-radio value="n"></ion-radio>
+                        </ion-item>
+                      </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-list>
+            </ion-col>
+
+            <ion-col col-3>
+
+              <ion-label stacked>Pessoas com mobilidade reduzida?</ion-label>
+              <ion-list radio-group name="snMobilidadeReduzida" [(ngModel)]="flat.snMobilidadeReduzida">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col col-4>
+                      <ion-item>
+                        <ion-label>Sim</ion-label>
+                        <ion-radio value="s"></ion-radio>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col col-4>
+                        <ion-item>
+                          <ion-label>Não</ion-label>
+                          <ion-radio value="n"></ion-radio>
+                        </ion-item>
+                      </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-list>
+
+            </ion-col>
+
+          </ion-row>
+
+          <ion-row>
+            <ion-col col-3>
+              <ion-label stacked>Fumantes?</ion-label>
+              <ion-list radio-group name="snFumantes" [(ngModel)]="flat.snFumantes">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col col-4>
+                      <ion-item>
+                        <ion-label>Sim</ion-label>
+                        <ion-radio value="s"></ion-radio>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col col-4>
+                        <ion-item>
+                          <ion-label>Não</ion-label>
+                          <ion-radio value="n"></ion-radio>
+                        </ion-item>
+                      </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-list>
+            </ion-col>
+
+            <ion-col col-3>
+              <ion-label stacked>Animais?</ion-label>
+              <ion-list radio-group name="snAnimais" [(ngModel)]="flat.snAnimais">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col col-4>
+                      <ion-item>
+                        <ion-label>Sim</ion-label>
+                        <ion-radio value="s"></ion-radio>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col col-4>
+                        <ion-item>
+                          <ion-label>Não</ion-label>
+                          <ion-radio value="n"></ion-radio>
+                        </ion-item>
+                      </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-list>
+            </ion-col>
+
+            <ion-col col-3>
+              <ion-label stacked>Festas / Eventos?</ion-label>
+              <ion-list radio-group name="snFestas" [(ngModel)]="flat.snFestas">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col col-4>
+                      <ion-item>
+                        <ion-label>Sim</ion-label>
+                        <ion-radio value="s"></ion-radio>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col col-4>
+                        <ion-item>
+                          <ion-label>Não</ion-label>
+                          <ion-radio value="n"></ion-radio>
+                        </ion-item>
+                      </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-list>
+            </ion-col>
+
+            <ion-col col-3>
+              <ion-label stacked>Longos períodos?</ion-label>
+              <ion-list radio-group name="snLongoPrazo" [(ngModel)]="flat.snLongoPrazo">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col col-4>
+                      <ion-item>
+                        <ion-label>Sim</ion-label>
+                        <ion-radio value="s"></ion-radio>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col col-4>
+                        <ion-item>
+                          <ion-label>Não</ion-label>
+                          <ion-radio value="n"></ion-radio>
+                        </ion-item>
+                      </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-list>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col col-4>
+              <ion-label stacked>Número de Quartos</ion-label>
+              <ion-input type="number" placeholder="0" name="nrQuartos" [(ngModel)]="flat.nrQuartos" required></ion-input>
+            </ion-col>
+            <ion-col col-4>
+              <ion-label stacked>Número de Banheiros</ion-label>
+              <ion-input type="number" placeholder="0" min="0" max="60" name="nrBanheiros" [(ngModel)]="flat.nrBanheiros" required></ion-input>
+            </ion-col>
+            <ion-col col-4>
+              <ion-label stacked>Número máximo de pessoas</ion-label>
+              <ion-input type="number" placeholder="0" min="0" max="10" name="nrMaxPessoas" [(ngModel)]="flat.nrMaxPessoas" required></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-4>
+              <ion-label stacked>Área do Flat (m2)</ion-label>
+              <ion-input type="number" placeholder="0" name="nrAreaFlat" [(ngModel)]="flat.nrAreaFlat" required></ion-input>
+            </ion-col>
+            <ion-col col-4>
+              <ion-label stacked>Valor básico da diária (R$)</ion-label>
+              <ion-input type="number" placeholder="0" name="vlBasicoDiaria" [(ngModel)]="flat.vlBasicoDiaria" required></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-12>
+              <ion-label stacked>Título do Anúncio</ion-label>
+              <ion-input type="text" placeholder="Digite o título" name="dsTituloAnuncio" [(ngModel)]="flat.dsTituloAnuncio" required></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col col-12>
+                <ion-label stacked>Descrição do Flat</ion-label>
+                <ion-textarea type="text" placeholder="Digite a descrição" name="dsFlat" [(ngModel)]="flat.dsFlat" required></ion-textarea>
+              </ion-col>
+            </ion-row>
+          <ion-row>
+            <ion-col col-12>
+              <ion-label stacked>Regras do Flat</ion-label>
+              <ion-textarea type="text" placeholder="Digite as regras" name="dsRegras" [(ngModel)]="flat.dsRegras" required></ion-textarea>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+
       <h3 padding>Características do Flat</h3>
       <div padding margin novalidate style="border: 1px solid rgb(0, 0, 0);">
         <h5 padding style="font-weight: bold;">Geral</h5>
@@ -375,7 +377,7 @@
 
     </div>
 
-    <div style="padding-left: 600px; padding-right: 600px; padding-bottom: 20px; padding-top: 20px;">
+    <div style="padding-left: 400px; padding-right: 400px; padding-bottom: 20px; padding-top: 20px;">
       <button ion-button block large round (click)="salvarFlat()">Salvar</button>
     </div>
   </form>

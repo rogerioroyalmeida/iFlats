@@ -3,7 +3,7 @@
   <form #form="ngForm" padding novalidate>
     <ion-list inset>
       <button ion-item *ngFor="let item of flats" (click)="itemSelected(item)">
-        {{ item }}
+        {{ item.ds_titulo_anuncio }}
       </button> 
     </ion-list>
     <div>

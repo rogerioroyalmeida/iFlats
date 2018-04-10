@@ -14,6 +14,7 @@ import { CadFlatsPage } from '../pages/cad-flats/cad-flats';
 import { LoginService } from '../providers/login/login-service';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { HttpModule } from '@angular/http';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCjVxmw5QdseWpzGFVuF4ZIPg6sIZagq0I",
@@ -36,6 +37,7 @@ const firebaseConfig = {
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule

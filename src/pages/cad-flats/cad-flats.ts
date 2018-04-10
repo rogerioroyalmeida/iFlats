@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Http, Headers, RequestOptions } from '@angular/http';
+import 'rxjs/add/operator/map';
 import { Flat } from '../../model/flat';
 import { FlatGeral } from '../../model/flat-geral';
 import { FlatCoz } from '../../model/flat-coz';
@@ -31,8 +33,13 @@ export class CadFlatsPage {
   focNomeServ = false;
 
   exibeCaracteristica = false;
+  textoInformacoes = 'Mais informações';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  urlPost = 'http://192.168.15.5:3000/iflats/flats';
+
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams,
+              public http: Http) {
     
   }
 
@@ -80,7 +87,34 @@ export class CadFlatsPage {
   }
 
   salvarFlat() {
-    this.exibeCaracteristica = true;
+
+    // todo terminar
+    let headers = new Headers(
+    {
+      'Content-Type' : 'application/json'
+    });
+    let options = new RequestOptions({ headers: headers });
+
+    this.http.post(this.urlPost, 
+                   this.flat, 
+                   options)
+    .toPromise()
+    .then(data => {
+      console.log('API Response : ', data.json());
+    }).catch(error => {
+      console.error('API Error : ', error.status);
+      console.error('API Error : ', JSON.stringify(error));
+    });
+  }
+
+  exibCarac() {
+    if(this.exibeCaracteristica) {
+      this.exibeCaracteristica = false;
+      this.textoInformacoes = 'Mais informações';
+    } else {
+      this.exibeCaracteristica = true;
+      this.textoInformacoes = 'Menos informações';
+    }
   }
 
   ionViewDidLoad() {
