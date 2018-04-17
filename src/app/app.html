@@ -2,7 +2,7 @@
     <ion-toolbar>
         <ion-title (click)="home()">Ilhas Flats</ion-title>
         <ion-buttons end>
-            <button ion-button round (click)="exibirAcoesUsuario()" style="padding-right: 40px;">
+            <button ion-button round (click)="exibirAcoesUsuario()" *ngIf="usuariologado" style="padding-right: 40px;">
                 <ion-icon>  Meu perfil</ion-icon>
             </button>
             <button ion-button round (click)="login()" style="padding-right: 40px;">

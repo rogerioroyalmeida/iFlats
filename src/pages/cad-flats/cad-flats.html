@@ -8,21 +8,21 @@
         <ion-row>
           <ion-col col-6>
             <ion-label stacked>Endereço</ion-label>
-            <ion-input type="text" placeholder="Digite o endereço" name="endereco" [(ngModel)]="flat.endereco" required></ion-input>
+            <ion-input type="text" placeholder="Digite o endereço" name="endereco" [(ngModel)]="endereco" required></ion-input>
           </ion-col>
           <ion-col col-6>
             <ion-label stacked>Número</ion-label>
-            <ion-input type="number" placeholder="Digite o número" name="numero" [(ngModel)]="flat.numero" required></ion-input>
+            <ion-input type="number" placeholder="Digite o número" name="numero" [(ngModel)]="numero" required></ion-input>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col col-6>
             <ion-label stacked>Complemento</ion-label>
-            <ion-input type="text" placeholder="Digite o complemento" name="complemento" [(ngModel)]="flat.complemento" required></ion-input>
+            <ion-input type="text" placeholder="Digite o complemento" name="complemento" [(ngModel)]="complemento" required></ion-input>
           </ion-col>
           <ion-col col-6>
             <ion-label stacked>País</ion-label>
-            <ion-select [(ngModel)]="flat.pais" name="pais">
+            <ion-select [(ngModel)]="pais" name="pais">
               <ion-option value="bra">Brasil</ion-option>
               <ion-option value="eua">EUA</ion-option>
               <ion-option value="arg">Argentina</ion-option>
@@ -35,21 +35,21 @@
         <ion-row>
           <ion-col col-6>
             <ion-label stacked>Estado</ion-label>
-            <ion-input type="text" placeholder="Digite o estado" name="estado" [(ngModel)]="flat.estado" required></ion-input>
+            <ion-input type="text" placeholder="Digite o estado" name="estado" [(ngModel)]="estado" required></ion-input>
           </ion-col>
           <ion-col col-6>
             <ion-label stacked>Cidade</ion-label>
-            <ion-input type="text" placeholder="Digite a cidade" name="cidade" [(ngModel)]="flat.cidade" required></ion-input>
+            <ion-input type="text" placeholder="Digite a cidade" name="cidade" [(ngModel)]="cidade" required></ion-input>
           </ion-col>
         </ion-row>
         <ion-row>
             <ion-col col-6>
               <ion-label stacked>Bairro</ion-label>
-              <ion-input type="text" placeholder="Digite o bairro" name="bairro" [(ngModel)]="flat.bairro" required></ion-input>
+              <ion-input type="text" placeholder="Digite o bairro" name="bairro" [(ngModel)]="bairro" required></ion-input>
             </ion-col>
             <ion-col col-6>
               <ion-label stacked>CEP</ion-label>
-              <ion-input type="text" placeholder="Digite o CEP" name="cep" [(ngModel)]="flat.cep" required></ion-input>
+              <ion-input type="text" placeholder="Digite o CEP" name="cep" [(ngModel)]="cep" required></ion-input>
             </ion-col>
           </ion-row>
       </ion-grid>
@@ -64,7 +64,7 @@
           <ion-row>
             <ion-col col-3>
               <ion-label stacked>Condomínio?</ion-label>
-              <ion-list radio-group name="snCondominio" [(ngModel)]="flat.snCondominio">
+              <ion-list radio-group name="snCondominio" [(ngModel)]="snCondominio">
                 <ion-grid>
                   <ion-row>
                     <ion-col col-4>
@@ -86,7 +86,7 @@
             <ion-col col-3>
 
               <ion-label stacked>Internet?</ion-label>
-              <ion-list radio-group name="snInternet" [(ngModel)]="flat.snInternet">
+              <ion-list radio-group name="snInternet" [(ngModel)]="snInternet">
                 <ion-grid>
                   <ion-row>
                     <ion-col col-4>
@@ -108,7 +108,7 @@
             
             <ion-col col-3>
               <ion-label stacked>Crianças?</ion-label>
-              <ion-list radio-group name="snCriancas" [(ngModel)]="flat.snCriancas">
+              <ion-list radio-group name="snCriancas" [(ngModel)]="snCriancas">
                 <ion-grid>
                   <ion-row>
                     <ion-col col-4>
@@ -131,7 +131,7 @@
             <ion-col col-3>
 
               <ion-label stacked>Pessoas com mobilidade reduzida?</ion-label>
-              <ion-list radio-group name="snMobilidadeReduzida" [(ngModel)]="flat.snMobilidadeReduzida">
+              <ion-list radio-group name="snMobilidadeReduzida" [(ngModel)]="snMobilidadeReduzida">
                 <ion-grid>
                   <ion-row>
                     <ion-col col-4>
@@ -157,7 +157,7 @@
           <ion-row>
             <ion-col col-3>
               <ion-label stacked>Fumantes?</ion-label>
-              <ion-list radio-group name="snFumantes" [(ngModel)]="flat.snFumantes">
+              <ion-list radio-group name="snFumantes" [(ngModel)]="snFumantes">
                 <ion-grid>
                   <ion-row>
                     <ion-col col-4>
@@ -179,7 +179,7 @@
 
             <ion-col col-3>
               <ion-label stacked>Animais?</ion-label>
-              <ion-list radio-group name="snAnimais" [(ngModel)]="flat.snAnimais">
+              <ion-list radio-group name="snAnimais" [(ngModel)]="snAnimais">
                 <ion-grid>
                   <ion-row>
                     <ion-col col-4>
@@ -201,7 +201,7 @@
 
             <ion-col col-3>
               <ion-label stacked>Festas / Eventos?</ion-label>
-              <ion-list radio-group name="snFestas" [(ngModel)]="flat.snFestas">
+              <ion-list radio-group name="snFestas" [(ngModel)]="snFestas">
                 <ion-grid>
                   <ion-row>
                     <ion-col col-4>
@@ -223,7 +223,7 @@
 
             <ion-col col-3>
               <ion-label stacked>Longos períodos?</ion-label>
-              <ion-list radio-group name="snLongoPrazo" [(ngModel)]="flat.snLongoPrazo">
+              <ion-list radio-group name="snLongoPrazo" [(ngModel)]="snLongoPrazo">
                 <ion-grid>
                   <ion-row>
                     <ion-col col-4>
@@ -247,43 +247,43 @@
           <ion-row>
             <ion-col col-4>
               <ion-label stacked>Número de Quartos</ion-label>
-              <ion-input type="number" placeholder="0" name="nrQuartos" [(ngModel)]="flat.nrQuartos" required></ion-input>
+              <ion-input type="number" placeholder="0" name="nrQuartos" [(ngModel)]="nrQuartos" required></ion-input>
             </ion-col>
             <ion-col col-4>
               <ion-label stacked>Número de Banheiros</ion-label>
-              <ion-input type="number" placeholder="0" min="0" max="60" name="nrBanheiros" [(ngModel)]="flat.nrBanheiros" required></ion-input>
+              <ion-input type="number" placeholder="0" min="0" max="60" name="nrBanheiros" [(ngModel)]="nrBanheiros" required></ion-input>
             </ion-col>
             <ion-col col-4>
               <ion-label stacked>Número máximo de pessoas</ion-label>
-              <ion-input type="number" placeholder="0" min="0" max="10" name="nrMaxPessoas" [(ngModel)]="flat.nrMaxPessoas" required></ion-input>
+              <ion-input type="number" placeholder="0" min="0" max="10" name="nrMaxPessoas" [(ngModel)]="nrMaxPessoas" required></ion-input>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col col-4>
               <ion-label stacked>Área do Flat (m2)</ion-label>
-              <ion-input type="number" placeholder="0" name="nrAreaFlat" [(ngModel)]="flat.nrAreaFlat" required></ion-input>
+              <ion-input type="number" placeholder="0" name="nrAreaFlat" [(ngModel)]="nrAreaFlat" required></ion-input>
             </ion-col>
             <ion-col col-4>
               <ion-label stacked>Valor básico da diária (R$)</ion-label>
-              <ion-input type="number" placeholder="0" name="vlBasicoDiaria" [(ngModel)]="flat.vlBasicoDiaria" required></ion-input>
+              <ion-input type="number" placeholder="0" name="vlBasicoDiaria" [(ngModel)]="vlBasicoDiaria" required></ion-input>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col col-12>
               <ion-label stacked>Título do Anúncio</ion-label>
-              <ion-input type="text" placeholder="Digite o título" name="dsTituloAnuncio" [(ngModel)]="flat.dsTituloAnuncio" required></ion-input>
+              <ion-input type="text" placeholder="Digite o título" name="dsTituloAnuncio" [(ngModel)]="dsTituloAnuncio" required></ion-input>
             </ion-col>
           </ion-row>
           <ion-row>
               <ion-col col-12>
                 <ion-label stacked>Descrição do Flat</ion-label>
-                <ion-textarea type="text" placeholder="Digite a descrição" name="dsFlat" [(ngModel)]="flat.dsFlat" required></ion-textarea>
+                <ion-textarea type="text" placeholder="Digite a descrição" name="dsFlat" [(ngModel)]="dsFlat" required></ion-textarea>
               </ion-col>
             </ion-row>
           <ion-row>
             <ion-col col-12>
               <ion-label stacked>Regras do Flat</ion-label>
-              <ion-textarea type="text" placeholder="Digite as regras" name="dsRegras" [(ngModel)]="flat.dsRegras" required></ion-textarea>
+              <ion-textarea type="text" placeholder="Digite as regras" name="dsRegras" [(ngModel)]="dsRegras" required></ion-textarea>
             </ion-col>
           </ion-row>
         </ion-grid>

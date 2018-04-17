@@ -226,7 +226,7 @@ export class Flat {
         return this.snFestas;
     }
 
-    public setSnFLongoPrazo(snLongoPrazo: string) {
+    public setSnLongoPrazo(snLongoPrazo: string) {
         this.snLongoPrazo = snLongoPrazo;
     }
 

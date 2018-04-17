@@ -13,7 +13,7 @@ import { LoginPage } from '../login/login';
 })
 export class ListFlatsPage {
 
-  urlGet = 'http://192.168.15.5:3000/iflats/flats/usuarios/1';
+  urlGet = 'http://192.168.15.3:3000/iflats/flats/usuarios/1';
 
   public flats: Array<Flat>;
 
@@ -27,7 +27,7 @@ export class ListFlatsPage {
       .map(res => res.json())
       .subscribe(data => {
         this.flats = data;
-        console.log(data);
+        console.log('list flats: ', data);
     });
   }
 
@@ -36,7 +36,7 @@ export class ListFlatsPage {
   }
 
   itemSelected(item) {
-
+    this.navCtrl.push(CadFlatsPage, {item: item});
   }
 
   abrirCadastro() {

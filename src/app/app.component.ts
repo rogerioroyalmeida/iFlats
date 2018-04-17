@@ -34,14 +34,10 @@ export class MyApp {
     this.authObserver = auth.authState.subscribe(user => {
       if (user) {
         this.usuariologado = true;
-        this.authObserver.unsubscribe();
       } else {
         this.usuariologado = false;
-        this.authObserver.unsubscribe();
       }
     });
-
-    console.log('logado: ', this.usuariologado);
   }
 
   initializeApp() {
@@ -72,6 +68,7 @@ export class MyApp {
   logout() {
     this.loginService.signOut()
       .then(() => {
+        alert('Sessão encerrada com sucesso.');
         this.nav.setRoot(HomePage);
       })
       .catch((error) => {

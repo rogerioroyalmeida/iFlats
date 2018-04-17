@@ -5,6 +5,7 @@ import { Usuario } from '../../model/usuario';
 import { LoginService } from '../../providers/login/login-service';
 import { HomePage } from '../home/home';
 import { ResetsenhaPage } from '../resetsenha/resetsenha';
+import { Http, Headers, RequestOptions } from '@angular/http';
 
 @IonicPage()
 @Component({
@@ -15,12 +16,14 @@ export class LoginPage {
   usuario: Usuario = new Usuario();
   email: any;
   senha: any;
+  urlLogin = 'http://192.168.15.3:3000/iflats/usuarios/login';
   @ViewChild('form') form: NgForm;
 
   constructor(
     public navCtrl: NavController,
     private toastCtrl: ToastController,
-    private loginService: LoginService) {
+    private loginService: LoginService,
+    public http: Http) {
   }
 
   resetPassword() {
@@ -33,6 +36,9 @@ export class LoginPage {
         .then(() => {
           this.email = this.usuario.getEmail();
           this.senha = this.usuario.getSenha();
+
+          this.loginBanco(this.email, this.senha);
+
           this.navCtrl.setRoot(HomePage, {usuario: this.usuario});
         })
         .catch((error: any) => {
@@ -49,5 +55,30 @@ export class LoginPage {
           toast.present();
         });
     }
+  }
+
+  loginBanco(email: string, senha: string) {
+
+    let headers = new Headers(
+      {
+        'Content-Type' : 'application/json'
+      });
+      let options = new RequestOptions({ headers: headers });
+  
+      this.http.post(this.urlLogin, 
+                    {email: email,
+                     senha: senha
+                    }, 
+                     options)
+      .toPromise()
+      .then(data => {
+        console.log('API Response : ', data.json());
+        alert('Usuário logado com sucesso!');
+      }).catch(error => {
+        console.error('API Error : ', error.status);
+        console.error('API Error : ', JSON.stringify(error));
+        alert('Não foi possível realizar o login!');
+      });
+
   }
 }
