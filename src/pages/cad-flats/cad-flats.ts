@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Flat } from '../../model/flat';
@@ -68,41 +68,42 @@ export class CadFlatsPage {
   exibeCaracteristica = false;
   textoInformacoes = 'Mostrar mais';
 
-  urlPost = 'http://192.168.15.3:3000/iflats/flats';
-  urlPatch = 'http://192.168.15.3:3000/iflats/flats/';
+  urlPost = 'http://192.168.15.4:3000/iflats/flats';
+  urlPatch = 'http://192.168.15.4:3000/iflats/flats/';
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
-              public http: Http) {
+              public http: Http,
+              private alertCtrl: AlertController) {
     
-    let f = this.navParams.get('item');
+    let f: Flat = this.navParams.get('item');
 
     if (f) {
-      this.codigo = f.cd_flat;
-      this.dsTituloAnuncio = f.ds_titulo_anuncio;
-      this.endereco = f.ds_endereco;
-      this.numero = f.nr_endereco;
-      this.complemento = f.ds_complemento;
-      this.pais = f.ds_pais;
-      this.estado = f.ds_estado;
-      this.cidade = f.ds_cidade;
-      this.bairro = f.ds_bairro;
-      this.cep = f.nr_cep;
-      this.snCondominio = f.sn_condominio;
-      this.nrQuartos = f.nr_quartos;
-      this.nrBanheiros = f.nr_banheiros;
-      this.nrMaxPessoas = f.nr_max_pessoas;
-      this.vlBasicoDiaria = f.vl_basico_diaria;
-      this.nrAreaFlat = f.nr_area_flat;
-      this.dsFlat = f.ds_flat;
-      this.dsRegras = f.ds_regras;
-      this.snInternet = f.sn_internet;
-      this.snCriancas = f.sn_criancas;
-      this.snMobilidadeReduzida = f.sn_mobilidade_reduzida;
-      this.snFumantes = f.sn_fumantes;
-      this.snAnimais = f.sn_animais;
-      this.snFestas = f.sn_festas;
-      this.snLongoPrazo = f.sn_longo_prazo;
+      this.codigo = f.getCodigoFlat();
+      this.dsTituloAnuncio = f.getDsTituloAnuncio();
+      this.endereco = f.getEndereco();
+      this.numero = f.getNumero();
+      this.complemento = f.getComplemento();
+      this.pais = f.getPais();
+      this.estado = f.getEstado();
+      this.cidade = f.getCidade();
+      this.bairro = f.getBairro();
+      this.cep = f.getCep();
+      this.snCondominio = f.getSnCondominio();
+      this.nrQuartos = f.getNrQuartos();
+      this.nrBanheiros = f.getNrBanheiros();
+      this.nrMaxPessoas = f.getNrMaxPessoas();
+      this.vlBasicoDiaria = f.getVlBasicoDiaria();
+      this.nrAreaFlat = f.getNrAreaFlat();
+      this.dsFlat = f.getDsFlat();
+      this.dsRegras = f.getDsRegras();
+      this.snInternet = f.getSnInternet();
+      this.snCriancas = f.getSnCriancas();
+      this.snMobilidadeReduzida = f.getSnMobilidadeReduzida();
+      this.snFumantes = f.getSnFumantes();
+      this.snAnimais = f.getSnAnimais();
+      this.snFestas = f.getSnFestas();
+      this.snLongoPrazo = f.getSnLongoPrazo();
     }
 
   }
@@ -192,12 +193,12 @@ export class CadFlatsPage {
       .toPromise()
       .then(data => {
         console.log('API Response : ', data.json());
-        alert('Flat atualizado com sucesso!');
+        this.msgAlert('Flat atualizado com sucesso!');
         this.navCtrl.push(ListFlatsPage);
       }).catch(error => {
         console.error('API Error : ', error.status);
         console.error('API Error : ', JSON.stringify(error));
-        alert('Erro ao atualizar o flat!');
+        this.msgAlert('Erro ao atualizar o flat!');
       });
 
     } else {
@@ -208,12 +209,12 @@ export class CadFlatsPage {
       .toPromise()
       .then(data => {
         console.log('API Response : ', data.json());
-        alert('Flat salvo com sucesso!');
+        this.msgAlert('Flat salvo com sucesso!');
         this.navCtrl.push(ListFlatsPage);
       }).catch(error => {
         console.error('API Error : ', error.status);
         console.error('API Error : ', JSON.stringify(error));
-        alert('Erro ao salvar o flat!');
+        this.msgAlert('Erro ao salvar o flat!');
       });
     }
   }
@@ -226,6 +227,16 @@ export class CadFlatsPage {
       this.exibeCaracteristica = true;
       this.textoInformacoes = 'Mostrar menos';
     }
+  }
+
+  msgAlert(text: string, title?: string, buttons?: string[]) {
+    !buttons ? buttons = ['Ok']: buttons;
+    let alert = this.alertCtrl.create({
+      title: title,
+      subTitle: text,
+      buttons: buttons
+    });
+    alert.present();
   }
 
   ionViewDidLoad() {

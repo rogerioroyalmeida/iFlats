@@ -34,6 +34,8 @@ export class Flat {
 
     private snAtivo: string;
 
+    public iconVisivel: boolean = false;
+
     public setCodigo(codigo: number) {
         this.codigo = codigo;
     }
@@ -264,5 +266,13 @@ export class Flat {
 
     public getCdUsuarioAlteracao() {
         return this.cdUsuarioAlteracao;
+    }
+
+    public setSnAtivo(snAtivo: string) {
+        this.snAtivo = snAtivo;
+    }
+
+    public getSnAtivo() {
+        return this.snAtivo;
     }
 }

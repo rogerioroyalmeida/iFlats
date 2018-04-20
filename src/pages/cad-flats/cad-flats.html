@@ -1,6 +1,36 @@
 
 <ion-content padding-top margin-top>
   <form #form="ngForm" item-height="100%" padding>
+
+    <h3 padding>Novo Flat</h3>
+    <div padding margin novalidate style="border: 1px solid rgb(0, 0, 0);">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-12>
+              <ion-label stacked>Título do Anúncio</ion-label>
+              <ion-input type="text" placeholder="Digite o título" name="dsTituloAnuncio" [(ngModel)]="dsTituloAnuncio" #titulo="ngModel" required></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="titulo.errors && (titulo.dirty || titulo.touched)" class="text-danger" style="color: red;">
+            Informe um título para o anúncio do flat!
+          </ion-row>
+          <ion-row>
+            <ion-col col-12>
+              <ion-label stacked>Descrição do Flat</ion-label>
+              <ion-textarea type="text" placeholder="Digite a descrição" name="dsFlat" [(ngModel)]="dsFlat" #desc="ngModel" required></ion-textarea>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="desc.errors && (desc.dirty || desc.touched)" class="text-danger" style="color: red;">
+            Digite alguma descrição para o flat!
+          </ion-row>
+          <ion-row>
+            <ion-col col-12>
+              <ion-label stacked>Regras do Flat</ion-label>
+              <ion-textarea type="text" placeholder="Digite as regras" name="dsRegras" [(ngModel)]="dsRegras" required></ion-textarea>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+    </div>
     
     <h3 padding>Endereço do Flat</h3>
     <div padding margin novalidate style="border: 1px solid rgb(0, 0, 0);">
@@ -8,11 +38,19 @@
         <ion-row>
           <ion-col col-6>
             <ion-label stacked>Endereço</ion-label>
-            <ion-input type="text" placeholder="Digite o endereço" name="endereco" [(ngModel)]="endereco" required></ion-input>
+            <ion-input type="text" placeholder="Digite o endereço" name="endereco" [(ngModel)]="endereco" #ender="ngModel" required></ion-input>
           </ion-col>
           <ion-col col-6>
             <ion-label stacked>Número</ion-label>
-            <ion-input type="number" placeholder="Digite o número" name="numero" [(ngModel)]="numero" required></ion-input>
+            <ion-input type="number" placeholder="Digite o número" name="numero" [(ngModel)]="numero" #num="ngModel" required></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="(ender.errors || num.errors) && ((ender.dirty || ender.touched) || (num.dirty || num.touched))" class="text-danger" style="color: red;">
+          <ion-col col-6 *ngIf="ender.errors && (ender.dirty || ender.touched)" class="text-danger" style="color: red;">
+            O flat precisa ter um endereço!
+          </ion-col>
+          <ion-col col-6 *ngIf="num.errors && (num.dirty || num.touched)" class="text-danger" style="color: red;">
+            O flat também precisa ter um número!
           </ion-col>
         </ion-row>
         <ion-row>
@@ -268,24 +306,6 @@
               <ion-input type="number" placeholder="0" name="vlBasicoDiaria" [(ngModel)]="vlBasicoDiaria" required></ion-input>
             </ion-col>
           </ion-row>
-          <ion-row>
-            <ion-col col-12>
-              <ion-label stacked>Título do Anúncio</ion-label>
-              <ion-input type="text" placeholder="Digite o título" name="dsTituloAnuncio" [(ngModel)]="dsTituloAnuncio" required></ion-input>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-              <ion-col col-12>
-                <ion-label stacked>Descrição do Flat</ion-label>
-                <ion-textarea type="text" placeholder="Digite a descrição" name="dsFlat" [(ngModel)]="dsFlat" required></ion-textarea>
-              </ion-col>
-            </ion-row>
-          <ion-row>
-            <ion-col col-12>
-              <ion-label stacked>Regras do Flat</ion-label>
-              <ion-textarea type="text" placeholder="Digite as regras" name="dsRegras" [(ngModel)]="dsRegras" required></ion-textarea>
-            </ion-col>
-          </ion-row>
         </ion-grid>
       </div>
 
@@ -377,8 +397,8 @@
 
     </div>
 
-    <div style="padding-left: 400px; padding-right: 400px; padding-bottom: 20px; padding-top: 20px;">
-      <button ion-button block large round (click)="salvarFlat()">Salvar</button>
+    <div style="width: 100%; text-align: center; padding-bottom: 20px; padding-top: 20px;">
+      <button style="width: 100px;" ion-button block large round (click)="salvarFlat()">Salvar</button>
     </div>
   </form>
 </ion-content>
