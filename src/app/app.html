@@ -1,18 +1,22 @@
-<ion-menu [content]="content">
-    <ion-header>
-        <ion-toolbar>
-        <ion-title>Ilhas Flats</ion-title>
-        </ion-toolbar>
-    </ion-header>
+<ion-header>
+    <ion-toolbar>
+        <ion-title (click)="home()">Ilhas Flats</ion-title>
+        <ion-buttons end>
+            <button ion-button round (click)="exibirAcoesUsuario()" *ngIf="usuariologado" style="padding-right: 40px;">
+                <ion-icon>  Meu perfil</ion-icon>
+            </button>
+            <button ion-button round (click)="login()" style="padding-right: 40px;">
+                <ion-icon name="log-in">  Login</ion-icon>
+            </button>
+            <button ion-button round (click)="cadastre()" style="padding-right: 40px;">
+                <ion-icon name="arrow-round-forward">  Cadastre-se</ion-icon>
+            </button>
+            <button ion-button round (click)="logout()" style="padding-right: 40px;">
+                <ion-icon name="power">  Logout</ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
 
-    <ion-content>
-        <ion-list>
-        <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-            {{p.title}}
-        </button>
-        </ion-list>
-    </ion-content>
 
-</ion-menu>
-
-<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
+<ion-nav [root]="rootPage"></ion-nav>

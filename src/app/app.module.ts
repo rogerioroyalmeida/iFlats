@@ -9,10 +9,12 @@ import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { CadastroUsuarioPage } from '../pages/cadastrousuario/cadastrousuario';
 import { ResetsenhaPage } from '../pages/resetsenha/resetsenha';
-import { ImoveisPage } from '../pages/imoveis/imoveis';
+import { ListFlatsPage } from '../pages/list-flats/list-flats';
+import { CadFlatsPage } from '../pages/cad-flats/cad-flats';
 import { LoginService } from '../providers/login/login-service';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { HttpModule } from '@angular/http';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCjVxmw5QdseWpzGFVuF4ZIPg6sIZagq0I",
@@ -30,10 +32,12 @@ const firebaseConfig = {
     LoginPage,
     CadastroUsuarioPage,
     ResetsenhaPage,
-    ImoveisPage
+    ListFlatsPage,
+    CadFlatsPage
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule
@@ -45,7 +49,8 @@ const firebaseConfig = {
     LoginPage,
     CadastroUsuarioPage,
     ResetsenhaPage,
-    ImoveisPage
+    ListFlatsPage,
+    CadFlatsPage
   ],
   providers: [
     StatusBar,

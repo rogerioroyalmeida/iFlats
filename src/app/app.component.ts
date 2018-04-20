@@ -7,37 +7,35 @@ import { LoginService } from '../providers/login/login-service';
 
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
-import { ImoveisPage } from '../pages/imoveis/imoveis';
+import { ListFlatsPage } from '../pages/list-flats/list-flats';
 
 import { AngularFireAuth } from 'angularfire2/auth';
+import { CadastroUsuarioPage } from '../pages/cadastrousuario/cadastrousuario';
+import { ActionSheetController } from 'ionic-angular';
+
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage:any;
+  rootPage:any = HomePage;
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private auth: AngularFireAuth, private loginService: LoginService) {
+  usuariologado:any = false;
+
+  authObserver;
+
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public auth: AngularFireAuth, private loginService: LoginService, public actionSheetCtrl: ActionSheetController) {
 
     this.initializeApp();
 
-    // used for an example of ngFor and navigation
-    this.pages = [
-      { title: 'Principal', component: HomePage },
-      { title: 'Meus Imóveis', component: ImoveisPage},
-      { title: 'Sair', component: null }
-    ];
-
-    const authObserver = auth.authState.subscribe(user => {
+    this.authObserver = auth.authState.subscribe(user => {
       if (user) {
-        this.rootPage = HomePage;
-        authObserver.unsubscribe();
+        this.usuariologado = true;
       } else {
-        //this.rootPage = LoginPage;
-        //authObserver.unsubscribe();
+        this.usuariologado = false;
       }
     });
   }
@@ -51,24 +49,53 @@ export class MyApp {
     });
   }
 
-  openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-    if(page.component) {
-      this.nav.setRoot(page.component);
-    } else {
-      this.signOut();
-    }
+  home() {
+    this.nav.setRoot(HomePage);
   }
 
-  signOut() {
+  login() {
+    //if(!this.usuariologado) {
+      this.nav.push(LoginPage);
+    //}
+  }
+
+  cadastre() {
+    //if(!this.usuariologado) {
+      this.nav.push(CadastroUsuarioPage);
+    //}
+  }
+
+  logout() {
     this.loginService.signOut()
       .then(() => {
-        this.nav.setRoot(LoginPage);
+        alert('Sessão encerrada com sucesso.');
+        this.nav.setRoot(HomePage);
       })
       .catch((error) => {
         console.error(error);
       });
+  }
+
+  exibirAcoesUsuario() {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Ações do Usuario',
+      buttons: [
+        {
+          text: 'Painel de Flats',
+          role: 'destructive',
+          handler: () => {
+            this.nav.push(ListFlatsPage);
+          }
+        },{
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    actionSheet.present();
   }
 }
 

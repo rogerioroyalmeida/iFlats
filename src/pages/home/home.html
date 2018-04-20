@@ -1,12 +1,6 @@
-<ion-header>
-    <ion-navbar>
-        <button ion-button menuToggle>
-            <ion-icon name="menu"></ion-icon>
-        </button>
-        <ion-title></ion-title>
-    </ion-navbar>
-</ion-header>
 
-<ion-content padding>
-    <p>Ilhas Flats (em produção...)</p>
+<ion-content padding-top margin-top>
+    <form #form="ngForm" padding novalidate>
+        <p>Ilhas Flats (em produção...) {{ usuario.getNome() }}</p>
+    </form>
 </ion-content>

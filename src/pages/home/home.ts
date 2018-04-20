@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { LoginService } from '../../providers/login/login-service';
 import { LoginPage } from '../login/login';
+import { Usuario } from '../../model/usuario';
 
 @Component({
   selector: 'page-home',
@@ -9,7 +10,15 @@ import { LoginPage } from '../login/login';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController, private loginService: LoginService) {}
+  usuario: Usuario = new Usuario();
+
+  constructor(public navCtrl: NavController, private loginService: LoginService, private navParams: NavParams) {
+
+    if(navParams.get('usuario')) {
+      this.usuario = navParams.get('usuario');
+    }
+
+  }
 
   signOut() {
     this.loginService.signOut()
