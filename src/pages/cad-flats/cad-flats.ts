@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Flat } from '../../model/flat';
-import { FlatGeral } from '../../model/flat-geral';
+import { ItGeral } from '../../model/it-geral';
 import { FlatCoz } from '../../model/flat-coz';
 import { FlatEnt } from '../../model/flat-ent';
 import { FlatInst } from '../../model/flat-inst';
@@ -51,7 +51,7 @@ export class CadFlatsPage {
 
 
   flat: Flat = new Flat();
-  listGeral = new Array<FlatGeral>();
+  listGeral = new Array<ItGeral>();
   listCozinha = new Array<FlatCoz>();
   listEnt = new Array<FlatEnt>();
   listInst = new Array<FlatInst>();
@@ -68,8 +68,7 @@ export class CadFlatsPage {
   exibeCaracteristica = false;
   textoInformacoes = 'Mostrar mais';
 
-  urlPost = 'http://192.168.15.8:3000/iflats/flats';
-  urlPatch = 'http://192.168.15.8:3000/iflats/flats/';
+  urlFlat = 'http://192.168.15.8:3000/iflats/flats';
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
@@ -111,7 +110,7 @@ export class CadFlatsPage {
   // Saving function
   saveNewGeral(): void {
     this.newItem = "";
-    let flatGeral = new FlatGeral();
+    let flatGeral = new ItGeral();
     this.listGeral.push(flatGeral);
     this.newItem = "";
   }
@@ -187,7 +186,7 @@ export class CadFlatsPage {
 
     if (this.flat.getCodigoFlat()) {
 
-      this.http.patch(this.urlPatch + this.flat.getCodigoFlat(), 
+      this.http.patch(this.urlFlat + this.flat.getCodigoFlat(), 
                       this.flat, 
                       options)
       .toPromise()
@@ -203,7 +202,7 @@ export class CadFlatsPage {
 
     } else {
       
-      this.http.post(this.urlPost, 
+      this.http.post(this.urlFlat, 
                      this.flat, 
                      options)
       .toPromise()
