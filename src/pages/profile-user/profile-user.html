@@ -1,0 +1,77 @@
+<ion-content padding-top margin-top>
+  <form #form="ngForm" item-height="100%" padding>
+    
+    <h3 padding>Perfil do Usuário</h3>
+    <div padding margin novalidate style="border: 1px solid rgb(0, 0, 0);">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-12>
+            <ion-label stacked>Nome</ion-label>
+            <ion-input type="text" placeholder="Digite o nome" name="nome" [(ngModel)]="nome" #name="ngModel" required></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="name.errors && (name.dirty || name.touched)" class="text-danger" style="color: red;">
+          Informe um Nome!
+        </ion-row>
+        <ion-row>
+          <ion-col col-12>
+            <ion-label stacked>Sobrenome</ion-label>
+            <ion-input type="text" placeholder="Digite o sobrenome" name="sobrenome" [(ngModel)]="sobrenome" #sobnome="ngModel" required></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="sobnome.errors && (sobnome.dirty || sobnome.touched)" class="text-danger" style="color: red;">
+          Informe um Sobrenome!
+        </ion-row>
+        <ion-row>
+          <ion-col col-12>
+            <ion-label stacked>E-mail</ion-label>
+            <ion-input type="text" placeholder="Digite o email" name="email" [(ngModel)]="email" #mail="ngModel" required></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="mail.errors && (mail.dirty || mail.touched)" class="text-danger" style="color: red;">
+          Digite um e-mail!
+        </ion-row>
+        <ion-row>
+          <ion-col col-12>
+            <ion-label stacked>Campo 01</ion-label>
+            <ion-input type="text" placeholder="Digite o campo 01" name="campo01" [(ngModel)]="campo01" #cmp01="ngModel" required></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="cmp01.errors && (cmp01.dirty || cmp01.touched)" class="text-danger" style="color: red;">
+          Digite o campo 01
+        </ion-row>
+        <ion-row>
+          <ion-col col-12>
+            <ion-label stacked>Campo 02</ion-label>
+            <ion-input type="text" placeholder="Digite o campo 02" name="campo02" [(ngModel)]="campo02" #cmp02="ngModel" required></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="cmp02.errors && (cmp02.dirty || cmp02.touched)" class="text-danger" style="color: red;">
+          Digite o campo 02
+        </ion-row>
+        <ion-row>
+          <ion-col col-12>
+            <ion-label stacked>Campo Real</ion-label>
+            <ion-input type="number" placeholder="Digite o campo Real" name="campo_real" [(ngModel)]="campo_real" #cmpReal="ngModel" required></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="cmpReal.errors && (cmpReal.dirty || cmpReal.touched)" class="text-danger" style="color: red;">
+          Digite o campo real
+        </ion-row>
+        <ion-row>
+          <ion-col col-12>
+            <ion-label stacked>Observação</ion-label>
+            <ion-input type="text" placeholder="Digite a Observação" name="observacao" [(ngModel)]="observacao" #cmpObs="ngModel" required></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="cmpObs.errors && (cmpObs.dirty || cmpObs.touched)" class="text-danger" style="color: red;">
+          Digite a observação
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div style="width: 100%; text-align: center; padding-bottom: 20px; padding-top: 20px;">
+      <button style="width: 100px;" ion-button block large round (click)="salvarUsuario()">Salvar</button>
+    </div>
+  </form>
+</ion-content>

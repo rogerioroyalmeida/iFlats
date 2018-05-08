@@ -14,8 +14,8 @@ import { AlertController } from 'ionic-angular';
 })
 export class ListFlatsPage {
 
-  urlGet = 'http://192.168.15.4:3000/iflats/flats/usuarios/1';
-  urlDelete = 'http://192.168.15.4:3000/iflats/flats/';
+  urlGet = 'http://192.168.15.8:3000/iflats/flats/usuarios/1';
+  urlDelete = 'http://192.168.15.8:3000/iflats/flats/';
 
   public flats: Array<Flat>;
 

@@ -4,32 +4,32 @@
 
     <h3 padding>Novo Flat</h3>
     <div padding margin novalidate style="border: 1px solid rgb(0, 0, 0);">
-        <ion-grid>
-          <ion-row>
-            <ion-col col-12>
-              <ion-label stacked>Título do Anúncio</ion-label>
-              <ion-input type="text" placeholder="Digite o título" name="dsTituloAnuncio" [(ngModel)]="dsTituloAnuncio" #titulo="ngModel" required></ion-input>
-            </ion-col>
-          </ion-row>
-          <ion-row *ngIf="titulo.errors && (titulo.dirty || titulo.touched)" class="text-danger" style="color: red;">
-            Informe um título para o anúncio do flat!
-          </ion-row>
-          <ion-row>
-            <ion-col col-12>
-              <ion-label stacked>Descrição do Flat</ion-label>
-              <ion-textarea type="text" placeholder="Digite a descrição" name="dsFlat" [(ngModel)]="dsFlat" #desc="ngModel" required></ion-textarea>
-            </ion-col>
-          </ion-row>
-          <ion-row *ngIf="desc.errors && (desc.dirty || desc.touched)" class="text-danger" style="color: red;">
-            Digite alguma descrição para o flat!
-          </ion-row>
-          <ion-row>
-            <ion-col col-12>
-              <ion-label stacked>Regras do Flat</ion-label>
-              <ion-textarea type="text" placeholder="Digite as regras" name="dsRegras" [(ngModel)]="dsRegras" required></ion-textarea>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-12>
+            <ion-label stacked>Título do Anúncio</ion-label>
+            <ion-input type="text" placeholder="Digite o título" name="dsTituloAnuncio" [(ngModel)]="dsTituloAnuncio" #titulo="ngModel" required></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="titulo.errors && (titulo.dirty || titulo.touched)" class="text-danger" style="color: red;">
+          Informe um título para o anúncio do flat!
+        </ion-row>
+        <ion-row>
+          <ion-col col-12>
+            <ion-label stacked>Descrição do Flat</ion-label>
+            <ion-textarea type="text" placeholder="Digite a descrição" name="dsFlat" [(ngModel)]="dsFlat" #desc="ngModel" required></ion-textarea>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="desc.errors && (desc.dirty || desc.touched)" class="text-danger" style="color: red;">
+          Digite alguma descrição para o flat!
+        </ion-row>
+        <ion-row>
+          <ion-col col-12>
+            <ion-label stacked>Regras do Flat</ion-label>
+            <ion-textarea type="text" placeholder="Digite as regras" name="dsRegras" [(ngModel)]="dsRegras" required></ion-textarea>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </div>
     
     <h3 padding>Endereço do Flat</h3>

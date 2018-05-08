@@ -12,6 +12,8 @@ import { ListFlatsPage } from '../pages/list-flats/list-flats';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { CadastroUsuarioPage } from '../pages/cadastrousuario/cadastrousuario';
 import { ActionSheetController } from 'ionic-angular';
+import { ProfileUserPage } from '../pages/profile-user/profile-user';
+import { Usuario } from '../model/usuario';
 
 @Component({
   templateUrl: 'app.html'
@@ -24,7 +26,7 @@ export class MyApp {
   pages: Array<{title: string, component: any}>;
 
   usuariologado:any = false;
-
+  email:String;
   authObserver;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public auth: AngularFireAuth, private loginService: LoginService, public actionSheetCtrl: ActionSheetController) {
@@ -33,6 +35,7 @@ export class MyApp {
 
     this.authObserver = auth.authState.subscribe(user => {
       if (user) {
+        this.email = user.email;
         this.usuariologado = true;
       } else {
         this.usuariologado = false;
@@ -85,6 +88,12 @@ export class MyApp {
           role: 'destructive',
           handler: () => {
             this.nav.push(ListFlatsPage);
+          }
+        },{
+          text: 'Meu perfil',
+          role: 'destructive',
+          handler: () => {
+            this.nav.push(ProfileUserPage, {email: this.email});
           }
         },{
           text: 'Cancel',

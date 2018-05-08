@@ -68,8 +68,8 @@ export class CadFlatsPage {
   exibeCaracteristica = false;
   textoInformacoes = 'Mostrar mais';
 
-  urlPost = 'http://192.168.15.4:3000/iflats/flats';
-  urlPatch = 'http://192.168.15.4:3000/iflats/flats/';
+  urlPost = 'http://192.168.15.8:3000/iflats/flats';
+  urlPatch = 'http://192.168.15.8:3000/iflats/flats/';
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,

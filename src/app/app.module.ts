@@ -15,6 +15,7 @@ import { LoginService } from '../providers/login/login-service';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { HttpModule } from '@angular/http';
+import { ProfileUserPage } from '../pages/profile-user/profile-user';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCjVxmw5QdseWpzGFVuF4ZIPg6sIZagq0I",
@@ -33,7 +34,8 @@ const firebaseConfig = {
     CadastroUsuarioPage,
     ResetsenhaPage,
     ListFlatsPage,
-    CadFlatsPage
+    CadFlatsPage,
+    ProfileUserPage
   ],
   imports: [
     BrowserModule,
@@ -50,7 +52,8 @@ const firebaseConfig = {
     CadastroUsuarioPage,
     ResetsenhaPage,
     ListFlatsPage,
-    CadFlatsPage
+    CadFlatsPage,
+    ProfileUserPage
   ],
   providers: [
     StatusBar,

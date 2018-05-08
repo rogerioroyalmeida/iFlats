@@ -16,8 +16,7 @@ import { AlertController } from 'ionic-angular';
 export class LoginPage {
   usuario: Usuario = new Usuario();
   email: any;
-  senha: any;
-  urlLogin = 'http://192.168.15.4:3000/iflats/usuarios/login';
+  urlLogin = 'http://192.168.15.8:3000/iflats/usuarios/login';
   @ViewChild('form') form: NgForm;
 
   constructor(
@@ -37,9 +36,8 @@ export class LoginPage {
       this.loginService.signIn(this.usuario)
         .then(() => {
           this.email = this.usuario.getEmail();
-          this.senha = this.usuario.getSenha();
 
-          this.loginBanco(this.email, this.senha);
+          this.loginBanco(this.email);
 
           this.navCtrl.setRoot(HomePage, {usuario: this.usuario});
         })
@@ -59,7 +57,7 @@ export class LoginPage {
     }
   }
 
-  loginBanco(email: string, senha: string) {
+  loginBanco(email: string) {
 
     let headers = new Headers(
       {
@@ -68,9 +66,7 @@ export class LoginPage {
       let options = new RequestOptions({ headers: headers });
   
       this.http.post(this.urlLogin, 
-                    {email: email,
-                     senha: senha
-                    }, 
+                    {email: email}, 
                      options)
       .toPromise()
       .then(data => {

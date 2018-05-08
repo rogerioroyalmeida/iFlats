@@ -1,33 +1,24 @@
 export abstract class Pessoa { 
 
-    private codigo: number;
-    private nome: string;
-    private sobrenome: string;
+    private ds_nome: string;
+    private ds_sobrenome: string;
     private cpf: number;
     private dtnascimento: Date;
 
-    public getCodigo() {
-        return this.codigo;
+    public getDsNome() {
+        return this.ds_nome;
     }
   
-    public setCodigo(codigo: number) {
-        this.codigo = codigo;
+    public setDsNome(ds_nome: string) {
+        this.ds_nome = ds_nome;
     }
 
-    public getNome() {
-        return this.nome;
+    public getDsSobreNome() {
+        return this.ds_sobrenome;
     }
   
-    public setNome(nome: string) {
-        this.nome = nome;
-    }
-
-    public getSobrenome() {
-        return this.sobrenome;
-    }
-  
-    public setSobrenome(sobrenome: string) {
-        this.sobrenome = sobrenome;
+    public setDsSobreNome(ds_sobrenome: string) {
+        this.ds_sobrenome = ds_sobrenome;
     }
 
     public getCpf() {
