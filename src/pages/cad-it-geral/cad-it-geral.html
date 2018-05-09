@@ -1,0 +1,100 @@
+<ion-content padding-top margin-top>
+  <form #form="ngForm" item-height="100%" padding>
+
+    <h3 padding>Meus itens</h3>
+    <div padding margin novalidate style="border: 1px solid rgb(0, 0, 0);">
+
+      <ion-grid>
+        <ion-row *ngFor="let item of itensGerais; let i = index" [class.line-even]="i == 0 || ((i+1) % 2 != 0)" [class.line-odd]="i > 0 && ((i+1) % 2 == 0)" (mouseenter)="showIcon(item)" (mouseleave)="hideIcon(item)">
+          <ion-col col-11>
+            <button ion-item (click)="itemSelected(item)">
+              {{ item.getDsItgeral() }}
+            </button>
+          </ion-col>
+          <ion-col col-1 style="text-align: center; font-size: 20px">
+            <button ion-button clear *ngIf="item.iconVisivel">
+              <ion-icon ios="ios-trash" md="md-trash" (click)="removerItGeral(i, item)" end></ion-icon>
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+    
+    <h3 padding>Cadastro de item geral do flat</h3>
+    <div padding margin novalidate style="border: 1px solid rgb(0, 0, 0);">
+
+      <a class="button button-outline button-positive" (click)="limpar()" style="margin-left: 15px;">Limpar</a>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-12>
+            <ion-label stacked>Descrição</ion-label>
+            <ion-input type="text" placeholder="Digite a descrição do item" name="ds_itgeral" [(ngModel)]="ds_itgeral" #dsitgeral="ngModel" required></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="dsitgeral.errors && (dsitgeral.dirty || dsitgeral.touched)" class="text-danger" style="color: red;">
+          Informe uma descrição para o item
+        </ion-row>
+        <ion-row>
+          <ion-col col-12>
+            <ion-label stacked>Observação</ion-label>
+            <ion-input type="text" placeholder="Digite a observação" name="observacao" [(ngModel)]="observacao" #obs="ngModel" required></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="obs.errors && (obs.dirty || obs.touched)" class="text-danger" style="color: red;">
+          Informe uma Observação!
+        </ion-row>
+        <ion-row>
+          <ion-col col-12>
+            <ion-label stacked>Valor</ion-label>
+            <ion-input type="number" placeholder="Digite o valor" name="valor" [(ngModel)]="valor" #vl="ngModel" required></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="vl.errors && (vl.dirty || vl.touched)" class="text-danger" style="color: red;">
+          Digite um valor!
+        </ion-row>
+        <ion-row>
+          <ion-col col-12>
+            <ion-label stacked>Campo 01</ion-label>
+            <ion-input type="text" maxlength="1" placeholder="Digite o campo 01" name="campo01" [(ngModel)]="campo01" #cmp01="ngModel" required></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="cmp01.errors && (cmp01.dirty || cmp01.touched)" class="text-danger" style="color: red;">
+          Digite o campo 01
+        </ion-row>
+        <ion-row>
+          <ion-col col-12>
+            <ion-label stacked>Campo 02</ion-label>
+            <ion-input type="text" maxlength="1" placeholder="Digite o campo 02" name="campo02" [(ngModel)]="campo02" #cmp02="ngModel" required></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="cmp02.errors && (cmp02.dirty || cmp02.touched)" class="text-danger" style="color: red;">
+          Digite o campo 02
+        </ion-row>
+        <ion-row>
+          <ion-col col-12>
+            <ion-label stacked>Campo 03</ion-label>
+            <ion-input type="text" maxlength="1" placeholder="Digite o campo 03" name="campo03" [(ngModel)]="campo03" #cmp03="ngModel" required></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="cmp03.errors && (cmp03.dirty || cmp03.touched)" class="text-danger" style="color: red;">
+          Digite o campo 03
+        </ion-row>
+        <ion-row>
+          <ion-col col-12>
+            <ion-label stacked>Campo 04</ion-label>
+            <ion-input type="text" maxlength="1" placeholder="Digite o campo 04" name="campo04" [(ngModel)]="campo04" #cmp04="ngModel" required></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="cmp04.errors && (cmp04.dirty || cmp04.touched)" class="text-danger" style="color: red;">
+          Digite o campo 04
+        </ion-row>
+      </ion-grid>
+
+    </div>
+
+    <div style="width: 100%; text-align: center; padding-bottom: 20px; padding-top: 20px;">
+      <button style="width: 100px;" ion-button block large round (click)="salvarItGeral()">Salvar</button>
+    </div>
+
+  </form>
+</ion-content>

@@ -3,6 +3,7 @@ import { Pessoa } from './pessoa';
 export class Usuario extends Pessoa { 
 
   private cd_usuario: number;
+  private senha: string;
   private email: string;
   private campo01: string;
   private campo02: string;
@@ -23,6 +24,14 @@ export class Usuario extends Pessoa {
 
   public setEmail(email: string) {
     this.email = email;
+  }
+
+  public getSenha() {
+    return this.senha;
+  }
+
+  public setSenha(senha: string) {
+    this.senha = senha;
   }
 
   public getCampo01() {

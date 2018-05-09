@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Flat } from '../../model/flat';
-import { FlatGeral } from '../../model/flat-geral';
+import { ItGeral } from '../../model/it-geral';
 import { FlatCoz } from '../../model/flat-coz';
 import { FlatEnt } from '../../model/flat-ent';
 import { FlatInst } from '../../model/flat-inst';
@@ -51,7 +51,7 @@ export class CadFlatsPage {
 
 
   flat: Flat = new Flat();
-  listGeral = new Array<FlatGeral>();
+  listGeral = new Array<ItGeral>();
   listCozinha = new Array<FlatCoz>();
   listEnt = new Array<FlatEnt>();
   listInst = new Array<FlatInst>();
@@ -64,17 +64,22 @@ export class CadFlatsPage {
   focNomeInst = false;
   focNomeEquip = false;
   focNomeServ = false;
+  marcaTodos = false;
+  labelMarcarTodos = 'Marcar todos';
 
   exibeCaracteristica = false;
   textoInformacoes = 'Mostrar mais';
 
-  urlPost = 'http://192.168.15.8:3000/iflats/flats';
-  urlPatch = 'http://192.168.15.8:3000/iflats/flats/';
+  urlFlat = 'http://192.168.15.8:3000/iflats/flats/';
+  urlItensGerais = 'http://192.168.15.8:3000/iflats/itens_geral/usuario/1';
+  urlFlatItGeral = 'http://192.168.15.8:3000/iflats/flats_itgeral/';
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               public http: Http,
               private alertCtrl: AlertController) {
+
+    this.getItensGeraisUsuario();
     
     let f: Flat = this.navParams.get('item');
 
@@ -104,16 +109,10 @@ export class CadFlatsPage {
       this.snAnimais = f.getSnAnimais();
       this.snFestas = f.getSnFestas();
       this.snLongoPrazo = f.getSnLongoPrazo();
+
+      this.carregarItensGeraisFlat();
     }
 
-  }
-
-  // Saving function
-  saveNewGeral(): void {
-    this.newItem = "";
-    let flatGeral = new FlatGeral();
-    this.listGeral.push(flatGeral);
-    this.newItem = "";
   }
 
   saveNewCozinha(): void {
@@ -187,12 +186,13 @@ export class CadFlatsPage {
 
     if (this.flat.getCodigoFlat()) {
 
-      this.http.patch(this.urlPatch + this.flat.getCodigoFlat(), 
+      this.http.patch(this.urlFlat + this.flat.getCodigoFlat(), 
                       this.flat, 
                       options)
       .toPromise()
       .then(data => {
         console.log('API Response : ', data.json());
+        this.salvarItensGeraisFlat();
         this.msgAlert('Flat atualizado com sucesso!');
         this.navCtrl.push(ListFlatsPage);
       }).catch(error => {
@@ -203,12 +203,13 @@ export class CadFlatsPage {
 
     } else {
       
-      this.http.post(this.urlPost, 
+      this.http.post(this.urlFlat, 
                      this.flat, 
                      options)
       .toPromise()
       .then(data => {
         console.log('API Response : ', data.json());
+        this.salvarItensGeraisFlat();
         this.msgAlert('Flat salvo com sucesso!');
         this.navCtrl.push(ListFlatsPage);
       }).catch(error => {
@@ -217,6 +218,114 @@ export class CadFlatsPage {
         this.msgAlert('Erro ao salvar o flat!');
       });
     }
+  }
+
+  getItensGeraisUsuario() {
+    
+    this.http.get(this.urlItensGerais)
+      .map(res => res.json())
+      .subscribe(data => {
+
+        if (data) {
+
+          data.forEach(element => {
+            let itgeral: ItGeral = new ItGeral();
+            itgeral.setCdItgeral(element.cd_itgeral);
+            itgeral.setDsItgeral(element.ds_itgeral);
+            itgeral.setObservacao(element.observacao);
+            itgeral.setValor(element.valor);
+            itgeral.setCampo01(element.campo01);
+            itgeral.setCampo02(element.campo02);
+            itgeral.setCampo03(element.campo03);
+            itgeral.setCampo04(element.campo04);
+            
+            this.listGeral.push(itgeral);
+          });
+
+          console.log('list itens_gerais usuario: ', data);
+
+        }
+    });
+
+  }
+
+  salvarItensGeraisFlat() {
+
+    // CHAMA O DELETE PARA APAGAR TODOS OS ITENS_GERAIS DO FLAT
+    let headers = new Headers(
+    {
+      'Content-Type' : 'application/json'
+    });
+    let options = new RequestOptions({ headers: headers });
+
+    this.http.delete(this.urlFlatItGeral + this.codigo, 
+                      options)
+      .toPromise()
+      .then(data => {
+        console.log('API Response : ', data.json());
+
+        // VARRE A LISTA DE TODOS OS ITENS_GERAIS PARA VERIFICAR SOMENTE OS MARCADOS E INSERIR NO BANCO
+        this.listGeral.forEach(element => {
+          if (element.checado) {
+
+            let item = {cd_flat: this.codigo, cd_itgeral: element.getCdItgeral()};
+
+            // CHAMA O POST PARA CADASTRAR OS NOVOS ITENS GERAIS SELECIONADOS
+            this.http.post(this.urlFlatItGeral, 
+                            item, 
+                            options)
+                      .toPromise()
+                      .then(data => {
+                        console.log('API Response : ', data.json());
+                      }).catch(error => {
+                        console.error('API Error : ', error.status);
+                        console.error('API Error : ', JSON.stringify(error));
+                      });
+
+          }
+        });
+
+      }).catch(error => {
+        console.error('API Error : ', error.status);
+        console.error('API Error : ', JSON.stringify(error));
+      });
+
+  }
+
+  marcarTodosItensGerais() {
+    this.listGeral.forEach(element => {
+      element.checado = this.marcaTodos;
+    });
+
+    if (this.marcaTodos) {
+      this.labelMarcarTodos = 'Desmarcar todos';
+    } else {
+      this.labelMarcarTodos = 'Marcar todos';
+    }
+  }
+
+  carregarItensGeraisFlat() {
+
+    this.http.get(this.urlFlatItGeral + this.codigo)
+      .map(res => res.json())
+      .subscribe(data => {
+
+        if (data) {
+
+          data.forEach(element => {
+            let flatitgeral: {cd_flat: number, cd_itgeral: number} = {cd_flat: element.cd_flat, cd_itgeral: element.cd_itgeral};
+            // flatitgeral.cd_flat = element.cd_flat;
+            // flatitgeral.cd_itgeral = element.cd_itgeral;
+
+            this.listGeral.find(x => x.getCdItgeral() == flatitgeral.cd_itgeral).checado = true;
+            
+          });
+
+          console.log('list flats_itgeral: ', data);
+
+        }
+    });
+
   }
 
   exibCarac() {

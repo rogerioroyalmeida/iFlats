@@ -16,6 +16,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { HttpModule } from '@angular/http';
 import { ProfileUserPage } from '../pages/profile-user/profile-user';
+import { CadItGeralPage } from '../pages/cad-it-geral/cad-it-geral';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCjVxmw5QdseWpzGFVuF4ZIPg6sIZagq0I",
@@ -35,7 +36,8 @@ const firebaseConfig = {
     ResetsenhaPage,
     ListFlatsPage,
     CadFlatsPage,
-    ProfileUserPage
+    ProfileUserPage,
+    CadItGeralPage
   ],
   imports: [
     BrowserModule,
@@ -53,7 +55,8 @@ const firebaseConfig = {
     ResetsenhaPage,
     ListFlatsPage,
     CadFlatsPage,
-    ProfileUserPage
+    ProfileUserPage,
+    CadItGeralPage
   ],
   providers: [
     StatusBar,
