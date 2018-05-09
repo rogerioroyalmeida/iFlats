@@ -23,6 +23,7 @@
     <h3 padding>Cadastro de item geral do flat</h3>
     <div padding margin novalidate style="border: 1px solid rgb(0, 0, 0);">
 
+      <a class="button button-outline button-positive" (click)="limpar()" style="margin-left: 15px;">Limpar</a>
       <ion-grid>
         <ion-row>
           <ion-col col-12>
@@ -54,7 +55,7 @@
         <ion-row>
           <ion-col col-12>
             <ion-label stacked>Campo 01</ion-label>
-            <ion-input type="text" placeholder="Digite o campo 01" name="campo01" [(ngModel)]="campo01" #cmp01="ngModel" required></ion-input>
+            <ion-input type="text" maxlength="1" placeholder="Digite o campo 01" name="campo01" [(ngModel)]="campo01" #cmp01="ngModel" required></ion-input>
           </ion-col>
         </ion-row>
         <ion-row *ngIf="cmp01.errors && (cmp01.dirty || cmp01.touched)" class="text-danger" style="color: red;">
@@ -63,7 +64,7 @@
         <ion-row>
           <ion-col col-12>
             <ion-label stacked>Campo 02</ion-label>
-            <ion-input type="text" placeholder="Digite o campo 02" name="campo02" [(ngModel)]="campo02" #cmp02="ngModel" required></ion-input>
+            <ion-input type="text" maxlength="1" placeholder="Digite o campo 02" name="campo02" [(ngModel)]="campo02" #cmp02="ngModel" required></ion-input>
           </ion-col>
         </ion-row>
         <ion-row *ngIf="cmp02.errors && (cmp02.dirty || cmp02.touched)" class="text-danger" style="color: red;">
@@ -72,7 +73,7 @@
         <ion-row>
           <ion-col col-12>
             <ion-label stacked>Campo 03</ion-label>
-            <ion-input type="text" placeholder="Digite o campo 03" name="campo03" [(ngModel)]="campo03" #cmp03="ngModel" required></ion-input>
+            <ion-input type="text" maxlength="1" placeholder="Digite o campo 03" name="campo03" [(ngModel)]="campo03" #cmp03="ngModel" required></ion-input>
           </ion-col>
         </ion-row>
         <ion-row *ngIf="cmp03.errors && (cmp03.dirty || cmp03.touched)" class="text-danger" style="color: red;">
@@ -81,7 +82,7 @@
         <ion-row>
           <ion-col col-12>
             <ion-label stacked>Campo 04</ion-label>
-            <ion-input type="text" placeholder="Digite o campo 04" name="campo04" [(ngModel)]="campo04" #cmp04="ngModel" required></ion-input>
+            <ion-input type="text" maxlength="1" placeholder="Digite o campo 04" name="campo04" [(ngModel)]="campo04" #cmp04="ngModel" required></ion-input>
           </ion-col>
         </ion-row>
         <ion-row *ngIf="cmp04.errors && (cmp04.dirty || cmp04.touched)" class="text-danger" style="color: red;">

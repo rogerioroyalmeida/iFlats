@@ -156,6 +156,7 @@ export class CadItGeralPage {
   }
 
   itemSelected(item: ItGeral) {
+    this.itgeral = item;
     this.ds_itgeral = item.getDsItgeral();
     this.observacao = item.getObservacao();
     this.valor = item.getValor();
@@ -163,6 +164,17 @@ export class CadItGeralPage {
     this.campo02 = item.getCampo02();
     this.campo03 = item.getCampo03();
     this.campo04 = item.getCampo04();
+  }
+
+  limpar() {
+    this.itgeral = new ItGeral();
+    this.ds_itgeral = '';
+    this.observacao = '';
+    this.valor = NaN;
+    this.campo01 = '';
+    this.campo02 = '';
+    this.campo03 = '';
+    this.campo04 = '';
   }
 
   msgAlert(text: string, title?: string, buttons?: string[]) {

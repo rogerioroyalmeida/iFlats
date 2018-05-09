@@ -15,6 +15,7 @@ export class ItGeral {
     private campo04: string;
 
     public iconVisivel: boolean = false;
+    public checado: boolean = false;
 
     public getCdItgeral() {
         return this.cd_itgeral;
