@@ -1,26 +1,26 @@
 <ion-content padding-top margin-top>
   <form #form="ngForm" item-height="100%" padding>
 
-    <h3 padding>Meus itens gerais</h3>
+    <h3 padding>Meus itens de cozinha</h3>
     <div padding margin novalidate style="border: 1px solid rgb(0, 0, 0);">
 
       <ion-grid>
-        <ion-row *ngFor="let item of itensGerais; let i = index" [class.line-even]="i == 0 || ((i+1) % 2 != 0)" [class.line-odd]="i > 0 && ((i+1) % 2 == 0)" (mouseenter)="showIcon(item)" (mouseleave)="hideIcon(item)">
+        <ion-row *ngFor="let item of itensCozinha; let i = index" [class.line-even]="i == 0 || ((i+1) % 2 != 0)" [class.line-odd]="i > 0 && ((i+1) % 2 == 0)" (mouseenter)="showIcon(item)" (mouseleave)="hideIcon(item)">
           <ion-col col-11>
             <button ion-item (click)="itemSelected(item)">
-              {{ item.getDsItgeral() }}
+              {{ item.getDsItemcozinha() }}
             </button>
           </ion-col>
           <ion-col col-1 style="text-align: center; font-size: 20px">
             <button ion-button clear *ngIf="item.iconVisivel">
-              <ion-icon ios="ios-trash" md="md-trash" (click)="removerItGeral(i, item)" end></ion-icon>
+              <ion-icon ios="ios-trash" md="md-trash" (click)="removerItCozinha(i, item)" end></ion-icon>
             </button>
           </ion-col>
         </ion-row>
       </ion-grid>
     </div>
     
-    <h3 padding>Cadastro de item geral do flat</h3>
+    <h3 padding>Cadastro de item de cozinha do flat</h3>
     <div padding margin novalidate style="border: 1px solid rgb(0, 0, 0);">
 
       <a class="button button-outline button-positive" (click)="limpar()" style="margin-left: 15px;">Limpar</a>
@@ -28,10 +28,10 @@
         <ion-row>
           <ion-col col-12>
             <ion-label stacked>Descrição</ion-label>
-            <ion-input type="text" placeholder="Digite a descrição do item" #inputDsItGeral name="ds_itgeral" [(ngModel)]="ds_itgeral" #dsitgeral="ngModel" required></ion-input>
+            <ion-input type="text" placeholder="Digite a descrição do item" #inputDsItCozinha name="ds_itemcozinha" [(ngModel)]="ds_itemcozinha" #dsitemcozinha="ngModel" required></ion-input>
           </ion-col>
         </ion-row>
-        <ion-row *ngIf="dsitgeral.errors && (dsitgeral.dirty || dsitgeral.touched)" class="text-danger" style="color: red; font-weight: bold;">
+        <ion-row *ngIf="dsitemcozinha.errors && (dsitemcozinha.dirty || dsitemcozinha.touched)" class="text-danger" style="color: red; font-weight: bold;">
           Informe uma descrição para o item
         </ion-row>
         <ion-row>
@@ -93,7 +93,7 @@
     </div>
 
     <div style="width: 100%; text-align: center; padding-bottom: 20px; padding-top: 20px;">
-      <button style="width: 100px;" ion-button block large round (click)="salvarItGeral()">Salvar</button>
+      <button style="width: 100px;" ion-button block large round (click)="salvarItCozinha()">Salvar</button>
     </div>
 
   </form>

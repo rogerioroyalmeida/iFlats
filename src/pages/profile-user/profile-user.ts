@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Usuario } from '../../model/usuario';
 import { HomePage } from '../home/home';
+import { Util } from '../../util/utils';
 
 @IonicPage()
 @Component({
@@ -19,19 +20,18 @@ export class ProfileUserPage {
   campo_real: Number;
   observacao: string;
 
-  urlUser = 'http://192.168.15.8:3000/iflats/usuarios/';
-
   usuario: Usuario = new Usuario();
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
               public http: Http,
-              private alertCtrl: AlertController) {
+              private alertCtrl: AlertController,
+              private util: Util) {
 
     if(navParams.get('email')) {
       this.email = navParams.get('email');
 
-      this.http.get(this.urlUser + this.email)
+      this.http.get(this.util.usuariosRotaPrincipal + this.email)
         .map(res => res.json())
         .subscribe(data => {
 
@@ -76,32 +76,22 @@ export class ProfileUserPage {
   
       if (this.usuario.getCdUsuario()) {
   
-        this.http.patch(this.urlUser + this.usuario.getCdUsuario(), 
+        this.http.patch(this.util.usuariosRotaPrincipal + this.usuario.getCdUsuario(), 
                         this.usuario, 
                         options)
         .toPromise()
         .then(data => {
           console.log('API Response : ', data.json());
-          this.msgAlert('Usuario atualizado com sucesso!');
+          this.util.msgAlert('Usuario atualizado com sucesso!');
           this.navCtrl.push(HomePage);
         }).catch(error => {
           console.error('API Error : ', error.status);
           console.error('API Error : ', JSON.stringify(error));
-          this.msgAlert('Erro ao atualizar o usuario!');
+          this.util.msgAlert('Erro ao atualizar o usuario!');
         });
   
       }
 
-  }
-
-  msgAlert(text: string, title?: string, buttons?: string[]) {
-    !buttons ? buttons = ['Ok']: buttons;
-    let alert = this.alertCtrl.create({
-      title: title,
-      subTitle: text,
-      buttons: buttons
-    });
-    alert.present();
   }
 
 }

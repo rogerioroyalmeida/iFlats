@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { ItGeral } from '../../model/it-geral';
+import { Util } from '../../util/utils';
 
 @IonicPage()
 @Component({
@@ -11,7 +12,7 @@ import { ItGeral } from '../../model/it-geral';
 })
 export class CadItGeralPage {
 
-  urlItGeral = 'http://192.168.15.8:3000/iflats/itens_geral/';
+  @ViewChild('inputDsItGeral') inputDsItGeral;
 
   public itensGerais: Array<ItGeral>;
   itgeral: ItGeral = new ItGeral();
@@ -24,7 +25,11 @@ export class CadItGeralPage {
   campo03: string;
   campo04: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, public http: Http) {
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams, 
+              private alertCtrl: AlertController, 
+              public http: Http,
+              private util: Util) {
 
     this.getItensGerais();
 
@@ -32,15 +37,17 @@ export class CadItGeralPage {
 
   salvarItGeral() {
 
-    this.itgeral.setDsItgeral(this.ds_itgeral);
-    this.itgeral.setObservacao(this.observacao);
-    this.itgeral.setValor(this.valor);
-    this.itgeral.setCampo01(this.campo01);
-    this.itgeral.setCampo02(this.campo02);
-    this.itgeral.setCampo03(this.campo03);
-    this.itgeral.setCampo04(this.campo04);
+    if (this.ds_itgeral) {
 
-    let headers = new Headers(
+      this.ds_itgeral ? this.itgeral.setDsItgeral(this.ds_itgeral) : this.itgeral.setDsItgeral('');
+      this.observacao ? this.itgeral.setObservacao(this.observacao) : this.itgeral.setObservacao('');
+      this.valor ? this.itgeral.setValor(this.valor) : this.itgeral.setValor(NaN);
+      this.campo01 ? this.itgeral.setCampo01(this.campo01) : this.itgeral.setCampo01('');
+      this.campo02 ? this.itgeral.setCampo02(this.campo02) : this.itgeral.setCampo02('');
+      this.campo03 ? this.itgeral.setCampo03(this.campo03) : this.itgeral.setCampo03('');
+      this.campo04 ? this.itgeral.setCampo04(this.campo04) : this.itgeral.setCampo04('');
+
+      let headers = new Headers(
       {
         'Content-Type' : 'application/json'
       });
@@ -48,45 +55,52 @@ export class CadItGeralPage {
   
       if (this.itgeral.getCdItgeral()) {
   
-        this.http.patch(this.urlItGeral + this.itgeral.getCdItgeral(), 
+        this.http.patch(this.util.itGeralRotaPrincipal + this.itgeral.getCdItgeral(), 
                         this.itgeral, 
                         options)
         .toPromise()
         .then(data => {
           console.log('API Response : ', data.json());
-          this.msgAlert('Item geral atualizado com sucesso!');
+          this.util.msgAlert('Item geral atualizado com sucesso!');
           this.navCtrl.push(CadItGeralPage);
           this.getItensGerais();
         }).catch(error => {
           console.error('API Error : ', error.status);
           console.error('API Error : ', JSON.stringify(error));
-          this.msgAlert('Erro ao atualizar o item geral!');
+          this.util.msgAlert('Erro ao atualizar o item geral!');
         });
   
       } else {
       
-        this.http.post(this.urlItGeral, 
-                       this.itgeral, 
-                       options)
+        this.http.post(this.util.itGeralRotaPrincipal, 
+                      this.itgeral, 
+                      options)
         .toPromise()
         .then(data => {
           console.log('API Response : ', data.json());
-          this.msgAlert('Item geral salvo com sucesso!');
+          this.util.msgAlert('Item geral salvo com sucesso!');
           this.navCtrl.push(CadItGeralPage);
           this.getItensGerais();
         }).catch(error => {
           console.error('API Error : ', error.status);
           console.error('API Error : ', JSON.stringify(error));
-          this.msgAlert('Erro ao salvar o item geral!');
+          this.util.msgAlert('Erro ao salvar o item geral!');
         });
       }
+
+    } else {
+
+      this.inputDsItGeral.setFocus();
+      this.util.msgAlert('Informe a descrição do item geral para salvar!');
+
+    }
 
   }
 
   getItensGerais() {
     this.itensGerais = new Array<ItGeral>();
 
-    this.http.get(this.urlItGeral)
+    this.http.get(this.util.itGeralRotaPrincipal)
       .map(res => res.json())
       .subscribe(data => {
 
@@ -134,18 +148,18 @@ export class CadItGeralPage {
             });
             let options = new RequestOptions({ headers: headers });
         
-            this.http.delete(this.urlItGeral + item.getCdItgeral(), 
+            this.http.delete(this.util.itGeralRotaPrincipal + item.getCdItgeral(), 
                               options)
               .toPromise()
               .then(data => {
                 this.itensGerais.splice(i, 1);
                 console.log('API Response : ', data.json());
-                this.msgAlert(null, 'Item geral removido com sucesso!', ['Ok']);
+                this.util.msgAlert('Item geral removido com sucesso!');
                 this.navCtrl.push(CadItGeralPage);
               }).catch(error => {
                 console.error('API Error : ', error.status);
                 console.error('API Error : ', JSON.stringify(error));
-                this.msgAlert(null, 'Erro ao remover o item geral!', ['Ok']);
+                this.util.msgAlert('Erro ao remover o item geral!');
               });
           }
         }
@@ -164,6 +178,8 @@ export class CadItGeralPage {
     this.campo02 = item.getCampo02();
     this.campo03 = item.getCampo03();
     this.campo04 = item.getCampo04();
+
+    this.inputDsItGeral.setFocus();
   }
 
   limpar() {
@@ -175,16 +191,6 @@ export class CadItGeralPage {
     this.campo02 = '';
     this.campo03 = '';
     this.campo04 = '';
-  }
-
-  msgAlert(text: string, title?: string, buttons?: string[]) {
-    !buttons ? buttons = ['Ok']: buttons;
-    let alert = this.alertCtrl.create({
-      title: title,
-      subTitle: text,
-      buttons: buttons
-    });
-    alert.present();
   }
 
   showIcon(item: ItGeral) {

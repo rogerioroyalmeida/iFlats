@@ -17,6 +17,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { HttpModule } from '@angular/http';
 import { ProfileUserPage } from '../pages/profile-user/profile-user';
 import { CadItGeralPage } from '../pages/cad-it-geral/cad-it-geral';
+import { CadItCozinhaPage } from '../pages/cad-it-cozinha/cad-it-cozinha';
+import { Util } from '../util/utils';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCjVxmw5QdseWpzGFVuF4ZIPg6sIZagq0I",
@@ -37,7 +39,8 @@ const firebaseConfig = {
     ListFlatsPage,
     CadFlatsPage,
     ProfileUserPage,
-    CadItGeralPage
+    CadItGeralPage,
+    CadItCozinhaPage
   ],
   imports: [
     BrowserModule,
@@ -56,13 +59,15 @@ const firebaseConfig = {
     ListFlatsPage,
     CadFlatsPage,
     ProfileUserPage,
-    CadItGeralPage
+    CadItGeralPage,
+    CadItCozinhaPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    LoginService
+    LoginService,
+    Util
   ]
 })
 export class AppModule {}

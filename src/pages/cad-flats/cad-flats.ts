@@ -4,12 +4,13 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Flat } from '../../model/flat';
 import { ItGeral } from '../../model/it-geral';
-import { FlatCoz } from '../../model/flat-coz';
+import { ItCozinha } from '../../model/it-cozinha';
 import { FlatEnt } from '../../model/flat-ent';
 import { FlatInst } from '../../model/flat-inst';
 import { FlatEquip } from '../../model/flat-equip';
 import { FlatServ } from '../../model/flat-serv';
 import { ListFlatsPage } from '../list-flats/list-flats';
+import { Util } from '../../util/utils';
 
 @IonicPage()
 @Component({
@@ -52,7 +53,7 @@ export class CadFlatsPage {
 
   flat: Flat = new Flat();
   listGeral = new Array<ItGeral>();
-  listCozinha = new Array<FlatCoz>();
+  listCozinha = new Array<ItCozinha>();
   listEnt = new Array<FlatEnt>();
   listInst = new Array<FlatInst>();
   listEquip = new Array<FlatEquip>();
@@ -64,22 +65,22 @@ export class CadFlatsPage {
   focNomeInst = false;
   focNomeEquip = false;
   focNomeServ = false;
-  marcaTodos = false;
-  labelMarcarTodos = 'Marcar todos';
+  marcaTodosGerais = false;
+  marcaTodosCozinha = false;
+  labelMarcarTodosGerais = 'Marcar todos';
+  labelMarcarTodosCozinha = 'Marcar todos';
 
   exibeCaracteristica = false;
   textoInformacoes = 'Mostrar mais';
 
-  urlFlat = 'http://192.168.15.8:3000/iflats/flats/';
-  urlItensGerais = 'http://192.168.15.8:3000/iflats/itens_geral/usuario/1';
-  urlFlatItGeral = 'http://192.168.15.8:3000/iflats/flats_itgeral/';
-
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               public http: Http,
-              private alertCtrl: AlertController) {
+              private alertCtrl: AlertController,
+              private util: Util) {
 
     this.getItensGeraisUsuario();
+    this.getItensCozinhaUsuario();
     
     let f: Flat = this.navParams.get('item');
 
@@ -111,13 +112,14 @@ export class CadFlatsPage {
       this.snLongoPrazo = f.getSnLongoPrazo();
 
       this.carregarItensGeraisFlat();
+      this.carregarItensCozinhaFlat();
     }
 
   }
 
   saveNewCozinha(): void {
     this.newItem = "";
-    let flatCozinha = new FlatCoz();
+    let flatCozinha = new ItCozinha();
     this.listCozinha.push(flatCozinha);
   }
 
@@ -186,43 +188,45 @@ export class CadFlatsPage {
 
     if (this.flat.getCodigoFlat()) {
 
-      this.http.patch(this.urlFlat + this.flat.getCodigoFlat(), 
+      this.http.patch(this.util.cadFlatsRotaPrincipal + this.flat.getCodigoFlat(), 
                       this.flat, 
                       options)
       .toPromise()
       .then(data => {
         console.log('API Response : ', data.json());
         this.salvarItensGeraisFlat();
-        this.msgAlert('Flat atualizado com sucesso!');
+        this.salvarItensCozinhaFlat();
+        this.util.msgAlert('Flat atualizado com sucesso!');
         this.navCtrl.push(ListFlatsPage);
       }).catch(error => {
         console.error('API Error : ', error.status);
         console.error('API Error : ', JSON.stringify(error));
-        this.msgAlert('Erro ao atualizar o flat!');
+        this.util.msgAlert('Erro ao atualizar o flat!');
       });
 
     } else {
       
-      this.http.post(this.urlFlat, 
+      this.http.post(this.util.cadFlatsRotaPrincipal, 
                      this.flat, 
                      options)
       .toPromise()
       .then(data => {
         console.log('API Response : ', data.json());
         this.salvarItensGeraisFlat();
-        this.msgAlert('Flat salvo com sucesso!');
+        this.salvarItensCozinhaFlat();
+        this.util.msgAlert('Flat salvo com sucesso!');
         this.navCtrl.push(ListFlatsPage);
       }).catch(error => {
         console.error('API Error : ', error.status);
         console.error('API Error : ', JSON.stringify(error));
-        this.msgAlert('Erro ao salvar o flat!');
+        this.util.msgAlert('Erro ao salvar o flat!');
       });
     }
   }
 
   getItensGeraisUsuario() {
     
-    this.http.get(this.urlItensGerais)
+    this.http.get(this.util.itGeralRotaGetByUsuario)
       .map(res => res.json())
       .subscribe(data => {
 
@@ -258,7 +262,7 @@ export class CadFlatsPage {
     });
     let options = new RequestOptions({ headers: headers });
 
-    this.http.delete(this.urlFlatItGeral + this.codigo, 
+    this.http.delete(this.util.flatItGeralRotaPrincipal + this.codigo, 
                       options)
       .toPromise()
       .then(data => {
@@ -271,7 +275,7 @@ export class CadFlatsPage {
             let item = {cd_flat: this.codigo, cd_itgeral: element.getCdItgeral()};
 
             // CHAMA O POST PARA CADASTRAR OS NOVOS ITENS GERAIS SELECIONADOS
-            this.http.post(this.urlFlatItGeral, 
+            this.http.post(this.util.flatItGeralRotaPrincipal, 
                             item, 
                             options)
                       .toPromise()
@@ -294,19 +298,19 @@ export class CadFlatsPage {
 
   marcarTodosItensGerais() {
     this.listGeral.forEach(element => {
-      element.checado = this.marcaTodos;
+      element.checado = this.marcaTodosGerais;
     });
 
-    if (this.marcaTodos) {
-      this.labelMarcarTodos = 'Desmarcar todos';
+    if (this.marcaTodosGerais) {
+      this.labelMarcarTodosGerais = 'Desmarcar todos';
     } else {
-      this.labelMarcarTodos = 'Marcar todos';
+      this.labelMarcarTodosGerais = 'Marcar todos';
     }
   }
 
   carregarItensGeraisFlat() {
 
-    this.http.get(this.urlFlatItGeral + this.codigo)
+    this.http.get(this.util.flatItGeralRotaPrincipal + this.codigo)
       .map(res => res.json())
       .subscribe(data => {
 
@@ -328,6 +332,114 @@ export class CadFlatsPage {
 
   }
 
+  getItensCozinhaUsuario() {
+    
+    this.http.get(this.util.itCozinhaRotaGetByUsuario)
+      .map(res => res.json())
+      .subscribe(data => {
+
+        if (data) {
+
+          data.forEach(element => {
+            let itcozinha: ItCozinha = new ItCozinha();
+            itcozinha.setCdItemcozinha(element.cd_itemcozinha);
+            itcozinha.setDsItemcozinha(element.ds_itemcozinha);
+            itcozinha.setObservacao(element.observacao);
+            itcozinha.setValor(element.valor);
+            itcozinha.setCampo01(element.campo01);
+            itcozinha.setCampo02(element.campo02);
+            itcozinha.setCampo03(element.campo03);
+            itcozinha.setCampo04(element.campo04);
+            
+            this.listCozinha.push(itcozinha);
+          });
+
+          console.log('list itens_cozinha usuario: ', data);
+
+        }
+    });
+
+  }
+
+  salvarItensCozinhaFlat() {
+
+    // CHAMA O DELETE PARA APAGAR TODOS OS ITENS_COZINHA DO FLAT
+    let headers = new Headers(
+    {
+      'Content-Type' : 'application/json'
+    });
+    let options = new RequestOptions({ headers: headers });
+
+    this.http.delete(this.util.flatItCozinhaRotaPrincipal + this.codigo, 
+                      options)
+      .toPromise()
+      .then(data => {
+        console.log('API Response : ', data.json());
+
+        // VARRE A LISTA DE TODOS OS ITENS_COZINHA PARA VERIFICAR SOMENTE OS MARCADOS E INSERIR NO BANCO
+        this.listCozinha.forEach(element => {
+          if (element.checado) {
+
+            let item = {cd_flat: this.codigo, cd_itemcozinha: element.getCdItemcozinha()};
+
+            // CHAMA O POST PARA CADASTRAR OS NOVOS ITENS COZINHA SELECIONADOS
+            this.http.post(this.util.flatItCozinhaRotaPrincipal, 
+                            item, 
+                            options)
+                      .toPromise()
+                      .then(data => {
+                        console.log('API Response : ', data.json());
+                      }).catch(error => {
+                        console.error('API Error : ', error.status);
+                        console.error('API Error : ', JSON.stringify(error));
+                      });
+
+          }
+        });
+
+      }).catch(error => {
+        console.error('API Error : ', error.status);
+        console.error('API Error : ', JSON.stringify(error));
+      });
+
+  }
+
+  marcarTodosItensCozinha() {
+    this.listCozinha.forEach(element => {
+      element.checado = this.marcaTodosCozinha;
+    });
+
+    if (this.marcaTodosCozinha) {
+      this.labelMarcarTodosCozinha = 'Desmarcar todos';
+    } else {
+      this.labelMarcarTodosCozinha = 'Marcar todos';
+    }
+  }
+
+  carregarItensCozinhaFlat() {
+
+    this.http.get(this.util.flatItCozinhaRotaPrincipal + this.codigo)
+      .map(res => res.json())
+      .subscribe(data => {
+
+        if (data) {
+
+          data.forEach(element => {
+            let flatitcozinha: {cd_flat: number, cd_itemcozinha: number} = {cd_flat: element.cd_flat, cd_itemcozinha: element.cd_itemcozinha};
+            // flatitgeral.cd_flat = element.cd_flat;
+            // flatitgeral.cd_itgeral = element.cd_itgeral;
+
+            this.listCozinha.find(x => x.getCdItemcozinha() == flatitcozinha.cd_itemcozinha).checado = true;
+            
+          });
+
+          console.log('list flats_itcozinha: ', data);
+
+        }
+    });
+
+  }
+
   exibCarac() {
     if(this.exibeCaracteristica) {
       this.exibeCaracteristica = false;
@@ -336,16 +448,6 @@ export class CadFlatsPage {
       this.exibeCaracteristica = true;
       this.textoInformacoes = 'Mostrar menos';
     }
-  }
-
-  msgAlert(text: string, title?: string, buttons?: string[]) {
-    !buttons ? buttons = ['Ok']: buttons;
-    let alert = this.alertCtrl.create({
-      title: title,
-      subTitle: text,
-      buttons: buttons
-    });
-    alert.present();
   }
 
   ionViewDidLoad() {

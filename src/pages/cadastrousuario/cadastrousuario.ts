@@ -1,9 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, AlertController } from 'ionic-angular';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import { NgForm } from '@angular/forms';
 import { Usuario } from '../../model/usuario';
 import { LoginService } from '../../providers/login/login-service';
 import { HomePage } from '../home/home';
+import { Util } from '../../util/utils';
 
 @IonicPage()
 @Component({
@@ -17,7 +19,9 @@ export class CadastroUsuarioPage {
   constructor(
     public navCtrl: NavController,
     private alertCtrl: AlertController,
-    private loginService: LoginService) {
+    private loginService: LoginService,
+    public http: Http,
+    private util: Util) {
   }
 
   createAccount() {
@@ -27,32 +31,45 @@ export class CadastroUsuarioPage {
         .then((user: any) => {
           user.sendEmailVerification();
 
-          this.msgAlert('Usuário criado com sucesso.');
+          this.postUsuario();
+
+          this.util.msgAlert('Usuário criado com sucesso.');
 
           this.navCtrl.setRoot(HomePage);
         })
         .catch((error: any) => {
           if (error.code  == 'auth/email-already-in-use') {
-            this.msgAlert('O e-mail digitado já está em uso.');
+            this.util.msgAlert('O e-mail digitado já está em uso.');
           } else if (error.code  == 'auth/invalid-email') {
-            this.msgAlert('O e-mail digitado não é valido.');
+            this.util.msgAlert('O e-mail digitado não é valido.');
           } else if (error.code  == 'auth/operation-not-allowed') {
-            this.msgAlert('Não está habilitado criar usuários.');
+            this.util.msgAlert('Não está habilitado criar usuários.');
           } else if (error.code  == 'auth/weak-password') {
-            this.msgAlert('A senha digitada é muito fraca.');
+            this.util.msgAlert('A senha digitada é muito fraca.');
           }
         });
     }
   }
 
-  msgAlert(text: string, title?: string, buttons?: string[]) {
-    !buttons ? buttons = ['Ok']: buttons;
-    let alert = this.alertCtrl.create({
-      title: title,
-      subTitle: text,
-      buttons: buttons
+  postUsuario() {
+
+    let headers = new Headers(
+    {
+      'Content-Type' : 'application/json'
     });
-    alert.present();
+    let options = new RequestOptions({ headers: headers });
+
+    this.http.post(this.util.usuariosRotaPrincipal, 
+                    this.usuario, 
+                    options)
+              .toPromise()
+              .then(data => {
+              console.log('API Response : ', data.json());
+              }).catch(error => {
+              console.error('API Error : ', error.status);
+              console.error('API Error : ', JSON.stringify(error));
+              });
+
   }
 
 }

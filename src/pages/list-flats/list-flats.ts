@@ -6,6 +6,8 @@ import 'rxjs/add/operator/map';
 import { Flat } from '../../model/flat';
 import { LoginPage } from '../login/login';
 import { CadItGeralPage } from '../cad-it-geral/cad-it-geral';
+import { CadItCozinhaPage } from '../cad-it-cozinha/cad-it-cozinha';
+import { Util } from '../../util/utils';
 
 @IonicPage()
 @Component({
@@ -14,19 +16,17 @@ import { CadItGeralPage } from '../cad-it-geral/cad-it-geral';
 })
 export class ListFlatsPage {
 
-  urlGet = 'http://192.168.15.8:3000/iflats/flats/usuarios/1';
-  urlDelete = 'http://192.168.15.8:3000/iflats/flats/';
-
   public flats: Array<Flat>;
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
               public http: Http,
-              private alertCtrl: AlertController) {
+              private alertCtrl: AlertController,
+              private util: Util) {
 
     this.flats = new Array<Flat>();
 
-    this.http.get(this.urlGet)
+    this.http.get(this.util.cadFlatsRotaGetByUsuario)
       .map(res => res.json())
       .subscribe(data => {
 
@@ -108,18 +108,18 @@ export class ListFlatsPage {
             });
             let options = new RequestOptions({ headers: headers });
         
-            this.http.delete(this.urlDelete + item.getCodigoFlat(), 
+            this.http.delete(this.util.cadFlatsRotaPrincipal + item.getCodigoFlat(), 
                               options)
               .toPromise()
               .then(data => {
                 this.flats.splice(i, 1);
                 console.log('API Response : ', data.json());
-                this.msgAlert(null, 'Flat removido com sucesso!', ['Ok']);
+                this.util.msgAlert('Flat removido com sucesso!');
                 this.navCtrl.push(ListFlatsPage);
               }).catch(error => {
                 console.error('API Error : ', error.status);
                 console.error('API Error : ', JSON.stringify(error));
-                this.msgAlert(null, 'Erro ao remover o flat!', ['Ok']);
+                this.util.msgAlert('Erro ao remover o flat!');
               });
           }
         }
@@ -127,16 +127,6 @@ export class ListFlatsPage {
     });
     alert.present();
     
-  }
-
-  msgAlert(text: string, title?: string, buttons?: string[]) {
-    !buttons ? buttons = ['Ok']: buttons;
-    let alert = this.alertCtrl.create({
-      title: title,
-      subTitle: text,
-      buttons: buttons
-    });
-    alert.present();
   }
 
   showIcon(item: Flat) {
@@ -149,6 +139,10 @@ export class ListFlatsPage {
 
   abrirItGeral() {
     this.navCtrl.push(CadItGeralPage);
+  }
+
+  abrirItCozinha() {
+    this.navCtrl.push(CadItCozinhaPage);
   }
 
 }
