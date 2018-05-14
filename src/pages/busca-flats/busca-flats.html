@@ -1,0 +1,69 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Busca de flats</ion-title>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let item of listFlats">
+
+        <ion-card style="width: 400px;">
+
+          <img height="350" width="100" src="../../assets/imgs/iflats_logo1.jpg">
+        
+          <ion-card-content>
+
+            <ion-card-title>
+              {{ item.getDsTituloAnuncio() }}
+            </ion-card-title>
+
+            <ion-row>
+              <p>{{ item.getNrQuartos() }}</p>
+              <p>&#160;quartos</p>
+            </ion-row>
+            <ion-row>
+              <p>Acomoda</p>
+              <p>&#160;{{ item.getNrMaxPessoas() }}</p>
+              <p>&#160;pessoas</p>
+            </ion-row>
+            <ion-row>
+              <p>{{ item.getNrAreaFlat() }}</p>
+              <p>&#160;m²</p>
+            </ion-row>
+            <p>{{ item.getDsFlat() }}</p>
+          </ion-card-content>
+        
+          <ion-row>
+            <ion-col>
+              <button ion-button icon-left clear small>
+                <ion-icon name="thumbs-up"></ion-icon>
+                <div>12 Likes</div>
+              </button>
+            </ion-col>
+            <ion-col>
+              <button ion-button icon-left clear small>
+                <ion-icon name="text"></ion-icon>
+                <div>4 Comments</div>
+              </button>
+            </ion-col>
+            <ion-col center text-center>
+              <ion-note>
+                11h ago
+              </ion-note>
+            </ion-col>
+          </ion-row>
+        
+        </ion-card>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

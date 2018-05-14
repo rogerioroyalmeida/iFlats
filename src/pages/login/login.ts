@@ -6,7 +6,6 @@ import { LoginService } from '../../providers/login/login-service';
 import { HomePage } from '../home/home';
 import { ResetsenhaPage } from '../resetsenha/resetsenha';
 import { Http, Headers, RequestOptions } from '@angular/http';
-import { AlertController } from 'ionic-angular';
 import { Util } from '../../util/utils';
 
 @IonicPage()
@@ -25,8 +24,7 @@ export class LoginPage {
     public navCtrl: NavController,
     private util: Util,
     private loginService: LoginService,
-    public http: Http,
-    private alertCtrl: AlertController) {
+    public http: Http) {
   }
 
   resetPassword() {

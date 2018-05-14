@@ -4,7 +4,6 @@ export class FlatEnt extends Flat {
 
     private codigoFlatEnt: number;
     private nome: string;
-    private codigoFlat: number;
     
     private dtCadastroFlatEnt: Date;
     private cdUsuarioCadastroFlatEnt: number;

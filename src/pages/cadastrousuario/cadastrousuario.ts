@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { NgForm } from '@angular/forms';
 import { Usuario } from '../../model/usuario';
@@ -18,7 +18,6 @@ export class CadastroUsuarioPage {
 
   constructor(
     public navCtrl: NavController,
-    private alertCtrl: AlertController,
     private loginService: LoginService,
     public http: Http,
     private util: Util) {

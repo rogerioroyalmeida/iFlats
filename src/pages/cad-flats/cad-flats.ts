@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Flat } from '../../model/flat';
@@ -76,7 +76,6 @@ export class CadFlatsPage {
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               public http: Http,
-              private alertCtrl: AlertController,
               private util: Util) {
 
     this.getItensGeraisUsuario();

@@ -23,7 +23,7 @@ export class MyApp {
 
   rootPage:any = HomePage;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{title: string, component: any, visivel: boolean, ordem: number}>;
 
   usuariologado:any = false;
   email:String;
@@ -41,6 +41,15 @@ export class MyApp {
         this.usuariologado = false;
       }
     });
+
+    // used for an example of ngFor and navigation
+    this.pages = [
+      { title: 'Buscar flat', component: HomePage, visivel: true, ordem: 1 },
+      { title: 'Meu perfil', component:  ProfileUserPage, visivel: this.usuariologado, ordem: 2 },
+      { title: 'Login', component:  LoginPage, visivel: true, ordem: 3 },
+      { title: 'Cadastre-se', component:  CadastroUsuarioPage, visivel: true, ordem: 4 },
+      { title: 'Logout', component:  null, visivel: true, ordem: 5 }
+    ];
   }
 
   initializeApp() {
@@ -52,20 +61,18 @@ export class MyApp {
     });
   }
 
-  home() {
-    this.nav.setRoot(HomePage);
-  }
-
-  login() {
-    //if(!this.usuariologado) {
-      this.nav.push(LoginPage);
-    //}
-  }
-
-  cadastre() {
-    //if(!this.usuariologado) {
-      this.nav.push(CadastroUsuarioPage);
-    //}
+  openPage(page) {
+    // Reset the content nav to have just this page
+    // we wouldn't want the back button to show in this scenario
+    if (page) {
+      if (page.ordem == 2) {
+        this.exibirAcoesUsuario();
+      } else {
+        this.nav.setRoot(page.component);
+      }
+    } else {
+      this.logout();
+    }
   }
 
   logout() {

@@ -1,10 +1,9 @@
-import { Component, ViewChild  } from '@angular/core';
+import { Component  } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { CadFlatsPage } from '../cad-flats/cad-flats';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Flat } from '../../model/flat';
-import { LoginPage } from '../login/login';
 import { CadItGeralPage } from '../cad-it-geral/cad-it-geral';
 import { CadItCozinhaPage } from '../cad-it-cozinha/cad-it-cozinha';
 import { Util } from '../../util/utils';

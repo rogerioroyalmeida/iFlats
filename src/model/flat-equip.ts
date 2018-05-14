@@ -4,7 +4,6 @@ export class FlatEquip extends Flat {
 
     private codigoFlatEquip: number;
     private nome: string;
-    private codigoFlat: number;
     
     private dtCadastroFlatEquip: Date;
     private cdUsuarioCadastroFlatEquip: number;

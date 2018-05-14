@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 import { NgForm } from '@angular/forms';
 import { LoginService } from '../../providers/login/login-service';
 import { Util } from '../../util/utils';
@@ -15,7 +15,6 @@ export class ResetsenhaPage {
 
   constructor(
     public navCtrl: NavController,
-    private alertCtrl: AlertController,
     private loginService: LoginService,
     private util: Util) {
   }

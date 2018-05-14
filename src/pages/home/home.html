@@ -1,6 +1,33 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>IFlats</ion-title>
+    </ion-navbar>
+</ion-header>
 
-<ion-content padding-top margin-top>
+<ion-content>
     <form #form="ngForm" padding novalidate>
-        <p>Ilhas Flats (em produção...) {{ usuario.getDsNome() }}</p>
+        <h5>Onde deseja se hospedar?</h5>
+        <ion-grid>
+            <ion-row>
+                <ion-col>
+                    <ion-label stacked>Destino</ion-label>
+                    <ion-input type="text" placeholder="Digite o destino" name="destino" [(ngModel)]="destino" required></ion-input>
+                </ion-col>
+                <ion-col>
+                    <ion-label stacked>de</ion-label>
+                    <ion-input type="date" placeholder="Digite a data inicial" name="dt_inicio" [(ngModel)]="dt_inicio" required></ion-input>
+                </ion-col>
+                <ion-col>
+                    <ion-label stacked>até</ion-label>
+                    <ion-input type="date" placeholder="Digite a data final" name="dt_fim" [(ngModel)]="dt_fim" required></ion-input>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+        <div style="text-align: center;">
+            <button ion-button clear (click)="buscarFlats()">Buscar</button>
+        </div>
     </form>
 </ion-content>
