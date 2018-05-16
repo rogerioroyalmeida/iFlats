@@ -25,7 +25,7 @@ export class ListFlatsPage {
 
     this.flats = new Array<Flat>();
 
-    this.http.get(this.util.cadFlatsRotaGetByUsuario)
+    this.http.get(this.util.cadFlatsRotaGetByUsuario + this.util.cdUsuarioLogado)
       .map(res => res.json())
       .subscribe(data => {
 

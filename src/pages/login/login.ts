@@ -58,23 +58,24 @@ export class LoginPage {
   loginBanco(email: string) {
 
     let headers = new Headers(
-      {
-        'Content-Type' : 'application/json'
-      });
-      let options = new RequestOptions({ headers: headers });
-  
-      this.http.post(this.util.usuariosRotaLogin, 
-                    {email: email}, 
-                     options)
-      .toPromise()
-      .then(data => {
-        console.log('API Response : ', data.json());
-        this.util.msgAlert('Usuário logado com sucesso!');
-      }).catch(error => {
-        console.error('API Error : ', error.status);
-        console.error('API Error : ', JSON.stringify(error));
-        this.util.msgAlert('Não foi possível realizar o login!');
-      });
+    {
+      'Content-Type' : 'application/json'
+    });
+    let options = new RequestOptions({ headers: headers });
+
+    this.http.post(this.util.usuariosRotaLogin, 
+                  {email: email}, 
+                    options)
+    .toPromise()
+    .then(data => {
+      console.log('API Response : ', data.json()[0].cd_usuario);
+      this.util.cdUsuarioLogado = data.json()[0].cd_usuario;
+      this.util.msgAlert('Usuário logado com sucesso!');
+    }).catch(error => {
+      console.error('API Error : ', error.status);
+      console.error('API Error : ', JSON.stringify(error));
+      this.util.msgAlert('Não foi possível realizar o login!');
+    });
 
   }
 }

@@ -16,18 +16,20 @@
                     <ion-label stacked>Destino</ion-label>
                     <ion-input type="text" placeholder="Digite o destino" name="destino" [(ngModel)]="destino" required></ion-input>
                 </ion-col>
+            </ion-row>
+            <ion-row>
                 <ion-col>
                     <ion-label stacked>de</ion-label>
-                    <ion-input type="date" placeholder="Digite a data inicial" name="dt_inicio" [(ngModel)]="dt_inicio" required></ion-input>
+                    <ion-datetime placeholder="Digite a data inicial" displayFormat="DD/MM/YYYY" max="2040" name="dt_inicio" [(ngModel)]="dt_inicio" required></ion-datetime>
                 </ion-col>
+            </ion-row>
+            <ion-row>
                 <ion-col>
                     <ion-label stacked>até</ion-label>
-                    <ion-input type="date" placeholder="Digite a data final" name="dt_fim" [(ngModel)]="dt_fim" required></ion-input>
+                    <ion-datetime placeholder="Digite a data final" displayFormat="DD/MM/YYYY" max="2040" name="dt_fim" [(ngModel)]="dt_fim" required></ion-datetime>
                 </ion-col>
             </ion-row>
         </ion-grid>
-        <div style="text-align: center;">
-            <button ion-button clear (click)="buscarFlats()">Buscar</button>
-        </div>
+        <button ion-button clear (click)="buscarFlats()">Buscar</button>
     </form>
 </ion-content>

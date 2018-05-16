@@ -25,6 +25,10 @@
             </ion-card-title>
 
             <ion-row>
+              <p>R&#36;&#160;</p>
+              <p>{{ item.getVlBasicoDiaria() }}</p>
+            </ion-row>
+            <ion-row>
               <p>{{ item.getNrQuartos() }}</p>
               <p>&#160;quartos</p>
             </ion-row>
@@ -37,26 +41,27 @@
               <p>{{ item.getNrAreaFlat() }}</p>
               <p>&#160;m²</p>
             </ion-row>
-            <p>{{ item.getDsFlat() }}</p>
           </ion-card-content>
         
           <ion-row>
             <ion-col>
               <button ion-button icon-left clear small>
-                <ion-icon name="thumbs-up"></ion-icon>
-                <div>12 Likes</div>
+                <ion-icon name="plane"></ion-icon>
+                <div>Reservar</div>
               </button>
             </ion-col>
             <ion-col>
               <button ion-button icon-left clear small>
                 <ion-icon name="text"></ion-icon>
-                <div>4 Comments</div>
+                <div>Mensagens</div>
               </button>
             </ion-col>
             <ion-col center text-center>
-              <ion-note>
+              <ion-icon style="font-size: 30px;" *ngIf="!item.isFavorito" (click)="setFavorito(item)" name="heart-outline"></ion-icon>
+              <ion-icon style="font-size: 30px;" *ngIf="item.isFavorito" (click)="setFavorito(item)" name="heart"></ion-icon>
+              <!-- <ion-note>
                 11h ago
-              </ion-note>
+              </ion-note> -->
             </ion-col>
           </ion-row>
         

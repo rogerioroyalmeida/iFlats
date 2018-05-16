@@ -35,6 +35,7 @@ export class Flat {
     private snAtivo: string;
 
     public iconVisivel: boolean = false;
+    public isFavorito: boolean = false;
 
     public setCodigo(codigo: number) {
         this.codigo = codigo;

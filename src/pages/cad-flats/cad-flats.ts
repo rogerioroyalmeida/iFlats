@@ -153,79 +153,88 @@ export class CadFlatsPage {
 
   salvarFlat() {
 
-    this.flat.setCodigo(this.codigo);
-    this.flat.setDsTituloAnuncio(this.dsTituloAnuncio);
-    this.flat.setEndereco(this.endereco);
-    this.flat.setNumero(this.numero);
-    this.flat.setComplemento(this.complemento);
-    this.flat.setPais(this.pais);
-    this.flat.setEstado(this.estado);
-    this.flat.setCidade(this.cidade);
-    this.flat.setBairro(this.bairro);
-    this.flat.setCep(this.cep);
-    this.flat.setSnCondominio(this.snCondominio);
-    this.flat.setNrQuartos(this.nrQuartos);
-    this.flat.setNrBanheiros(this.nrBanheiros);
-    this.flat.setNrMaxPessoas(this.nrMaxPessoas);
-    this.flat.setVlBasicoDiaria(this.vlBasicoDiaria);
-    this.flat.setNrAreaFlat(this.nrAreaFlat);
-    this.flat.setDsFlat(this.dsFlat);
-    this.flat.setDsRegras(this.dsRegras);
-    this.flat.setSnInternet(this.snInternet);
-    this.flat.setSnCriancas(this.snCriancas);
-    this.flat.setSnMobilidadeReduzida(this.snMobilidadeReduzida);
-    this.flat.setSnFumantes(this.snFumantes);
-    this.flat.setSnAnimais(this.snAnimais);
-    this.flat.setSnFestas(this.snFestas);
-    this.flat.setSnLongoPrazo(this.snLongoPrazo);
+    if (!this.dsTituloAnuncio ||
+        (!this.vlBasicoDiaria || this.vlBasicoDiaria == 0) ||
+        (!this.nrQuartos || this.nrQuartos == 0) ||
+        (!this.nrMaxPessoas || this.nrMaxPessoas == 0) ||
+        (!this.nrAreaFlat || this.nrAreaFlat == 0)) {
+      this.util.msgAlert('Os seguintes campos são obrigatórios: Título do anúncio, Valor da diária, Número de quartos, Número máximo de pessoas, Área do flat', 5000);
+    } else {
 
-    let headers = new Headers(
-    {
-      'Content-Type' : 'application/json'
-    });
-    let options = new RequestOptions({ headers: headers });
+      this.flat.setCodigo(this.codigo);
+      this.flat.setDsTituloAnuncio(this.dsTituloAnuncio);
+      this.flat.setEndereco(this.endereco);
+      this.flat.setNumero(this.numero);
+      this.flat.setComplemento(this.complemento);
+      this.flat.setPais(this.pais);
+      this.flat.setEstado(this.estado);
+      this.flat.setCidade(this.cidade);
+      this.flat.setBairro(this.bairro);
+      this.flat.setCep(this.cep);
+      this.flat.setSnCondominio(this.snCondominio);
+      this.flat.setNrQuartos(this.nrQuartos);
+      this.flat.setNrBanheiros(this.nrBanheiros);
+      this.flat.setNrMaxPessoas(this.nrMaxPessoas);
+      this.flat.setVlBasicoDiaria(this.vlBasicoDiaria);
+      this.flat.setNrAreaFlat(this.nrAreaFlat);
+      this.flat.setDsFlat(this.dsFlat);
+      this.flat.setDsRegras(this.dsRegras);
+      this.flat.setSnInternet(this.snInternet);
+      this.flat.setSnCriancas(this.snCriancas);
+      this.flat.setSnMobilidadeReduzida(this.snMobilidadeReduzida);
+      this.flat.setSnFumantes(this.snFumantes);
+      this.flat.setSnAnimais(this.snAnimais);
+      this.flat.setSnFestas(this.snFestas);
+      this.flat.setSnLongoPrazo(this.snLongoPrazo);
 
-    if (this.flat.getCodigoFlat()) {
+      let headers = new Headers(
+      {
+        'Content-Type' : 'application/json'
+      });
+      let options = new RequestOptions({ headers: headers });
 
-      this.http.patch(this.util.cadFlatsRotaPrincipal + this.flat.getCodigoFlat(), 
+      if (this.flat.getCodigoFlat()) {
+
+        this.http.patch(this.util.cadFlatsRotaPrincipal + this.flat.getCodigoFlat(), 
+                        this.flat, 
+                        options)
+        .toPromise()
+        .then(data => {
+          console.log('API Response : ', data.json());
+          this.salvarItensGeraisFlat();
+          this.salvarItensCozinhaFlat();
+          this.util.msgAlert('Flat atualizado com sucesso!');
+          this.navCtrl.push(ListFlatsPage);
+        }).catch(error => {
+          console.error('API Error : ', error.status);
+          console.error('API Error : ', JSON.stringify(error));
+          this.util.msgAlert('Erro ao atualizar o flat!');
+        });
+
+      } else {
+        
+        this.http.post(this.util.cadFlatsRotaPrincipal, 
                       this.flat, 
                       options)
-      .toPromise()
-      .then(data => {
-        console.log('API Response : ', data.json());
-        this.salvarItensGeraisFlat();
-        this.salvarItensCozinhaFlat();
-        this.util.msgAlert('Flat atualizado com sucesso!');
-        this.navCtrl.push(ListFlatsPage);
-      }).catch(error => {
-        console.error('API Error : ', error.status);
-        console.error('API Error : ', JSON.stringify(error));
-        this.util.msgAlert('Erro ao atualizar o flat!');
-      });
-
-    } else {
-      
-      this.http.post(this.util.cadFlatsRotaPrincipal, 
-                     this.flat, 
-                     options)
-      .toPromise()
-      .then(data => {
-        console.log('API Response : ', data.json());
-        this.salvarItensGeraisFlat();
-        this.salvarItensCozinhaFlat();
-        this.util.msgAlert('Flat salvo com sucesso!');
-        this.navCtrl.push(ListFlatsPage);
-      }).catch(error => {
-        console.error('API Error : ', error.status);
-        console.error('API Error : ', JSON.stringify(error));
-        this.util.msgAlert('Erro ao salvar o flat!');
-      });
+        .toPromise()
+        .then(data => {
+          console.log('API Response : ', data.json());
+          this.salvarItensGeraisFlat();
+          this.salvarItensCozinhaFlat();
+          this.util.msgAlert('Flat salvo com sucesso!');
+          this.navCtrl.push(ListFlatsPage);
+        }).catch(error => {
+          console.error('API Error : ', error.status);
+          console.error('API Error : ', JSON.stringify(error));
+          this.util.msgAlert('Erro ao salvar o flat!');
+        });
+      }
     }
   }
 
   getItensGeraisUsuario() {
     
-    this.http.get(this.util.itGeralRotaGetByUsuario)
+    this.http.get(this.util.itGeralRotaGetByUsuario + this.util.cdUsuarioLogado)
       .map(res => res.json())
       .subscribe(data => {
 
@@ -333,7 +342,7 @@ export class CadFlatsPage {
 
   getItensCozinhaUsuario() {
     
-    this.http.get(this.util.itCozinhaRotaGetByUsuario)
+    this.http.get(this.util.itCozinhaRotaGetByUsuario + this.util.cdUsuarioLogado)
       .map(res => res.json())
       .subscribe(data => {
 

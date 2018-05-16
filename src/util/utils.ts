@@ -4,21 +4,24 @@ import { ToastController } from 'ionic-angular';
 @Injectable()
 export class Util {
 
+    cdUsuarioLogado: string = '';
+
     dominio = 'http://192.168.15.8:3000/iflats/';
 
     usuariosRotaPrincipal = this.dominio + 'usuarios/';
     usuariosRotaLogin = this.usuariosRotaPrincipal + 'login';
 
     cadFlatsRotaPrincipal = this.dominio + 'flats/';
-    cadFlatsRotaGetByUsuario = this.cadFlatsRotaPrincipal + 'usuario/1';
+    cadFlatsRotaGetByUsuario = this.cadFlatsRotaPrincipal + 'usuario/';
+    cadFlatsRotaGetByFiltros = this.cadFlatsRotaPrincipal + 'filtros/';
 
     itGeralRotaPrincipal = this.dominio + 'itens_geral/';
-    itGeralRotaGetByUsuario = this.itGeralRotaPrincipal + 'usuario/1';
+    itGeralRotaGetByUsuario = this.itGeralRotaPrincipal + 'usuario/';
 
     flatItGeralRotaPrincipal = this.dominio + 'flats_itgeral/';
 
     itCozinhaRotaPrincipal = this.dominio + 'itens_cozinha/';
-    itCozinhaRotaGetByUsuario = this.itCozinhaRotaPrincipal + 'usuario/1';
+    itCozinhaRotaGetByUsuario = this.itCozinhaRotaPrincipal + 'usuario/';
 
     flatItCozinhaRotaPrincipal = this.dominio + 'flats_itcozinha/';
 

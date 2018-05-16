@@ -14,6 +14,9 @@ import { CadastroUsuarioPage } from '../pages/cadastrousuario/cadastrousuario';
 import { ActionSheetController } from 'ionic-angular';
 import { ProfileUserPage } from '../pages/profile-user/profile-user';
 import { Usuario } from '../model/usuario';
+import { Util } from '../util/utils';
+import { Http } from '@angular/http';
+import 'rxjs/add/operator/map';
 
 @Component({
   templateUrl: 'app.html'
@@ -29,26 +32,41 @@ export class MyApp {
   email:String;
   authObserver;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public auth: AngularFireAuth, private loginService: LoginService, public actionSheetCtrl: ActionSheetController) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public auth: AngularFireAuth, private loginService: LoginService, public actionSheetCtrl: ActionSheetController, private util: Util, public http: Http) {
 
     this.initializeApp();
 
     this.authObserver = auth.authState.subscribe(user => {
       if (user) {
+
+        this.http.get(this.util.usuariosRotaPrincipal + user.email)
+          .map(res => res.json())
+          .subscribe(data => {
+
+            this.util.cdUsuarioLogado = data[0].cd_usuario;
+
+            console.log('get usuario: ', data);
+        });
+
         this.email = user.email;
         this.usuariologado = true;
+        this.montarPaginasMenu();
       } else {
         this.usuariologado = false;
+        this.montarPaginasMenu();
       }
     });
 
+  }
+
+  montarPaginasMenu() {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Buscar flat', component: HomePage, visivel: true, ordem: 1 },
       { title: 'Meu perfil', component:  ProfileUserPage, visivel: this.usuariologado, ordem: 2 },
-      { title: 'Login', component:  LoginPage, visivel: true, ordem: 3 },
-      { title: 'Cadastre-se', component:  CadastroUsuarioPage, visivel: true, ordem: 4 },
-      { title: 'Logout', component:  null, visivel: true, ordem: 5 }
+      { title: 'Login', component:  LoginPage, visivel: !this.usuariologado, ordem: 3 },
+      { title: 'Cadastre-se', component:  CadastroUsuarioPage, visivel: !this.usuariologado, ordem: 4 },
+      { title: 'Logout', component:  null, visivel: this.usuariologado, ordem: 5 }
     ];
   }
 
@@ -64,7 +82,7 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    if (page) {
+    if (page.component) {
       if (page.ordem == 2) {
         this.exibirAcoesUsuario();
       } else {
@@ -72,13 +90,15 @@ export class MyApp {
       }
     } else {
       this.logout();
+
+      this.montarPaginasMenu();
     }
   }
 
   logout() {
     this.loginService.signOut()
       .then(() => {
-        alert('Sessão encerrada com sucesso.');
+        this.util.msgAlert('Sessão encerrada com sucesso.');
         this.nav.setRoot(HomePage);
       })
       .catch((error) => {
@@ -88,7 +108,7 @@ export class MyApp {
 
   exibirAcoesUsuario() {
     let actionSheet = this.actionSheetCtrl.create({
-      title: 'Ações do Usuario',
+      title: 'Ações do usuário',
       buttons: [
         {
           text: 'Painel de Flats',
