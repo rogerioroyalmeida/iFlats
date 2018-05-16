@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Http } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Util } from '../../util/utils';
 import { Flat } from '../../model/flat';
@@ -20,15 +20,69 @@ export class BuscaFlatsPage {
 
     if(navParams.get('listFlats')) {
       this.listFlats = navParams.get('listFlats');
+
+      this.setFlatsFavoritos();
     }
 
   }
 
+  setFlatsFavoritos() {
+    this.http.get(this.util.favoritosRotaGetByUsuario + this.util.cdUsuarioLogado)
+      .map(res => res.json())
+      .subscribe(data => {
+
+        if (data) {
+
+          data.forEach(element => {
+
+            this.listFlats.find(x => x.getCodigoFlat() == element.cd_flat).isFavorito = true;
+            
+          });
+
+          console.log('list flats_favoritos: ', data);
+
+        }
+      });
+  }
+
   setFavorito(item: Flat) {
+
+    // CHAMA O DELETE PARA APAGAR O FLAT FAVORITO DO USUARIO
+    let headers = new Headers(
+    {
+      'Content-Type' : 'application/json'
+    });
+    let options = new RequestOptions({ headers: headers });
+
+    this.http.delete(this.util.favoritosRotaPrincipal + item.getCodigoFlat() + '/' + this.util.cdUsuarioLogado, 
+                      options)
+      .toPromise()
+      .then(data => {
+        console.log('API Response : ', data.json());
+      }).catch(error => {
+        console.error('API Error : ', error.status);
+        console.error('API Error : ', JSON.stringify(error));
+      });
+
     if (item.isFavorito) {
       item.isFavorito = false;
+      this.util.msgAlert('Flat removido da lista de favoritos!');
     } else {
-      item.isFavorito = true;
+
+      this.http.post(this.util.favoritosRotaPrincipal, 
+              {cd_flat: item.getCodigoFlat(), cd_usuario: this.util.cdUsuarioLogado}, 
+              options)
+      .toPromise()
+      .then(data => {
+        console.log('API Response : ', data.json());
+        this.util.msgAlert('Flat favorito salvo com sucesso!');
+        item.isFavorito = true;
+      }).catch(error => {
+        console.error('API Error : ', error.status);
+        console.error('API Error : ', JSON.stringify(error));
+        this.util.msgAlert('Erro ao salvar o flat favorito!');
+      });
+      
     }
   }
 

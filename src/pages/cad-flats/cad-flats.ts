@@ -325,11 +325,8 @@ export class CadFlatsPage {
         if (data) {
 
           data.forEach(element => {
-            let flatitgeral: {cd_flat: number, cd_itgeral: number} = {cd_flat: element.cd_flat, cd_itgeral: element.cd_itgeral};
-            // flatitgeral.cd_flat = element.cd_flat;
-            // flatitgeral.cd_itgeral = element.cd_itgeral;
 
-            this.listGeral.find(x => x.getCdItgeral() == flatitgeral.cd_itgeral).checado = true;
+            this.listGeral.find(x => x.getCdItgeral() == element.cd_itgeral).checado = true;
             
           });
 

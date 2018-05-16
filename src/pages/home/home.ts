@@ -38,6 +38,8 @@ export class HomePage {
   buscarFlats() {
     if (this.destino) {
 
+      this.listFlats = new Array<Flat>();
+
       // this.util.cadFlatsRotaGetByFiltros + this.destino + '/' + this.dt_inicio + '/' + this.dt_fim
       this.http.get(this.util.cadFlatsRotaPrincipal)
         .map(res => res.json())
@@ -81,12 +83,13 @@ export class HomePage {
               this.listFlats.push(flat);
             });
 
+            this.navCtrl.push(BuscaFlatsPage, {'listFlats': this.listFlats});
+
             console.log('list flats: ', data);
 
           }
       });
-
-      this.navCtrl.push(BuscaFlatsPage, {'listFlats': this.listFlats});
+      
     } else {
       this.util.msgAlert('Favor informar ao menos o destino para buscar!');
     }

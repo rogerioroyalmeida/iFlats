@@ -17,6 +17,7 @@ import { Usuario } from '../model/usuario';
 import { Util } from '../util/utils';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { ListFavoritosPage } from '../pages/list-favoritos/list-favoritos';
 
 @Component({
   templateUrl: 'app.html'
@@ -114,13 +115,19 @@ export class MyApp {
           text: 'Painel de Flats',
           role: 'destructive',
           handler: () => {
-            this.nav.push(ListFlatsPage);
+            this.nav.setRoot(ListFlatsPage);
+          }
+        },{
+          text: 'Favoritos',
+          role: 'destructive',
+          handler: () => {
+            this.nav.setRoot(ListFavoritosPage);
           }
         },{
           text: 'Meu perfil',
           role: 'destructive',
           handler: () => {
-            this.nav.push(ProfileUserPage, {email: this.email});
+            this.nav.setRoot(ProfileUserPage, {email: this.email});
           }
         },{
           text: 'Cancel',

@@ -20,6 +20,7 @@ import { CadItGeralPage } from '../pages/cad-it-geral/cad-it-geral';
 import { CadItCozinhaPage } from '../pages/cad-it-cozinha/cad-it-cozinha';
 import { Util } from '../util/utils';
 import { BuscaFlatsPage } from '../pages/busca-flats/busca-flats';
+import { ListFavoritosPage } from '../pages/list-favoritos/list-favoritos';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCjVxmw5QdseWpzGFVuF4ZIPg6sIZagq0I",
@@ -42,7 +43,8 @@ const firebaseConfig = {
     ProfileUserPage,
     CadItGeralPage,
     CadItCozinhaPage,
-    BuscaFlatsPage
+    BuscaFlatsPage,
+    ListFavoritosPage
   ],
   imports: [
     BrowserModule,
@@ -63,7 +65,8 @@ const firebaseConfig = {
     ProfileUserPage,
     CadItGeralPage,
     CadItCozinhaPage,
-    BuscaFlatsPage
+    BuscaFlatsPage,
+    ListFavoritosPage
   ],
   providers: [
     StatusBar,

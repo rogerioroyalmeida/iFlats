@@ -25,6 +25,10 @@ export class Util {
 
     flatItCozinhaRotaPrincipal = this.dominio + 'flats_itcozinha/';
 
+    favoritosRotaPrincipal = this.dominio + 'favoritos/';
+    favoritosRotaGetByUsuario = this.favoritosRotaPrincipal + 'usuario/';
+    favoritosRotaGetFlatsByUsuario = this.favoritosRotaGetByUsuario + 'flats/';
+
     constructor(public toastCtrl: ToastController) {
 
     }
