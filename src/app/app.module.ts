@@ -21,6 +21,13 @@ import { CadItCozinhaPage } from '../pages/cad-it-cozinha/cad-it-cozinha';
 import { Util } from '../util/utils';
 import { BuscaFlatsPage } from '../pages/busca-flats/busca-flats';
 import { ListFavoritosPage } from '../pages/list-favoritos/list-favoritos';
+import { EnviaMensagemFlatPage } from '../pages/envia-mensagem-flat/envia-mensagem-flat';
+import { RecebeMensagemFlatPage } from '../pages/recebe-mensagem-flat/recebe-mensagem-flat';
+import { EmojiProvider } from '../providers/emoji';
+import { HttpClientModule } from '@angular/common/http';
+import { EmojiPickerComponentModule } from '../components/emoji-picker/emoji-picker.module';
+import { RelativeTime } from '../pipes/relative-time';
+import { CadItEntretenimentoPage } from '../pages/cad-it-entretenimento/cad-it-entretenimento';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCjVxmw5QdseWpzGFVuF4ZIPg6sIZagq0I",
@@ -44,11 +51,17 @@ const firebaseConfig = {
     CadItGeralPage,
     CadItCozinhaPage,
     BuscaFlatsPage,
-    ListFavoritosPage
+    ListFavoritosPage,
+    EnviaMensagemFlatPage,
+    RecebeMensagemFlatPage,
+    RelativeTime,
+    CadItEntretenimentoPage
   ],
   imports: [
     BrowserModule,
     HttpModule,
+    HttpClientModule,
+    EmojiPickerComponentModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule
@@ -66,14 +79,18 @@ const firebaseConfig = {
     CadItGeralPage,
     CadItCozinhaPage,
     BuscaFlatsPage,
-    ListFavoritosPage
+    ListFavoritosPage,
+    EnviaMensagemFlatPage,
+    RecebeMensagemFlatPage,
+    CadItEntretenimentoPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     LoginService,
-    Util
+    Util,
+    EmojiProvider
   ]
 })
 export class AppModule {}

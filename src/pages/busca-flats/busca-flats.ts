@@ -4,6 +4,7 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Util } from '../../util/utils';
 import { Flat } from '../../model/flat';
+import { EnviaMensagemFlatPage } from '../envia-mensagem-flat/envia-mensagem-flat';
 
 @IonicPage()
 @Component({
@@ -13,6 +14,7 @@ import { Flat } from '../../model/flat';
 export class BuscaFlatsPage {
 
   public listFlats: Array<Flat>;
+  public tituloTelaBuscaFlats = 'Busca de flats';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, private util: Util) {
 
@@ -24,6 +26,8 @@ export class BuscaFlatsPage {
       this.setFlatsFavoritos();
     }
 
+    navParams.get('tituloTela') ? this.tituloTelaBuscaFlats = navParams.get('tituloTela') : false;
+
   }
 
   setFlatsFavoritos() {
@@ -33,13 +37,15 @@ export class BuscaFlatsPage {
 
         if (data) {
 
-          data.forEach(element => {
+          if (this.listFlats.length > 0) {
+            data.forEach(element => {
 
-            this.listFlats.find(x => x.getCodigoFlat() == element.cd_flat).isFavorito = true;
-            
-          });
+              this.listFlats.find(x => x.getCodigoFlat() == element.cd_flat).isFavorito = true;
+              
+            });
 
-          console.log('list flats_favoritos: ', data);
+            console.log('list flats_favoritos: ', data);
+          }
 
         }
       });
@@ -84,6 +90,12 @@ export class BuscaFlatsPage {
       });
       
     }
+  }
+
+  chamarTelaMensagens(item: Flat) {
+
+    this.navCtrl.push(EnviaMensagemFlatPage, {'flat': item});
+
   }
 
   ionViewDidLoad() {

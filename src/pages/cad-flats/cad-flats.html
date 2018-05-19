@@ -361,17 +361,24 @@
         </ion-grid>
 
         <h5 padding style="font-weight: bold;">Entretenimento</h5>
-        <ion-list>
-          <ion-item *ngFor="let item of listEnt" (ionFocus)="focNomeEnt = true" (ionBlur)="focNomeEnt = false">
-            <ion-input value="{{item.nome}}" placeholder="Digite"></ion-input>
-          </ion-item>
-          <ion-item *ngIf="focNomeEnt">
-            Ex: DVD, Livros, Jogos de mesa
-          </ion-item>
-          <ion-item>
-            <button ion-button (click)="saveNewEnt()">Nova</button>
-          </ion-item>
-        </ion-list>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label>{{ labelMarcarTodosEntretenimento }}</ion-label>
+                <ion-checkbox (click)="marcarTodosItensEntretenimento()" [(ngModel)]="marcaTodosEntretenimento" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col *ngFor="let item of listEntretenimento">
+              <ion-item>
+                <ion-label>{{ item.getDsItemEntretenimento() }}</ion-label>
+                <ion-checkbox [(ngModel)]="item.checado" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
 
         <h5 padding style="font-weight: bold;">Instalações</h5>
 

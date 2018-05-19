@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 import { Flat } from '../../model/flat';
 import { ItGeral } from '../../model/it-geral';
 import { ItCozinha } from '../../model/it-cozinha';
-import { FlatEnt } from '../../model/flat-ent';
+import { ItEntretenimento } from '../../model/it-entretenimento';
 import { FlatInst } from '../../model/flat-inst';
 import { FlatEquip } from '../../model/flat-equip';
 import { FlatServ } from '../../model/flat-serv';
@@ -54,7 +54,7 @@ export class CadFlatsPage {
   flat: Flat = new Flat();
   listGeral = new Array<ItGeral>();
   listCozinha = new Array<ItCozinha>();
-  listEnt = new Array<FlatEnt>();
+  listEntretenimento = new Array<ItEntretenimento>();
   listInst = new Array<FlatInst>();
   listEquip = new Array<FlatEquip>();
   listServ = new Array<FlatServ>();
@@ -67,8 +67,10 @@ export class CadFlatsPage {
   focNomeServ = false;
   marcaTodosGerais = false;
   marcaTodosCozinha = false;
+  marcaTodosEntretenimento = false;
   labelMarcarTodosGerais = 'Marcar todos';
   labelMarcarTodosCozinha = 'Marcar todos';
+  labelMarcarTodosEntretenimento = 'Marcar todos';
 
   exibeCaracteristica = false;
   textoInformacoes = 'Mostrar mais';
@@ -80,6 +82,7 @@ export class CadFlatsPage {
 
     this.getItensGeraisUsuario();
     this.getItensCozinhaUsuario();
+    this.getItensEntretenimentoUsuario();
     
     let f: Flat = this.navParams.get('item');
 
@@ -112,43 +115,9 @@ export class CadFlatsPage {
 
       this.carregarItensGeraisFlat();
       this.carregarItensCozinhaFlat();
+      this.carregarItensEntretenimentoFlat();
     }
 
-  }
-
-  saveNewCozinha(): void {
-    this.newItem = "";
-    let flatCozinha = new ItCozinha();
-    this.listCozinha.push(flatCozinha);
-  }
-
-  saveNewEnt(): void {
-    this.newItem = "";
-    let flatEnt = new FlatEnt();
-    this.listEnt.push(flatEnt);
-  }
-
-  saveNewInst(): void {
-    this.newItem = "";
-    let flatInst = new FlatInst();
-    this.listInst.push(flatInst);
-  }
-
-  saveNewEquip(): void {
-    this.newItem = "";
-    let flatEquip = new FlatEquip();
-    this.listEquip.push(flatEquip);
-  }
-
-  saveNewServ(): void {
-    this.newItem = "";
-    let flatServ = new FlatServ();
-    this.listServ.push(flatServ);
-  }
-
-  // Cancel function
-  cancelNew(): void {
-    this.newItem = "";
   }
 
   salvarFlat() {
@@ -203,6 +172,7 @@ export class CadFlatsPage {
           console.log('API Response : ', data.json());
           this.salvarItensGeraisFlat();
           this.salvarItensCozinhaFlat();
+          this.salvarItensEntretenimentoFlat();
           this.util.msgAlert('Flat atualizado com sucesso!');
           this.navCtrl.push(ListFlatsPage);
         }).catch(error => {
@@ -221,6 +191,7 @@ export class CadFlatsPage {
           console.log('API Response : ', data.json());
           this.salvarItensGeraisFlat();
           this.salvarItensCozinhaFlat();
+          this.salvarItensEntretenimentoFlat();
           this.util.msgAlert('Flat salvo com sucesso!');
           this.navCtrl.push(ListFlatsPage);
         }).catch(error => {
@@ -439,6 +410,114 @@ export class CadFlatsPage {
           });
 
           console.log('list flats_itcozinha: ', data);
+
+        }
+    });
+
+  }
+
+  getItensEntretenimentoUsuario() {
+    
+    this.http.get(this.util.itEntretenimentoRotaPrincipal + this.util.cdUsuarioLogado)
+      .map(res => res.json())
+      .subscribe(data => {
+
+        if (data) {
+
+          data.forEach(element => {
+            let itentretenimento: ItEntretenimento = new ItEntretenimento();
+            itentretenimento.setCdItemEntretenimento(element.cd_itentretenimento);
+            itentretenimento.setDsItemEntretenimento(element.ds_itentretenimento);
+            itentretenimento.setObservacao(element.observacao);
+            itentretenimento.setValor(element.valor);
+            itentretenimento.setCampo01(element.campo01);
+            itentretenimento.setCampo02(element.campo02);
+            itentretenimento.setCampo03(element.campo03);
+            itentretenimento.setCampo04(element.campo04);
+            
+            this.listEntretenimento.push(itentretenimento);
+          });
+
+          console.log('list itens_entretenimento usuario: ', data);
+
+        }
+    });
+
+  }
+
+  salvarItensEntretenimentoFlat() {
+
+    // CHAMA O DELETE PARA APAGAR TODOS OS ITEM_ENTRETENIMENTO DO FLAT
+    let headers = new Headers(
+    {
+      'Content-Type' : 'application/json'
+    });
+    let options = new RequestOptions({ headers: headers });
+
+    this.http.delete(this.util.flatItEntretenimentoRotaPrincipal + this.codigo, 
+                      options)
+      .toPromise()
+      .then(data => {
+        console.log('API Response : ', data.json());
+
+        // VARRE A LISTA DE TODOS OS ITEM_ENTRETENIMENTO PARA VERIFICAR SOMENTE OS MARCADOS E INSERIR NO BANCO
+        this.listEntretenimento.forEach(element => {
+          if (element.checado) {
+
+            let item = {cd_flat: this.codigo, cd_itentretenimento: element.getCdItemEntretenimento()};
+
+            // CHAMA O POST PARA CADASTRAR OS NOVOS ITENS ENTRETENIMENTO SELECIONADOS
+            this.http.post(this.util.flatItEntretenimentoRotaPrincipal, 
+                            item, 
+                            options)
+                      .toPromise()
+                      .then(data => {
+                        console.log('API Response : ', data.json());
+                      }).catch(error => {
+                        console.error('API Error : ', error.status);
+                        console.error('API Error : ', JSON.stringify(error));
+                      });
+
+          }
+        });
+
+      }).catch(error => {
+        console.error('API Error : ', error.status);
+        console.error('API Error : ', JSON.stringify(error));
+      });
+
+  }
+
+  marcarTodosItensEntretenimento() {
+    this.listEntretenimento.forEach(element => {
+      element.checado = this.marcaTodosEntretenimento;
+    });
+
+    if (this.marcaTodosEntretenimento) {
+      this.labelMarcarTodosEntretenimento = 'Desmarcar todos';
+    } else {
+      this.labelMarcarTodosEntretenimento = 'Marcar todos';
+    }
+  }
+
+  carregarItensEntretenimentoFlat() {
+
+    this.http.get(this.util.flatItEntretenimentoRotaPrincipal + this.codigo)
+      .map(res => res.json())
+      .subscribe(data => {
+
+        if (data) {
+
+          data.forEach(element => {
+            let flatitentretenimento: {cd_flat: number, cd_itentretenimento: number} = {cd_flat: element.cd_flat, cd_itentretenimento: element.cd_itentretenimento};
+            // flatitgeral.cd_flat = element.cd_flat;
+            // flatitgeral.cd_itgeral = element.cd_itgeral;
+
+            this.listEntretenimento.find(x => x.getCdItemEntretenimento() == flatitentretenimento.cd_itentretenimento).checado = true;
+            
+          });
+
+          console.log('list flats_itentretenimento: ', data);
 
         }
     });

@@ -3,12 +3,14 @@
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>Busca de flats</ion-title>
+        <ion-title>{{ tituloTelaBuscaFlats }}</ion-title>
     </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
+
+  <div *ngIf="listFlats.length == 0">Não foram encontrados flats</div>
 
   <ion-grid>
     <ion-row>
@@ -51,7 +53,7 @@
               </button>
             </ion-col>
             <ion-col>
-              <button ion-button icon-left clear small>
+              <button ion-button icon-left clear small (click)="chamarTelaMensagens(item)">
                 <ion-icon name="text"></ion-icon>
                 <div>Mensagens</div>
               </button>

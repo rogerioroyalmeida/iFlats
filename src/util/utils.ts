@@ -5,11 +5,13 @@ import { ToastController } from 'ionic-angular';
 export class Util {
 
     cdUsuarioLogado: string = '';
+    usuarioIsAdm = false;
 
-    dominio = 'http://192.168.15.8:3000/iflats/';
+    dominio = 'http://192.168.0.106:3000/iflats/';
 
     usuariosRotaPrincipal = this.dominio + 'usuarios/';
     usuariosRotaLogin = this.usuariosRotaPrincipal + 'login';
+    usuarioRotaGetByCodigo = this.usuariosRotaPrincipal + 'codigo/';
 
     cadFlatsRotaPrincipal = this.dominio + 'flats/';
     cadFlatsRotaGetByUsuario = this.cadFlatsRotaPrincipal + 'usuario/';
@@ -25,9 +27,19 @@ export class Util {
 
     flatItCozinhaRotaPrincipal = this.dominio + 'flats_itcozinha/';
 
+    itEntretenimentoRotaPrincipal = this.dominio + 'itens_entretenimento/';
+    itEntretenimentoRotaGetByUsuario = this.itEntretenimentoRotaPrincipal + 'usuario/';
+
+    flatItEntretenimentoRotaPrincipal = this.dominio + 'flats_itentretenimento/';
+
     favoritosRotaPrincipal = this.dominio + 'favoritos/';
     favoritosRotaGetByUsuario = this.favoritosRotaPrincipal + 'usuario/';
     favoritosRotaGetFlatsByUsuario = this.favoritosRotaGetByUsuario + 'flats/';
+
+    mensagemRotaPrincipal = this.dominio + 'mensagens/';
+    mensagemRotaGetByFlatUsuario = this.mensagemRotaPrincipal + 'flat/usuario/';
+
+    flatsMensagensRotaGetByUsuario = this.cadFlatsRotaPrincipal + 'mensagens/';
 
     constructor(public toastCtrl: ToastController) {
 

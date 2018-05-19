@@ -18,9 +18,12 @@ import { Util } from '../util/utils';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { ListFavoritosPage } from '../pages/list-favoritos/list-favoritos';
+import { BuscaFlatsPage } from '../pages/busca-flats/busca-flats';
+import { Flat } from '../model/flat';
 
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: 'app.html',
+  providers: [Util]
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
@@ -33,7 +36,14 @@ export class MyApp {
   email:String;
   authObserver;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public auth: AngularFireAuth, private loginService: LoginService, public actionSheetCtrl: ActionSheetController, private util: Util, public http: Http) {
+  constructor(public platform: Platform, 
+              public statusBar: StatusBar, 
+              public splashScreen: SplashScreen, 
+              public auth: AngularFireAuth, 
+              private loginService: LoginService, 
+              public actionSheetCtrl: ActionSheetController, 
+              private util: Util, 
+              public http: Http) {
 
     this.initializeApp();
 
@@ -45,6 +55,8 @@ export class MyApp {
           .subscribe(data => {
 
             this.util.cdUsuarioLogado = data[0].cd_usuario;
+
+            data[0].sn_adm == 'S' ? this.util.usuarioIsAdm = true : this.util.usuarioIsAdm = false;
 
             console.log('get usuario: ', data);
         });
@@ -108,35 +120,79 @@ export class MyApp {
   }
 
   exibirAcoesUsuario() {
+
+    let actions: Array<any> = new Array<any>();
+
+    this.util.usuarioIsAdm ? actions.push(
+      {
+        text: 'Painel de Flats',
+        role: 'destructive',
+        handler: () => {
+          this.nav.setRoot(ListFlatsPage);
+        }
+      }
+    ) : null;
+
+    actions.push(
+      {
+        text: 'Favoritos',
+        role: 'destructive',
+        handler: () => {
+          this.nav.setRoot(ListFavoritosPage);
+        }
+      }
+    );
+
+    actions.push(
+      {
+        text: 'Meu perfil',
+        role: 'destructive',
+        handler: () => {
+          this.nav.setRoot(ProfileUserPage, {email: this.email});
+        }
+      }
+    );
+
+    actions.push(
+      {
+        text: 'Mensagens',
+        role: 'destructive',
+        handler: () => {
+
+          let listFlats: Array<Flat> = new Array<Flat>();
+
+          this.http.get(this.util.flatsMensagensRotaGetByUsuario + this.util.cdUsuarioLogado)
+          .map(res => res.json())
+          .subscribe(data => {
+
+            if (data) {
+
+              listFlats = data;
+
+              console.log('list flats_mensagens: ', data);
+
+            }
+          });
+
+          if (listFlats)
+            this.nav.setRoot(BuscaFlatsPage, {'listFlats': listFlats, 'tituloTela': 'Flats com mensagens'});
+        }
+      }
+    );
+
+    actions.push(
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }
+    );
+
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Ações do usuário',
-      buttons: [
-        {
-          text: 'Painel de Flats',
-          role: 'destructive',
-          handler: () => {
-            this.nav.setRoot(ListFlatsPage);
-          }
-        },{
-          text: 'Favoritos',
-          role: 'destructive',
-          handler: () => {
-            this.nav.setRoot(ListFavoritosPage);
-          }
-        },{
-          text: 'Meu perfil',
-          role: 'destructive',
-          handler: () => {
-            this.nav.setRoot(ProfileUserPage, {email: this.email});
-          }
-        },{
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        }
-      ]
+      buttons: actions
     });
     actionSheet.present();
   }

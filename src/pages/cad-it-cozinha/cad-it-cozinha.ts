@@ -62,7 +62,7 @@ export class CadItCozinhaPage {
         .then(data => {
           console.log('API Response : ', data.json());
           this.util.msgAlert('Item cozinha atualizado com sucesso!');
-          this.navCtrl.push(CadItCozinhaPage);
+          // this.navCtrl.push(CadItCozinhaPage);
           this.getItensCozinha();
         }).catch(error => {
           console.error('API Error : ', error.status);
@@ -79,7 +79,7 @@ export class CadItCozinhaPage {
         .then(data => {
           console.log('API Response : ', data.json());
           this.util.msgAlert('Item cozinha salvo com sucesso!');
-          this.navCtrl.push(CadItCozinhaPage);
+          // this.navCtrl.push(CadItCozinhaPage);
           this.getItensCozinha();
         }).catch(error => {
           console.error('API Error : ', error.status);
@@ -155,7 +155,7 @@ export class CadItCozinhaPage {
                 this.itensCozinha.splice(i, 1);
                 console.log('API Response : ', data.json());
                 this.util.msgAlert('Item cozinha removido com sucesso!');
-                this.navCtrl.push(CadItCozinhaPage);
+                // this.navCtrl.push(CadItCozinhaPage);
               }).catch(error => {
                 console.error('API Error : ', error.status);
                 console.error('API Error : ', JSON.stringify(error));

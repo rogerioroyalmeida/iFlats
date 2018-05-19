@@ -9,6 +9,7 @@ export class Usuario extends Pessoa {
   private campo02: string;
   private campo_real: Number;
   private observacao: string;
+  private imagem: string;
 
   public getCdUsuario() {
     return this.cd_usuario;
@@ -64,6 +65,14 @@ export class Usuario extends Pessoa {
 
   public setObservacao(observacao: string) {
     this.observacao = observacao;
+  }
+
+  public getImagem() {
+    return this.imagem;
+  }
+
+  public setImagem(imagem: string) {
+    this.imagem = imagem;
   }
 
 }

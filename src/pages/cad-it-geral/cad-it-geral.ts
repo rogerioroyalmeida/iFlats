@@ -62,7 +62,7 @@ export class CadItGeralPage {
         .then(data => {
           console.log('API Response : ', data.json());
           this.util.msgAlert('Item geral atualizado com sucesso!');
-          this.navCtrl.push(CadItGeralPage);
+          // this.navCtrl.push(CadItGeralPage);
           this.getItensGerais();
         }).catch(error => {
           console.error('API Error : ', error.status);
@@ -79,7 +79,7 @@ export class CadItGeralPage {
         .then(data => {
           console.log('API Response : ', data.json());
           this.util.msgAlert('Item geral salvo com sucesso!');
-          this.navCtrl.push(CadItGeralPage);
+          // this.navCtrl.push(CadItGeralPage);
           this.getItensGerais();
         }).catch(error => {
           console.error('API Error : ', error.status);
@@ -155,7 +155,7 @@ export class CadItGeralPage {
                 this.itensGerais.splice(i, 1);
                 console.log('API Response : ', data.json());
                 this.util.msgAlert('Item geral removido com sucesso!');
-                this.navCtrl.push(CadItGeralPage);
+                // this.navCtrl.push(CadItGeralPage);
               }).catch(error => {
                 console.error('API Error : ', error.status);
                 console.error('API Error : ', JSON.stringify(error));

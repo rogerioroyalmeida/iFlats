@@ -7,6 +7,7 @@ import { Flat } from '../../model/flat';
 import { CadItGeralPage } from '../cad-it-geral/cad-it-geral';
 import { CadItCozinhaPage } from '../cad-it-cozinha/cad-it-cozinha';
 import { Util } from '../../util/utils';
+import { CadItEntretenimentoPage } from '../cad-it-entretenimento/cad-it-entretenimento';
 
 @IonicPage()
 @Component({
@@ -142,6 +143,10 @@ export class ListFlatsPage {
 
   abrirItCozinha() {
     this.navCtrl.push(CadItCozinhaPage);
+  }
+
+  abrirItEntretenimento() {
+    this.navCtrl.push(CadItEntretenimentoPage);
   }
 
 }
