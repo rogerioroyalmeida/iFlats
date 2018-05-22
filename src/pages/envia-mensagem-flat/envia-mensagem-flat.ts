@@ -22,6 +22,7 @@ export class EnviaMensagemFlatPage {
   toUser: Usuario = new Usuario();
   editorMsg = '';
   showEmojiPicker = false;
+  cdMensagemInserida = NaN;
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
@@ -182,7 +183,7 @@ export class EnviaMensagemFlatPage {
 
     this.enviarMsg(newMsg)
     .then(() => {
-      let index = this.getMsgIndexById(newMsg.getCdMensagem());
+      let index = this.getMsgIndexById(this.cdMensagemInserida);
       if (index !== -1) {
         this.msgList[index].status2 = 'success';
       }
@@ -208,6 +209,7 @@ export class EnviaMensagemFlatPage {
     .toPromise()
     .then(data => {
       console.log('API Response : ', data.json());
+      this.cdMensagemInserida = data.json().insertId;
     }).catch(error => {
       console.error('API Error : ', error.status);
       console.error('API Error : ', JSON.stringify(error));

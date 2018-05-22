@@ -221,6 +221,8 @@ export class RecebeMensagemFlatPage {
     .toPromise()
     .then(data => {
       console.log('API Response : ', data.json());
+      console.log('ALAN: ', data[0].insertId)
+      msg.setCdMensagem(data[0].insertId);
     }).catch(error => {
       console.error('API Error : ', error.status);
       console.error('API Error : ', JSON.stringify(error));

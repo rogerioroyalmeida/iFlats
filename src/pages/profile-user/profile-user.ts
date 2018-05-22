@@ -82,7 +82,7 @@ export class ProfileUserPage {
         .then(data => {
           console.log('API Response : ', data.json());
           this.util.msgAlert('Usuario atualizado com sucesso!');
-          this.navCtrl.push(HomePage);
+          this.navCtrl.setRoot(HomePage);
         }).catch(error => {
           console.error('API Error : ', error.status);
           console.error('API Error : ', JSON.stringify(error));

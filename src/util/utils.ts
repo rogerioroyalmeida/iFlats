@@ -41,6 +41,12 @@ export class Util {
 
     flatsMensagensRotaGetByUsuario = this.cadFlatsRotaPrincipal + 'mensagens/';
 
+    solicReservaRotaPrincipal = this.dominio + 'solicitacao_reserva/';
+    solicReservaRotaGetByUsuario = this.solicReservaRotaPrincipal + 'usuario/';
+    solicReservaRotaGetByUsuarioResp = this.solicReservaRotaPrincipal + 'usuario_resp/';
+
+    reservaRotaPrincipal = this.dominio + 'reserva/';
+
     constructor(public toastCtrl: ToastController) {
 
     }

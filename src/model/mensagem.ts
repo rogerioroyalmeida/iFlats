@@ -17,6 +17,10 @@ export class Mensagem {
         return this.cd_mensagem;
     }
 
+    public setCdMensagem(cd_mensagem: number) {
+        this.cd_mensagem = cd_mensagem;
+    }
+
     public getCdFlat() {
         return this.cd_flat;
     }

@@ -112,6 +112,8 @@ export class MyApp {
     this.loginService.signOut()
       .then(() => {
         this.util.msgAlert('Sessão encerrada com sucesso.');
+        this.util.cdUsuarioLogado = '';
+        this.util.usuarioIsAdm = false;
         this.nav.setRoot(HomePage);
       })
       .catch((error) => {

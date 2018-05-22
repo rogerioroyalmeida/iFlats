@@ -63,10 +63,10 @@ export class CadastroUsuarioPage {
                     options)
               .toPromise()
               .then(data => {
-              console.log('API Response : ', data.json());
+                console.log('API Response : ', data.json());
               }).catch(error => {
-              console.error('API Error : ', error.status);
-              console.error('API Error : ', JSON.stringify(error));
+                console.error('API Error : ', error.status);
+                console.error('API Error : ', JSON.stringify(error));
               });
 
   }
