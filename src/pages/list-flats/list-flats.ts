@@ -8,6 +8,7 @@ import { CadItGeralPage } from '../cad-it-geral/cad-it-geral';
 import { CadItCozinhaPage } from '../cad-it-cozinha/cad-it-cozinha';
 import { Util } from '../../util/utils';
 import { CadItEntretenimentoPage } from '../cad-it-entretenimento/cad-it-entretenimento';
+import { RecebeMensagemFlatPage } from '../recebe-mensagem-flat/recebe-mensagem-flat';
 
 @IonicPage()
 @Component({
@@ -147,6 +148,10 @@ export class ListFlatsPage {
 
   abrirItEntretenimento() {
     this.navCtrl.push(CadItEntretenimentoPage);
+  }
+
+  abrirListMensagens(i: number, item: Flat) {
+    this.navCtrl.push(RecebeMensagemFlatPage, {'flat': item});
   }
 
 }

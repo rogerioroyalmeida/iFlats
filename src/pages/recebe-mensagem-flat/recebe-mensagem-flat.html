@@ -3,11 +3,50 @@
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>Mensagens recebidas do flat XYZ</ion-title>
+        <ion-title>Mensagens recebidas do flat {{ flat.getCodigoFlat() }}</ion-title>
     </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
+    <div class="message-wrap">
 
+        <div *ngFor="let msg of msgList"
+                class="message"
+                [class.left]=" msg.cd_usuario_emissario === toUser.getCdUsuario() "
+                [class.right]=" msg.cd_usuario_emissario === user.getCdUsuario() ">
+            <img class="user-img" [src]="msg.nm_usuario_emissario" alt="" src="">
+            <ion-spinner name="dots" *ngIf="msg.status2 === 'pending'"></ion-spinner>
+            <div class="msg-detail">
+            <div class="msg-info">
+                <p>
+                {{msg.nm_usuario_emissario}}&nbsp;&nbsp;&nbsp;{{msg.time | relativeTime}}</p>
+            </div>
+            <div class="msg-content">
+                <span class="triangle"></span>
+                <p class="line-breaker ">{{msg.ds_mensagem}}</p>
+            </div>
+            </div>
+        </div>
+    
+        </div>
+    
 </ion-content>
+    
+<ion-footer no-border [style.height]="showEmojiPicker ? '255px' : '55px'">
+<div class="input-wrap">
+    <button ion-button clear icon-only item-right (click)="switchEmojiPicker()">
+    <ion-icon name="md-happy"></ion-icon>
+    </button>
+    <textarea #chat_input
+            placeholder="Text Input"
+            [(ngModel)]="editorMsg"
+            (keyup.enter)="sendMsg()"
+            (focusin)="onFocus()">
+    </textarea>
+    <button ion-button clear icon-only item-right (click)="sendMsg()">
+    <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
+    </button>
+</div>
+<emoji-picker [(ngModel)]="editorMsg"></emoji-picker>
+</ion-footer>

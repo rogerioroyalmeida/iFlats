@@ -94,7 +94,11 @@ export class BuscaFlatsPage {
 
   chamarTelaMensagens(item: Flat) {
 
-    this.navCtrl.push(EnviaMensagemFlatPage, {'flat': item});
+    if (item.getCdUsuarioCadastro().toString() != this.util.cdUsuarioLogado) {
+      this.navCtrl.push(EnviaMensagemFlatPage, {'flat': item});
+    } else {
+      this.util.msgAlert('Não é possível enviar mensagens para você mesmo!');
+    }
 
   }
 

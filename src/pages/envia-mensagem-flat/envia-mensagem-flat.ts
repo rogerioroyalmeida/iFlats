@@ -158,53 +158,35 @@ export class EnviaMensagemFlatPage {
   sendMsg() {
     if (!this.editorMsg.trim()) return;
 
-    // Mock message
-    // const id = Date.now().toString();
-    // let newMsg: Mensagem = {
-    //   messageId: Date.now().toString(),
-    //   userId: this.user.getCdUsuario().toString(),
-    //   userName: this.user.getDsNome(),
-    //   userAvatar: this.user.getDsNome(),
-    //   toUserId: this.toUser.getCdUsuario().toString(),
-    //   time: Date.now(),
-    //   message: this.editorMsg,
-    //   status: 'pending'
-    // };
+    let newMsg: Mensagem = new Mensagem();
 
-    if (this.user.getCdUsuario() != this.toUser.getCdUsuario()) {
+    newMsg.setCdFlat(this.flat.getCodigoFlat());
+    newMsg.setAnexo01('');
+    newMsg.setAnexo02('');
+    newMsg.setCdUsuarioEmissario(this.user.getCdUsuario());
+    newMsg.setNmUsuarioEmissario(this.user.getDsNome());
+    newMsg.setCdUsuarioDestinatario(this.toUser.getCdUsuario());
+    newMsg.setNmUsuarioDestinatario(this.toUser.getDsNome());
+    // newMsg.setDtMensagem(new Date());
+    newMsg.setTime(Date.now());
+    newMsg.setDsMensagem(this.editorMsg);
+    newMsg.setStatus('N');
+    newMsg.status2 = 'pending';
 
-      let newMsg: Mensagem = new Mensagem();
+    this.pushNewMsg(newMsg);
+    this.editorMsg = '';
 
-      newMsg.setCdFlat(this.flat.getCodigoFlat());
-      newMsg.setAnexo01('');
-      newMsg.setAnexo02('');
-      newMsg.setCdUsuarioEmissario(this.user.getCdUsuario());
-      newMsg.setNmUsuarioEmissario(this.user.getDsNome());
-      newMsg.setCdUsuarioDestinatario(this.toUser.getCdUsuario());
-      newMsg.setNmUsuarioDestinatario(this.toUser.getDsNome());
-      // newMsg.setDtMensagem(new Date());
-      newMsg.setTime(Date.now());
-      newMsg.setDsMensagem(this.editorMsg);
-      newMsg.setStatus('N');
-      newMsg.status2 = 'pending';
-
-      this.pushNewMsg(newMsg);
-      this.editorMsg = '';
-
-      if (!this.showEmojiPicker) {
-        this.focus();
-      }
-
-      this.enviarMsg(newMsg)
-      .then(() => {
-        let index = this.getMsgIndexById(newMsg.getCdMensagem());
-        if (index !== -1) {
-          this.msgList[index].status2 = 'success';
-        }
-      })
-    } else {
-      this.util.msgAlert('Não é possível enviar mensagens para você mesmo!');
+    if (!this.showEmojiPicker) {
+      this.focus();
     }
+
+    this.enviarMsg(newMsg)
+    .then(() => {
+      let index = this.getMsgIndexById(newMsg.getCdMensagem());
+      if (index !== -1) {
+        this.msgList[index].status2 = 'success';
+      }
+    })
   }
 
   enviarMsg(msg: Mensagem) {

@@ -31,9 +31,14 @@
     <h3 padding>Meus Flats</h3>
     <ion-grid>
       <ion-row *ngFor="let item of flats; let i = index" [class.line-even]="i == 0 || ((i+1) % 2 != 0)" [class.line-odd]="i > 0 && ((i+1) % 2 == 0)" (mouseenter)="showIcon(item)" (mouseleave)="hideIcon(item)">
-        <ion-col col-11>
+        <ion-col col-10>
           <button ion-item (click)="itemSelected(item)">
             {{ item.getDsTituloAnuncio() }}
+          </button>
+        </ion-col>
+        <ion-col col-1 style="text-align: center; font-size: 20px">
+          <button ion-button clear *ngIf="item.iconVisivel">
+            <ion-icon ios="ios-mail" md="md-mail" (click)="abrirListMensagens(i, item)" end></ion-icon>
           </button>
         </ion-col>
         <ion-col col-1 style="text-align: center; font-size: 20px">
