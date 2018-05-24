@@ -22,7 +22,6 @@ export class EnviaMensagemFlatPage {
   toUser: Usuario = new Usuario();
   editorMsg = '';
   showEmojiPicker = false;
-  cdMensagemInserida = NaN;
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
@@ -66,6 +65,8 @@ export class EnviaMensagemFlatPage {
         console.log('get usuario chat-service: ', data)
       });
 
+      this.scrollToBottom();
+
     // Get mock user information
     // this.toUser = this.getUserInfo(this.flat.getCdUsuarioCadastro().toString());
 
@@ -108,7 +109,8 @@ export class EnviaMensagemFlatPage {
 
     // Subscribe to received  new message events
     this.events.subscribe('chat:received', msg => {
-      this.pushNewMsg(msg);
+      if (msg.getCdUsuarioEmissario() != this.user.getCdUsuario())
+        this.pushNewMsg(msg);
     })
   }
 
@@ -135,7 +137,7 @@ export class EnviaMensagemFlatPage {
    */
   getMsg() {
 
-    return this.http.get(this.util.mensagemRotaGetByFlatUsuario + this.flat.getCodigoFlat() + '/' + this.util.cdUsuarioLogado)
+    return this.http.get(this.util.mensagemRotaGetByFlat + this.flat.getCodigoFlat())
       .map(res => res.json())
       .subscribe(data => {
 
@@ -183,7 +185,7 @@ export class EnviaMensagemFlatPage {
 
     this.enviarMsg(newMsg)
     .then(() => {
-      let index = this.getMsgIndexById(this.cdMensagemInserida);
+      let index = this.getMsgIndexById(newMsg.getCdFlat(), newMsg.getDsMensagem(), newMsg.getCdUsuarioEmissario(), newMsg.getCdUsuarioDestinatario());
       if (index !== -1) {
         this.msgList[index].status2 = 'success';
       }
@@ -195,7 +197,7 @@ export class EnviaMensagemFlatPage {
     .then(() => this.mockNewMsg(msg));
   }
 
-  mockNewMsg(msg) {
+  mockNewMsg(msg: Mensagem) {
 
     let headers = new Headers(
     {
@@ -209,7 +211,7 @@ export class EnviaMensagemFlatPage {
     .toPromise()
     .then(data => {
       console.log('API Response : ', data.json());
-      this.cdMensagemInserida = data.json().insertId;
+      msg.setCdMensagem(data.json().insertId);
     }).catch(error => {
       console.error('API Error : ', error.status);
       console.error('API Error : ', JSON.stringify(error));
@@ -236,8 +238,11 @@ export class EnviaMensagemFlatPage {
     this.scrollToBottom();
   }
 
-  getMsgIndexById(id: number) {
-    return this.msgList.findIndex(e => e.getCdMensagem() === id)
+  getMsgIndexById(cd_flat: number, ds_mensagem: string, cd_usuario_emi: number, cd_usuario_dest: number) {
+    return this.msgList.findIndex(e => e.cd_flat === cd_flat && 
+                                  e.ds_mensagem === ds_mensagem && 
+                                  e.cd_usuario_emissario === cd_usuario_emi && 
+                                  e.cd_usuario_destinatario === cd_usuario_dest)
   }
 
   scrollToBottom() {

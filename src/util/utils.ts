@@ -37,9 +37,10 @@ export class Util {
     favoritosRotaGetFlatsByUsuario = this.favoritosRotaGetByUsuario + 'flats/';
 
     mensagemRotaPrincipal = this.dominio + 'mensagens/';
-    mensagemRotaGetByFlatUsuario = this.mensagemRotaPrincipal + 'flat/usuario/';
+    mensagemRotaGetByFlat = this.mensagemRotaPrincipal + 'flat/';
+    mensagemRotaGetByFlatUsuario = this.mensagemRotaGetByFlat + 'usuario/';
 
-    flatsMensagensRotaGetByUsuario = this.cadFlatsRotaPrincipal + 'mensagens/';
+    flatsMensagensRotaGetByUsuarioEmissario = this.cadFlatsRotaPrincipal + 'mensagens/';
 
     solicReservaRotaPrincipal = this.dominio + 'solicitacao_reserva/';
     solicReservaRotaGetByUsuario = this.solicReservaRotaPrincipal + 'usuario/';

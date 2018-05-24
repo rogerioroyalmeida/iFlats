@@ -4,6 +4,7 @@ import { Flat } from '../../model/flat';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Util } from '../../util/utils';
+import { EnviaMensagemFlatPage } from '../envia-mensagem-flat/envia-mensagem-flat';
 
 @IonicPage()
 @Component({
@@ -60,10 +61,94 @@ export class ListFavoritosPage {
             this.flatsFavoritos.push(flat);
           });
 
+          this.setFlatsFavoritos();
+
           console.log('list flats favoritos: ', data);
 
         }
     });
+
+  }
+
+  setFlatsFavoritos() {
+    if(this.util.cdUsuarioLogado) {
+      this.http.get(this.util.favoritosRotaGetByUsuario + this.util.cdUsuarioLogado)
+        .map(res => res.json())
+        .subscribe(data => {
+
+          if (data) {
+
+            if (this.flatsFavoritos.length > 0) {
+              data.forEach(element => {
+
+                this.flatsFavoritos.find(x => x.getCodigoFlat() == element.cd_flat).isFavorito = true;
+                
+              });
+
+              console.log('list flats_favoritos: ', data);
+            }
+
+          }
+        });
+    }
+  }
+
+  setFavorito(item: Flat) {
+
+    if(this.util.cdUsuarioLogado) {
+      // CHAMA O DELETE PARA APAGAR O FLAT FAVORITO DO USUARIO
+      let headers = new Headers(
+      {
+        'Content-Type' : 'application/json'
+      });
+      let options = new RequestOptions({ headers: headers });
+
+      this.http.delete(this.util.favoritosRotaPrincipal + item.getCodigoFlat() + '/' + this.util.cdUsuarioLogado, 
+                        options)
+        .toPromise()
+        .then(data => {
+          console.log('API Response : ', data.json());
+        }).catch(error => {
+          console.error('API Error : ', error.status);
+          console.error('API Error : ', JSON.stringify(error));
+        });
+
+      if (item.isFavorito) {
+        item.isFavorito = false;
+        this.util.msgAlert('Flat removido da lista de favoritos!');
+      } else {
+
+        this.http.post(this.util.favoritosRotaPrincipal, 
+                {cd_flat: item.getCodigoFlat(), cd_usuario: this.util.cdUsuarioLogado}, 
+                options)
+        .toPromise()
+        .then(data => {
+          console.log('API Response : ', data.json());
+          this.util.msgAlert('Flat favorito salvo com sucesso!');
+          item.isFavorito = true;
+        }).catch(error => {
+          console.error('API Error : ', error.status);
+          console.error('API Error : ', JSON.stringify(error));
+          this.util.msgAlert('Erro ao salvar o flat favorito!');
+        });
+        
+      }
+    } else {
+      this.util.msgAlert('É necessário realizar login para selecionar favoritos!');
+    }
+  }
+
+  chamarTelaMensagens(item: Flat) {
+
+    if(this.util.cdUsuarioLogado) {
+      if (item.getCdUsuarioCadastro().toString() != this.util.cdUsuarioLogado) {
+        this.navCtrl.push(EnviaMensagemFlatPage, {'flat': item});
+      } else {
+        this.util.msgAlert('Não é possível enviar mensagens para você mesmo!');
+      }
+    } else {
+      this.util.msgAlert('É necessário realizar login para enviar mensagens!');
+    }
 
   }
 

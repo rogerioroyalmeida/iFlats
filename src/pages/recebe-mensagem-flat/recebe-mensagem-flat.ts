@@ -40,45 +40,49 @@ export class RecebeMensagemFlatPage {
       .subscribe(data => {
 
         if (data[0])
-          cdUsuarioMensagem = data[0].cd_usuario_destinatario;
+          cdUsuarioMensagem = data[0].cd_usuario_emissario;
 
-      });
+          this.http.get(this.util.usuarioRotaGetByCodigo + cdUsuarioMensagem.toString())
+            .map(res => res.json())
+            .subscribe(data => {
 
-    this.http.get(this.util.usuarioRotaGetByCodigo + cdUsuarioMensagem)
-      .map(res => res.json())
-      .subscribe(data => {
+              if (data[0]) {
+                this.toUser.setCdUsuario(data[0].cd_usuario);
+                this.toUser.setEmail(data[0].email);
+                this.toUser.setDsNome(data[0].ds_nome);
+                this.toUser.setDsSobreNome(data[0].ds_sobrenome);
+                this.toUser.setCampo01(data[0].campo01);
+                this.toUser.setCampo02(data[0].campo02);
+                this.toUser.setCampoReal(data[0].campo_real);
+                this.toUser.setObservacao(data[0].observacao);
+              } else {
+                this.util.msgAlert('Você não possui mensagens de usuarios para seu flat.', 3000);
+              }
 
-        if (data[0]) {
-          this.toUser.setCdUsuario(data[0].cd_usuario);
-          this.toUser.setEmail(data[0].email);
-          this.toUser.setDsNome(data[0].ds_nome);
-          this.toUser.setDsSobreNome(data[0].ds_sobrenome);
-          this.toUser.setCampo01(data[0].campo01);
-          this.toUser.setCampo02(data[0].campo02);
-          this.toUser.setCampoReal(data[0].campo_real);
-          this.toUser.setObservacao(data[0].observacao);
-        } else {
-          this.util.msgAlert('Você não possui mensagens de usuarios para seu flat.', 3000);
-        }
+              console.log('get usuario chat-service: ', data)
+            });
 
-        console.log('get usuario chat-service: ', data)
       });
 
     this.http.get(this.util.usuarioRotaGetByCodigo + this.util.cdUsuarioLogado)
       .map(res => res.json())
       .subscribe(data => {
 
-        this.user.setCdUsuario(data[0].cd_usuario);
-        this.user.setEmail(data[0].email);
-        this.user.setDsNome(data[0].ds_nome);
-        this.user.setDsSobreNome(data[0].ds_sobrenome);
-        this.user.setCampo01(data[0].campo01);
-        this.user.setCampo02(data[0].campo02);
-        this.user.setCampoReal(data[0].campo_real);
-        this.user.setObservacao(data[0].observacao);
+        if (data[0]) {
+          this.user.setCdUsuario(data[0].cd_usuario);
+          this.user.setEmail(data[0].email);
+          this.user.setDsNome(data[0].ds_nome);
+          this.user.setDsSobreNome(data[0].ds_sobrenome);
+          this.user.setCampo01(data[0].campo01);
+          this.user.setCampo02(data[0].campo02);
+          this.user.setCampoReal(data[0].campo_real);
+          this.user.setObservacao(data[0].observacao);
+        }
 
         console.log('get usuario chat-service: ', data)
       });
+
+    this.scrollToBottom();
   }
 
   getUserInfo(cdUsuario: string): Usuario {
@@ -115,7 +119,8 @@ export class RecebeMensagemFlatPage {
 
     // Subscribe to received  new message events
     this.events.subscribe('chat:received', msg => {
-      this.pushNewMsg(msg);
+      if (msg.getCdUsuarioEmissario() != this.user.getCdUsuario())
+        this.pushNewMsg(msg);
     })
   }
 
@@ -142,7 +147,7 @@ export class RecebeMensagemFlatPage {
    */
   getMsg() {
 
-    return this.http.get(this.util.mensagemRotaGetByFlatUsuario + this.flat.getCodigoFlat() + '/' + this.util.cdUsuarioLogado)
+    return this.http.get(this.util.mensagemRotaGetByFlat + this.flat.getCodigoFlat())
       .map(res => res.json())
       .subscribe(data => {
 
@@ -192,7 +197,7 @@ export class RecebeMensagemFlatPage {
 
       this.enviarMsg(newMsg)
       .then(() => {
-        let index = this.getMsgIndexById(newMsg.getCdMensagem());
+        let index = this.getMsgIndexById(newMsg.getCdFlat(), newMsg.getDsMensagem(), newMsg.getCdUsuarioEmissario(), newMsg.getCdUsuarioDestinatario());
         if (index !== -1) {
           this.msgList[index].status2 = 'success';
         }
@@ -221,8 +226,7 @@ export class RecebeMensagemFlatPage {
     .toPromise()
     .then(data => {
       console.log('API Response : ', data.json());
-      console.log('ALAN: ', data[0].insertId)
-      msg.setCdMensagem(data[0].insertId);
+      msg.setCdMensagem(data.json().insertId);
     }).catch(error => {
       console.error('API Error : ', error.status);
       console.error('API Error : ', JSON.stringify(error));
@@ -249,8 +253,11 @@ export class RecebeMensagemFlatPage {
     this.scrollToBottom();
   }
 
-  getMsgIndexById(id: number) {
-    return this.msgList.findIndex(e => e.getCdMensagem() === id)
+  getMsgIndexById(cd_flat: number, ds_mensagem: string, cd_usuario_emi: number, cd_usuario_dest: number) {
+    return this.msgList.findIndex(e => e.cd_flat === cd_flat && 
+                                  e.ds_mensagem === ds_mensagem && 
+                                  e.cd_usuario_emissario === cd_usuario_emi && 
+                                  e.cd_usuario_destinatario === cd_usuario_dest)
   }
 
   scrollToBottom() {
