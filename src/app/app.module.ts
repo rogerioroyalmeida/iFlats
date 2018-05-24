@@ -28,6 +28,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { EmojiPickerComponentModule } from '../components/emoji-picker/emoji-picker.module';
 import { RelativeTime } from '../pipes/relative-time';
 import { CadItEntretenimentoPage } from '../pages/cad-it-entretenimento/cad-it-entretenimento';
+import { SolicReservaPage } from '../pages/solic-reserva/solic-reserva';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCjVxmw5QdseWpzGFVuF4ZIPg6sIZagq0I",
@@ -55,7 +56,8 @@ const firebaseConfig = {
     EnviaMensagemFlatPage,
     RecebeMensagemFlatPage,
     RelativeTime,
-    CadItEntretenimentoPage
+    CadItEntretenimentoPage,
+    SolicReservaPage
   ],
   imports: [
     BrowserModule,
@@ -82,7 +84,8 @@ const firebaseConfig = {
     ListFavoritosPage,
     EnviaMensagemFlatPage,
     RecebeMensagemFlatPage,
-    CadItEntretenimentoPage
+    CadItEntretenimentoPage,
+    SolicReservaPage
   ],
   providers: [
     StatusBar,

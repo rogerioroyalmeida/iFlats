@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-navbar>
+      <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Solicitar reserva</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+  <form #form="ngForm" item-height="100%" padding>
+    <h3 padding>Confirmar solicitação de reserva</h3>
+    <div padding margin novalidate style="border: 1px solid rgb(0, 0, 0);">
+      <ion-grid>
+        <ion-row align-items-start>
+          <ion-col>
+            <h2>{{ flat.getDsTituloAnuncio() }}</h2>
+            <h3>{{ flat.getCidade() }}, {{ flat.getEstado() }}</h3>
+            <img height="350" width="400" src="../../assets/imgs/iflats_logo1.jpg">
+          </ion-col>
+          <ion-col>
+            <ion-label stacked>Descrição do flat</ion-label>
+            <p>{{ flat.getDsFlat() }}</p>
+            <br />
+            <ion-label stacked>Regras da casa</ion-label>
+            <p>{{ flat.getDsRegras() }}</p>
+            <br />
+            <ion-label stacked>Nº de quartos</ion-label>
+            <p>{{ flat.getNrQuartos() }}</p>
+            <br />
+            <ion-label stacked>Nº de banheiros</ion-label>
+            <p>{{ flat.getNrBanheiros() }}</p>
+            <br />
+            <ion-label stacked>Máximo de pessoas</ion-label>
+            <p>{{ flat.getNrMaxPessoas() }}</p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      
+    </div>
+
+    <h3 padding>Informar dados da reserva</h3>
+    <div padding margin novalidate style="border: 1px solid rgb(0, 0, 0);">
+      <ion-grid>
+        <ion-row align-items-start>
+          <ion-col>
+            <ion-label stacked>Número de dias</ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div style="width: 100%; text-align: center; padding-bottom: 20px; padding-top: 20px;">
+      <button style="width: 150px;" ion-button block large round [disabled]="!habilitaReserva" (click)="confirmarReserva()">Confirmar</button>
+    </div>
+  </form>
+
+</ion-content>

@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import { Util } from '../../util/utils';
 import { Flat } from '../../model/flat';
 import { EnviaMensagemFlatPage } from '../envia-mensagem-flat/envia-mensagem-flat';
+import { SolicReservaPage } from '../solic-reserva/solic-reserva';
 
 @IonicPage()
 @Component({
@@ -110,6 +111,15 @@ export class BuscaFlatsPage {
       this.util.msgAlert('É necessário realizar login para enviar mensagens!');
     }
 
+  }
+
+  chamarTelaSolicReserva(item: Flat) {
+    
+    if(this.util.cdUsuarioLogado) {
+      this.navCtrl.push(SolicReservaPage, {'flat': item});
+    } else {
+      this.util.msgAlert('É necessário realizar login para reservar!');
+    }
   }
 
   ionViewDidLoad() {
