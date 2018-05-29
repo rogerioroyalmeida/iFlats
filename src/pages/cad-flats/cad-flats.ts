@@ -297,7 +297,9 @@ export class CadFlatsPage {
 
           data.forEach(element => {
 
-            this.listGeral.find(x => x.getCdItgeral() == element.cd_itgeral).checado = true;
+            let itGeral: ItGeral = this.listGeral.find(x => x.getCdItgeral() == element.cd_itgeral);
+            if (itGeral)
+              itGeral.checado = true;
             
           });
 
@@ -405,7 +407,9 @@ export class CadFlatsPage {
             // flatitgeral.cd_flat = element.cd_flat;
             // flatitgeral.cd_itgeral = element.cd_itgeral;
 
-            this.listCozinha.find(x => x.getCdItemcozinha() == flatitcozinha.cd_itemcozinha).checado = true;
+            let itCozinha: ItCozinha = this.listCozinha.find(x => x.getCdItemcozinha() == flatitcozinha.cd_itemcozinha);
+            if (itCozinha)
+              itCozinha.checado = true;
             
           });
 
@@ -513,7 +517,9 @@ export class CadFlatsPage {
             // flatitgeral.cd_flat = element.cd_flat;
             // flatitgeral.cd_itgeral = element.cd_itgeral;
 
-            this.listEntretenimento.find(x => x.getCdItemEntretenimento() == flatitentretenimento.cd_itentretenimento).checado = true;
+            let itEntretenimento: ItEntretenimento = this.listEntretenimento.find(x => x.getCdItemEntretenimento() == flatitentretenimento.cd_itentretenimento);
+            if (itEntretenimento)
+              itEntretenimento.checado = true;
             
           });
 

@@ -42,7 +42,9 @@ export class BuscaFlatsPage {
             if (this.listFlats.length > 0) {
               data.forEach(element => {
 
-                this.listFlats.find(x => x.getCodigoFlat() == element.cd_flat).isFavorito = true;
+                let f: Flat = this.listFlats.find(x => x.getCodigoFlat() == element.cd_flat);
+                if (f)
+                  f.isFavorito = true;
                 
               });
 

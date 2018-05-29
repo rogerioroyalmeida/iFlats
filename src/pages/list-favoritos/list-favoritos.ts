@@ -81,7 +81,9 @@ export class ListFavoritosPage {
             if (this.flatsFavoritos.length > 0) {
               data.forEach(element => {
 
-                this.flatsFavoritos.find(x => x.getCodigoFlat() == element.cd_flat).isFavorito = true;
+                let f: Flat = this.flatsFavoritos.find(x => x.getCodigoFlat() == element.cd_flat);
+                if (f)
+                  f.isFavorito = true;
                 
               });
 

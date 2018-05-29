@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-navbar>
+      <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Minhas solicitações de reserva</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-label stacked *ngIf="listSolicReserva.length === 0">Você não possui solicitações de reserva realizadas</ion-label>
+  <ion-grid *ngIf="listSolicReserva.length > 0">
+    <ion-row>
+      <ion-col>
+        <ion-label stacked>Código</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-label stacked>Flat</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-label stacked>Locatário</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-label stacked>Proprietário</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-label stacked>Dt. Inicial</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-label stacked>Dt. Final</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-label stacked>Nº dias</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-label stacked>Nº Pessoas</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-label stacked>Vl Diária</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-label stacked>Vl Entrada</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-label stacked>Vl Total</ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngFor="let item of listSolicReserva">
+      <ion-col>
+        {{ item.getCdSolicReserva() }}
+      </ion-col>
+      <ion-col>
+        {{ item.getCdFlat() }}
+      </ion-col>
+      <ion-col>
+        {{ item.getCdUsuario() }}
+      </ion-col>
+      <ion-col>
+        {{ item.getCdUsuarioResponsavel() }}
+      </ion-col>
+      <ion-col>
+        {{ item.getDtInicial() }}
+      </ion-col>
+      <ion-col>
+        {{ item.getDtFinal() }}
+      </ion-col>
+      <ion-col>
+        {{ item.getNrDias() }}
+      </ion-col>
+      <ion-col>
+        {{ item.getNrPessoas() }}
+      </ion-col>
+      <ion-col>
+        {{ item.getVlDiaria() }}
+      </ion-col>
+      <ion-col>
+        {{ item.getVlEntrada() }}
+      </ion-col>
+      <ion-col>
+        {{ item.getVlTotal() }}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

@@ -47,6 +47,7 @@ export class Util {
     solicReservaRotaGetByUsuarioResp = this.solicReservaRotaPrincipal + 'usuario_resp/';
 
     reservaRotaPrincipal = this.dominio + 'reserva/';
+    reservaRotaGetByUser = this.reservaRotaPrincipal + 'usuario/';
 
     constructor(public toastCtrl: ToastController) {
 
@@ -64,6 +65,20 @@ export class Util {
         });
         
         toast.present();
+    }
+
+    dateToDMY(dt: Date): string {
+        var year, month, day;
+        year = String(dt.getFullYear());
+        month = String(dt.getMonth() + 1);
+        if (month.length == 1) {
+            month = "0" + month;
+        }
+        day = String(dt.getDate());
+        if (day.length == 1) {
+            day = "0" + day;
+        }
+        return year + "-" + month + "-" + day;
     }
 
 }

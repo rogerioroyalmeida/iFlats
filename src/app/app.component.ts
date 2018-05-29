@@ -20,6 +20,7 @@ import 'rxjs/add/operator/map';
 import { ListFavoritosPage } from '../pages/list-favoritos/list-favoritos';
 import { BuscaFlatsPage } from '../pages/busca-flats/busca-flats';
 import { Flat } from '../model/flat';
+import { ListSolicRealizPage } from '../pages/list-solic-realiz/list-solic-realiz';
 
 @Component({
   templateUrl: 'app.html',
@@ -211,6 +212,18 @@ export class MyApp {
 
             }
           });
+
+        }
+      }
+    );
+
+    actions.push(
+      {
+        text: 'Solicitações',
+        role: 'destructive',
+        handler: () => {
+
+          this.nav.push(ListSolicRealizPage);
 
         }
       }

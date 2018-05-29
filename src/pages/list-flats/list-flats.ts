@@ -9,6 +9,8 @@ import { CadItCozinhaPage } from '../cad-it-cozinha/cad-it-cozinha';
 import { Util } from '../../util/utils';
 import { CadItEntretenimentoPage } from '../cad-it-entretenimento/cad-it-entretenimento';
 import { RecebeMensagemFlatPage } from '../recebe-mensagem-flat/recebe-mensagem-flat';
+import { SolicReserva } from '../../model/solic-reserva';
+import { Reserva } from '../../model/reserva';
 
 @IonicPage()
 @Component({
@@ -18,6 +20,8 @@ import { RecebeMensagemFlatPage } from '../recebe-mensagem-flat/recebe-mensagem-
 export class ListFlatsPage {
 
   public flats: Array<Flat>;
+  public listSolicitacoes: Array<SolicReserva>;
+  public listFlatsReservados: Array<Reserva>;
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
@@ -73,6 +77,10 @@ export class ListFlatsPage {
 
         }
     });
+
+    this.buscarSolicitacoesReserva();
+    this.buscarFlatsReservados();
+
   }
 
   ionViewDidLoad() {
@@ -152,6 +160,194 @@ export class ListFlatsPage {
 
   abrirListMensagens(i: number, item: Flat) {
     this.navCtrl.push(RecebeMensagemFlatPage, {'flat': item});
+  }
+
+  aceitarSolicReserva(solicReserva: SolicReserva, i: number) {
+
+    let alert = this.alertCtrl.create({
+      title: 'Aceitar solicitação',
+      message: 'Tem certeza que deseja reservar este flat no período solicitado?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Reservar',
+          handler: () => {
+            let headers = new Headers(
+            {
+              'Content-Type' : 'application/json'
+            });
+            let options = new RequestOptions({ headers: headers });
+
+            let reserva: Reserva = new Reserva();
+
+            reserva.setCdSolicitacaoReserva(solicReserva.getCdSolicReserva());
+            reserva.setVlRestante(solicReserva.getVlTotal() - solicReserva.getVlEntrada());
+            reserva.setObservacao('');
+
+            this.http.post(this.util.reservaRotaPrincipal,
+                              reserva, 
+                              options)
+              .toPromise()
+              .then(data => {
+
+                var dtIni = solicReserva.getDtInicial();
+                var dtFim = solicReserva.getDtFinal();
+                solicReserva.setStatus('N');
+
+                var datePartsIni = dtIni.split("-");
+                var jsDateIni = new Date(parseInt(datePartsIni[0]), parseInt(datePartsIni[1]) - 1, parseInt(datePartsIni[2].substr(0,2)));
+                solicReserva.setDtInicial(jsDateIni.toISOString());
+                var datePartsFim = dtFim.split("-");
+                var jsDateFim = new Date(parseInt(datePartsFim[0]), parseInt(datePartsFim[1]) - 1, parseInt(datePartsFim[2].substr(0,2)));
+                solicReserva.setDtFinal(jsDateFim.toISOString());
+
+                this.http.patch(this.util.solicReservaRotaPrincipal + solicReserva.getCdSolicReserva(),
+                                  solicReserva, 
+                                  options)
+                    .toPromise()
+                    .then(data => {
+                      this.listSolicitacoes.splice(i, 1);
+                      console.log('API Response : ', data.json());
+                      this.buscarSolicitacoesReserva();
+                      // this.navCtrl.push(CadItCozinhaPage);
+                    }).catch(error => {
+                      console.error('API Error : ', error.status);
+                      console.error('API Error : ', JSON.stringify(error));
+                    });
+
+                console.log('API Response : ', data.json());
+                this.util.msgAlert('Flat reservado!');
+                this.buscarFlatsReservados();
+                // this.navCtrl.push(CadItCozinhaPage);
+              }).catch(error => {
+                console.error('API Error : ', error.status);
+                console.error('API Error : ', JSON.stringify(error));
+                this.util.msgAlert('Erro ao reservar o flat!');
+              });
+          }
+        }
+      ]
+    });
+    alert.present();
+
+  }
+
+  negarSolicReserva(solicReserva: SolicReserva, i: number) {
+
+    let alert = this.alertCtrl.create({
+      title: 'Negar solicitação',
+      message: 'Tem certeza que deseja negar esta solicitação de reserva?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Negar',
+          handler: () => {
+            let headers = new Headers(
+            {
+              'Content-Type' : 'application/json'
+            });
+            let options = new RequestOptions({ headers: headers });
+
+            var dtIni = solicReserva.getDtInicial();
+            var dtFim = solicReserva.getDtFinal();
+            solicReserva.setStatus('C');
+
+            solicReserva.setDtInicial(dtIni.substr(0, 10));
+            solicReserva.setDtFinal(dtFim.substr(0, 10));
+
+            this.http.patch(this.util.solicReservaRotaPrincipal + solicReserva.getCdSolicReserva(),
+                              solicReserva, 
+                              options)
+                .toPromise()
+                .then(data => {
+                  this.listSolicitacoes.splice(i, 1);
+                  console.log('API Response : ', data.json());
+                  this.util.msgAlert('Solicitação negada!');
+                  this.buscarSolicitacoesReserva();
+                  // this.navCtrl.push(CadItCozinhaPage);
+                }).catch(error => {
+                  console.error('API Error : ', error.status);
+                  console.error('API Error : ', JSON.stringify(error));
+                  this.util.msgAlert('Não foi possível negar a solicitação!');
+                });
+          }
+        }
+      ]
+    });
+    alert.present();
+
+  }
+
+  buscarSolicitacoesReserva() {
+
+    this.listSolicitacoes = new Array<SolicReserva>();
+
+    this.http.get(this.util.solicReservaRotaGetByUsuarioResp + this.util.cdUsuarioLogado)
+      .map(res => res.json())
+      .subscribe(data => {
+
+        if (data) {
+
+          data.forEach(element => {
+            let solicReserva: SolicReserva = new SolicReserva();
+            solicReserva.setCdSolicReserva(element.cd_solic_reserva);
+            solicReserva.setCdFlat(element.cd_flat);
+            solicReserva.setCdUsuario(element.cd_usuario);
+            solicReserva.setCdUsuarioResponsavel(element.cd_usuario_responsavel);
+            solicReserva.setDtInicial(element.dt_inicial);
+            solicReserva.setDtFinal(element.dt_final);
+            solicReserva.setNrDias(element.nr_dias);
+            solicReserva.setNrPessoas(element.nr_pessoas);
+            solicReserva.setVlDiaria(element.vl_diaria);
+            solicReserva.setVlEntrada(element.vl_entrada);
+            solicReserva.setVlTotal(element.vl_total);
+
+            this.listSolicitacoes.push(solicReserva);
+          });
+
+          console.log('list solicReserva: ', data);
+
+        }
+    });
+  }
+
+  buscarFlatsReservados() {
+
+    this.listFlatsReservados = new Array<Reserva>();
+
+    this.http.get(this.util.reservaRotaGetByUser + this.util.cdUsuarioLogado)
+      .map(res => res.json())
+      .subscribe(data => {
+
+        if (data) {
+
+          data.forEach(element => {
+            let reserva: Reserva = new Reserva();
+            reserva.setCdReserva(element.cd_reserva);
+            reserva.setCdSolicitacaoReserva(element.cd_solicitacao_reserva);
+            reserva.setVlRestante(element.vl_restante);
+            reserva.setObservacao(element.observacao);
+
+            this.listFlatsReservados.push(reserva);
+          });
+
+          console.log('list reserva: ', data);
+
+        }
+    });
+
   }
 
 }

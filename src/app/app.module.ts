@@ -29,6 +29,8 @@ import { EmojiPickerComponentModule } from '../components/emoji-picker/emoji-pic
 import { RelativeTime } from '../pipes/relative-time';
 import { CadItEntretenimentoPage } from '../pages/cad-it-entretenimento/cad-it-entretenimento';
 import { SolicReservaPage } from '../pages/solic-reserva/solic-reserva';
+import { BrMaskerModule } from 'brmasker-ionic-3';
+import { ListSolicRealizPage } from '../pages/list-solic-realiz/list-solic-realiz';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCjVxmw5QdseWpzGFVuF4ZIPg6sIZagq0I",
@@ -57,7 +59,8 @@ const firebaseConfig = {
     RecebeMensagemFlatPage,
     RelativeTime,
     CadItEntretenimentoPage,
-    SolicReservaPage
+    SolicReservaPage,
+    ListSolicRealizPage
   ],
   imports: [
     BrowserModule,
@@ -66,7 +69,8 @@ const firebaseConfig = {
     EmojiPickerComponentModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    BrMaskerModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -85,7 +89,8 @@ const firebaseConfig = {
     EnviaMensagemFlatPage,
     RecebeMensagemFlatPage,
     CadItEntretenimentoPage,
-    SolicReservaPage
+    SolicReservaPage,
+    ListSolicRealizPage
   ],
   providers: [
     StatusBar,

@@ -51,5 +51,84 @@
     <div>
       <button ion-button block clear margin-top (click)="abrirCadastro()">Novo flat</button>
     </div>
+
+    <h3 padding>Solicitações de reserva</h3>
+    <ion-label stacked *ngIf="listSolicitacoes.length === 0">Você não possui solicitações de reserva recebidas para negociar</ion-label>
+    <ion-grid *ngIf="listSolicitacoes.length > 0">
+      <ion-row>
+        <ion-col>
+          Flat
+        </ion-col>
+        <ion-col>
+          Usuário
+        </ion-col>
+        <ion-col>
+          Data inicial
+        </ion-col>
+        <ion-col>
+          Data final
+        </ion-col>
+        <ion-col>
+          
+        </ion-col>
+        <ion-col>
+          
+        </ion-col>
+      </ion-row>
+      <ion-row *ngFor="let item of listSolicitacoes; let i = index">
+        <ion-col>
+          {{ item.getCdFlat() }}
+        </ion-col>
+        <ion-col>
+          {{ item.getCdUsuario() }}
+        </ion-col>
+        <ion-col>
+          {{ item.getDtInicial() }}
+        </ion-col>
+        <ion-col>
+          {{ item.getDtFinal() }}
+        </ion-col>
+        <ion-col>
+          <button ion-button (click)="aceitarSolicReserva(item, i)">Aceitar</button>
+        </ion-col>
+        <ion-col>
+          <button ion-button (click)="negarSolicReserva(item, i)">Negar</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <h3 padding>Flats reservados</h3>
+    <ion-label stacked *ngIf="listFlatsReservados.length === 0">Você não possui flats reservados</ion-label>
+    <ion-grid *ngIf="listFlatsReservados.length > 0">
+      <ion-row>
+        <ion-col>
+          Reserva
+        </ion-col>
+        <ion-col>
+          Solicitação
+        </ion-col>
+        <ion-col>
+          Valor restante
+        </ion-col>
+        <ion-col>
+          Observação
+        </ion-col>
+      </ion-row>
+      <ion-row *ngFor="let item of listFlatsReservados; let i = index">
+        <ion-col>
+          {{ item.getCdReserva() }}
+        </ion-col>
+        <ion-col>
+          {{ item.getCdSolicitacaoReserva() }}
+        </ion-col>
+        <ion-col>
+          {{ item.getVlRestante() }}
+        </ion-col>
+        <ion-col>
+          {{ item.getObservacao() }}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
   </form>
 </ion-content>
