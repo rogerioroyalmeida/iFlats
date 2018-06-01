@@ -31,6 +31,7 @@ import { CadItEntretenimentoPage } from '../pages/cad-it-entretenimento/cad-it-e
 import { SolicReservaPage } from '../pages/solic-reserva/solic-reserva';
 import { BrMaskerModule } from 'brmasker-ionic-3';
 import { ListSolicRealizPage } from '../pages/list-solic-realiz/list-solic-realiz';
+import { DetalheReservaPage } from '../pages/detalhe-reserva/detalhe-reserva';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCjVxmw5QdseWpzGFVuF4ZIPg6sIZagq0I",
@@ -60,7 +61,8 @@ const firebaseConfig = {
     RelativeTime,
     CadItEntretenimentoPage,
     SolicReservaPage,
-    ListSolicRealizPage
+    ListSolicRealizPage,
+    DetalheReservaPage
   ],
   imports: [
     BrowserModule,
@@ -90,7 +92,8 @@ const firebaseConfig = {
     RecebeMensagemFlatPage,
     CadItEntretenimentoPage,
     SolicReservaPage,
-    ListSolicRealizPage
+    ListSolicRealizPage,
+    DetalheReservaPage
   ],
   providers: [
     StatusBar,

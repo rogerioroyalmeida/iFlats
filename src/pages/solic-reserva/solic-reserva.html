@@ -13,7 +13,6 @@
   <form #form="ngForm" item-height="100%" padding>
     <h3 padding>Confirmar solicitação de reserva</h3>
     <div padding margin novalidate style="border: 1px solid rgb(0, 0, 0);">
-      <p style="color: red; font-weight: bold;">Obs: Para que sua solicitação de reserva seja aceita é necessário depositar o valor da entrada equivalente a 20% do valor total da estadia</p>
       <ion-grid>
         <ion-row align-items-start>
           <ion-col>
@@ -45,6 +44,7 @@
     <h3 padding>Informar dados da reserva</h3>
     <div padding margin novalidate style="border: 1px solid rgb(0, 0, 0);">
 
+        <p style="color: red; font-weight: bold;">Obs: Para que sua solicitação de reserva seja aceita é necessário depositar o valor da entrada equivalente a 20% do valor total da estadia</p>
       <h3>Valor Diária: R&#36;&#160; {{ flat.getVlBasicoDiaria() }}</h3>
       <h3>Valor Total: R&#36;&#160; {{ vlTotal }}</h3>
       <h3>Qtd. dias {{ qtDias }}</h3>

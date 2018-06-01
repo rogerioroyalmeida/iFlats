@@ -25,6 +25,9 @@ export class Flat {
     private snAnimais: string;
     private snFestas: string;
     private snLongoPrazo: string;
+    private cd_usuario_geren_responsavel: number;
+    private observacao: string;
+    private status: string;
 
     private dtCadastro: Date;
     private cdUsuarioCadastro: number;
@@ -275,5 +278,29 @@ export class Flat {
 
     public getSnAtivo() {
         return this.snAtivo;
+    }
+
+    public setCdUsuarioGerenResponsavel(cd_usuario_geren_responsavel: number) {
+        this.cd_usuario_geren_responsavel = cd_usuario_geren_responsavel;
+    }
+
+    public getCdUsuarioGerenResponsavel() {
+        return this.cd_usuario_geren_responsavel;
+    }
+
+    public setObservacao(observacao: string) {
+        this.observacao = observacao;
+    }
+
+    public getObservacao() {
+        return this.observacao;
+    }
+
+    public setStatus(status: string) {
+        this.status = status;
+    }
+
+    public getStatus() {
+        return this.status;
     }
 }

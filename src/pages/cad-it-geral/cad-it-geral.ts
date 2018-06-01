@@ -72,7 +72,7 @@ export class CadItGeralPage {
   
       } else {
       
-        this.http.post(this.util.itGeralRotaPrincipal, 
+        this.http.post(this.util.itGeralRotaPrincipal + this.util.cdUsuarioLogado, 
                       this.itgeral, 
                       options)
         .toPromise()

@@ -130,18 +130,20 @@ export class SolicReservaPage {
   onBlurEntrada() {
     console.log('vlEntrada', this.vlEntrada);
 
-    if (this.vlTotal)
-      if (parseFloat(this.vlEntrada.toString()) >= (20 * this.vlTotal / 100) && parseFloat(this.vlEntrada.toString()) <= this.vlTotal) {
-        this.vlEntradaValido = true;
-      } else {
-        this.vlEntradaValido = false;
-        this.util.msgAlert('O valor informado não é permitido. Deve ser no mínimo 20% do valor total R$ ' + this.vlTotal, 3000);
-      }
+    if (this.vlEntrada) {
+      if (this.vlTotal)
+        if (parseFloat(this.vlEntrada.toString()) >= (20 * this.vlTotal / 100) && parseFloat(this.vlEntrada.toString()) <= this.vlTotal) {
+          this.vlEntradaValido = true;
+        } else {
+          this.vlEntradaValido = false;
+          this.util.msgAlert('O valor informado não é permitido. Deve ser no mínimo 20% do valor total R$ ' + this.vlTotal, 3000);
+        }
 
-    if (this.qtDiasValido && this.vlEntradaValido && this.nrPessoasValido) {
-      this.habilitaReserva = true;
-    } else {
-      this.habilitaReserva = false;
+      if (this.qtDiasValido && this.vlEntradaValido && this.nrPessoasValido) {
+        this.habilitaReserva = true;
+      } else {
+        this.habilitaReserva = false;
+      }
     }
   }
 

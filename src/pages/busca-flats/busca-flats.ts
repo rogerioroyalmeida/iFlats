@@ -118,7 +118,11 @@ export class BuscaFlatsPage {
   chamarTelaSolicReserva(item: Flat) {
     
     if(this.util.cdUsuarioLogado) {
-      this.navCtrl.push(SolicReservaPage, {'flat': item});
+      if (item.getCdUsuarioCadastro().toString() != this.util.cdUsuarioLogado) {
+        this.navCtrl.push(SolicReservaPage, {'flat': item});
+      } else {
+        this.util.msgAlert('Este flat é seu, não é possível reservar!');
+      }
     } else {
       this.util.msgAlert('É necessário realizar login para reservar!');
     }

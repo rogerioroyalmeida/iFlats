@@ -72,7 +72,7 @@ export class CadItCozinhaPage {
   
       } else {
       
-        this.http.post(this.util.itCozinhaRotaPrincipal, 
+        this.http.post(this.util.itCozinhaRotaPrincipal + this.util.cdUsuarioLogado, 
                       this.itcozinha, 
                       options)
         .toPromise()

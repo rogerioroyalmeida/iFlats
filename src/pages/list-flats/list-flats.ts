@@ -11,6 +11,8 @@ import { CadItEntretenimentoPage } from '../cad-it-entretenimento/cad-it-entrete
 import { RecebeMensagemFlatPage } from '../recebe-mensagem-flat/recebe-mensagem-flat';
 import { SolicReserva } from '../../model/solic-reserva';
 import { Reserva } from '../../model/reserva';
+import { DetalheReservaPage } from '../detalhe-reserva/detalhe-reserva';
+import * as moment from 'moment';
 
 @IonicPage()
 @Component({
@@ -306,8 +308,8 @@ export class ListFlatsPage {
             solicReserva.setCdFlat(element.cd_flat);
             solicReserva.setCdUsuario(element.cd_usuario);
             solicReserva.setCdUsuarioResponsavel(element.cd_usuario_responsavel);
-            solicReserva.setDtInicial(element.dt_inicial);
-            solicReserva.setDtFinal(element.dt_final);
+            solicReserva.setDtInicial(moment(data[0].dt_inicial).format('DD/MM/YYYY'));
+            solicReserva.setDtFinal(moment(data[0].dt_final).format('DD/MM/YYYY'));
             solicReserva.setNrDias(element.nr_dias);
             solicReserva.setNrPessoas(element.nr_pessoas);
             solicReserva.setVlDiaria(element.vl_diaria);
@@ -348,6 +350,10 @@ export class ListFlatsPage {
         }
     });
 
+  }
+
+  chamarTelaDetalheReserva(item: Reserva) {
+    this.navCtrl.push(DetalheReservaPage, {'reserva': item});
   }
 
 }

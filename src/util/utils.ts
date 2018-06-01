@@ -56,7 +56,7 @@ export class Util {
     msgAlert(text: string, duration?: number) {
         let toast = this.toastCtrl.create({
             message: text,
-            duration: duration?duration:1500,
+            duration: duration?duration:3000,
             position: 'middle'
         });
         

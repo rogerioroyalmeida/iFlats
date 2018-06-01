@@ -164,7 +164,7 @@ export class CadFlatsPage {
 
       if (this.flat.getCodigoFlat()) {
 
-        this.http.patch(this.util.cadFlatsRotaPrincipal + this.flat.getCodigoFlat(), 
+        this.http.patch(this.util.cadFlatsRotaPrincipal + 'usuario/' + this.util.cdUsuarioLogado + '/flat/' + this.flat.getCodigoFlat(), 
                         this.flat, 
                         options)
         .toPromise()
@@ -183,7 +183,7 @@ export class CadFlatsPage {
 
       } else {
         
-        this.http.post(this.util.cadFlatsRotaPrincipal, 
+        this.http.post(this.util.cadFlatsRotaPrincipal + this.util.cdUsuarioLogado, 
                       this.flat, 
                       options)
         .toPromise()

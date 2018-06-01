@@ -72,7 +72,7 @@ export class CadItEntretenimentoPage {
   
       } else {
       
-        this.http.post(this.util.itEntretenimentoRotaPrincipal, 
+        this.http.post(this.util.itEntretenimentoRotaPrincipal + this.util.cdUsuarioLogado, 
                       this.itentretenimento, 
                       options)
         .toPromise()

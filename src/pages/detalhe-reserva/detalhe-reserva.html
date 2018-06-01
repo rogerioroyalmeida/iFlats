@@ -1,0 +1,65 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Detalhe da reserva</ion-title>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <h3>Flat</h3>
+                <h5>{{ ds_titulo_anuncio }}</h5>
+                <h5>{{ ds_endereco }}, {{nr_endereco}}, {{ds_complemento}}</h5>
+                <h5>{{ds_pais}}, {{ds_estado}}, {{ds_cidade}}, {{ds_bairro}}</h5>
+                <ion-card>
+                    
+                    <ion-card-content>
+                        
+                        <img height="350" width="100" src="../../assets/imgs/iflats_logo1.jpg">
+                        
+            
+                        <!-- <ion-row>
+                            <p>R&#36;&#160;</p>
+                            <p>{{ flat.getVlBasicoDiaria() }}</p>
+                        </ion-row>
+                        <ion-row>
+                            <p>{{ flat.getNrQuartos() }}</p>
+                            <p>&#160;quartos</p>
+                        </ion-row>
+                        <ion-row>
+                            <p>Acomoda</p>
+                            <p>&#160;{{ flat.getNrMaxPessoas() }}</p>
+                            <p>&#160;pessoas</p>
+                        </ion-row>
+                        <ion-row>
+                            <p>{{ flat.getNrAreaFlat() }}</p>
+                            <p>&#160;m²</p>
+                        </ion-row> -->
+                    </ion-card-content>
+                    
+                    
+                </ion-card>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <h3>Detalhes da reserva</h3>
+                <h4>Usuário solicitante: {{ nmUsuario }}</h4>
+                <h4>{{ dt_inicial_reserva }} ---> {{ dt_final_reserva }}</h4>
+                <h4>{{ solicReserva.getNrDias() }} dias</h4>
+                <h4>{{ solicReserva.getNrPessoas() }} pessoas</h4>
+                <h4>Valor diária: R$ {{ solicReserva.getVlDiaria() }}</h4>
+                <h4>Valor entrada: R$ {{ solicReserva.getVlEntrada() }}</h4>
+                <h4>Valor total: R$ {{ solicReserva.getVlTotal() }}</h4>
+                <h4>Valor restante: R$ {{ reserva.getVlRestante() }}</h4>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+</ion-content>
