@@ -29,6 +29,10 @@ import { EmojiPickerComponentModule } from '../components/emoji-picker/emoji-pic
 import { RelativeTime } from '../pipes/relative-time';
 import { CadItEntretenimentoPage } from '../pages/cad-it-entretenimento/cad-it-entretenimento';
 import { SolicReservaPage } from '../pages/solic-reserva/solic-reserva';
+import { CadItCriancaPage } from '../pages/cad-it-crianca/cad-it-crianca';
+import { CadItInstalacaoPage } from '../pages/cad-it-instalacao/cad-it-instalacao';
+import { CadServicoPage } from '../pages/cad-servico/cad-servico';
+import { CadEquipamentoPage } from '../pages/cad-equipamento/cad-equipamento';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCjVxmw5QdseWpzGFVuF4ZIPg6sIZagq0I",
@@ -57,7 +61,11 @@ const firebaseConfig = {
     RecebeMensagemFlatPage,
     RelativeTime,
     CadItEntretenimentoPage,
-    SolicReservaPage
+    SolicReservaPage,
+    CadItCriancaPage,
+    CadServicoPage,
+    CadItInstalacaoPage,
+    CadEquipamentoPage
   ],
   imports: [
     BrowserModule,
@@ -85,7 +93,11 @@ const firebaseConfig = {
     EnviaMensagemFlatPage,
     RecebeMensagemFlatPage,
     CadItEntretenimentoPage,
-    SolicReservaPage
+    SolicReservaPage,
+    CadItCriancaPage,
+    CadServicoPage,
+    CadItInstalacaoPage,
+    CadEquipamentoPage
   ],
   providers: [
     StatusBar,

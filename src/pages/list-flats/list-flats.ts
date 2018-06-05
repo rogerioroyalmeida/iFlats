@@ -9,6 +9,10 @@ import { CadItCozinhaPage } from '../cad-it-cozinha/cad-it-cozinha';
 import { Util } from '../../util/utils';
 import { CadItEntretenimentoPage } from '../cad-it-entretenimento/cad-it-entretenimento';
 import { RecebeMensagemFlatPage } from '../recebe-mensagem-flat/recebe-mensagem-flat';
+import { CadItCriancaPage } from '../cad-it-crianca/cad-it-crianca';
+import { CadItInstalacaoPage } from '../cad-it-instalacao/cad-it-instalacao';
+import { CadServicoPage } from '../cad-servico/cad-servico';
+import { CadEquipamentoPage } from '../cad-equipamento/cad-equipamento';
 
 @IonicPage()
 @Component({
@@ -153,5 +157,22 @@ export class ListFlatsPage {
   abrirListMensagens(i: number, item: Flat) {
     this.navCtrl.push(RecebeMensagemFlatPage, {'flat': item});
   }
+
+  abrirItCrianca( ) {
+    this.navCtrl.push(CadItCriancaPage);
+  }
+
+  abrirItInstalacao( ) {
+    this.navCtrl.push(CadItInstalacaoPage);
+  }
+
+  abrirServico( ) {
+    this.navCtrl.push(CadServicoPage);
+  }
+  
+  abrirEquipamento( ) {
+    this.navCtrl.push(CadEquipamentoPage);
+  }
+  
 
 }
