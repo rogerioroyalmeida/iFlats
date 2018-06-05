@@ -13,6 +13,10 @@ import { SolicReserva } from '../../model/solic-reserva';
 import { Reserva } from '../../model/reserva';
 import { DetalheReservaPage } from '../detalhe-reserva/detalhe-reserva';
 import * as moment from 'moment';
+import { CadItCriancaPage } from '../cad-it-crianca/cad-it-crianca';
+import { CadItInstalacaoPage } from '../cad-it-instalacao/cad-it-instalacao';
+import { CadServicoPage } from '../cad-servico/cad-servico';
+import { CadEquipamentoPage } from '../cad-equipamento/cad-equipamento';
 
 @IonicPage()
 @Component({
@@ -355,5 +359,21 @@ export class ListFlatsPage {
   chamarTelaDetalheReserva(item: Reserva) {
     this.navCtrl.push(DetalheReservaPage, {'reserva': item});
   }
+  abrirItCrianca( ) {
+    this.navCtrl.push(CadItCriancaPage);
+  }
+
+  abrirItInstalacao( ) {
+    this.navCtrl.push(CadItInstalacaoPage);
+  }
+
+  abrirServico( ) {
+    this.navCtrl.push(CadServicoPage);
+  }
+  
+  abrirEquipamento( ) {
+    this.navCtrl.push(CadEquipamentoPage);
+  }
+  
 
 }
