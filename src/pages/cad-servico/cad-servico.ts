@@ -108,7 +108,7 @@ export class CadServicoPage {
 
           data.forEach(element => {
             let servico: Servico = new Servico();
-            servico.setDsServico(element.cd_servico);
+            servico.setCdServico(element.cd_servico);
             servico.setDsServico(element.ds_servico);
             servico.setObservacao(element.observacao);
             servico.setValor(element.valor);

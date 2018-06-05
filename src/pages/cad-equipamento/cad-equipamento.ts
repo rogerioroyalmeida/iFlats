@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { Equipamentos } from '../../model/equipamento';
+import { Equipamento } from '../../model/equipamento';
 import { Util } from '../../util/utils';
 
 @IonicPage()
@@ -12,10 +12,10 @@ import { Util } from '../../util/utils';
 })
 export class CadEquipamentoPage {
 
-  @ViewChild('inputDsequipamento') inputDsequipamento;
+  @ViewChild('inputDsEquipamento') inputDsEquipamento;
 
-  public equipamentos: Array<Equipamentos>;
-  Equipamentos: Equipamentos = new Equipamentos();
+  public equipamentos: Array<Equipamento>;
+  equipamento: Equipamento = new Equipamento();
 
   ds_equipamento: string;
   observacao: string;
@@ -39,13 +39,13 @@ export class CadEquipamentoPage {
 
     if (this.ds_equipamento) {
 
-      this.ds_equipamento ? this.Equipamentos.setDsEquipamento(this.ds_equipamento) : this.Equipamentos.setDsEquipamento('');
-      this.observacao ? this.Equipamentos.setObservacao(this.observacao) : this.Equipamentos.setObservacao('');
-      this.valor ? this.Equipamentos.setValor(this.valor) : this.Equipamentos.setValor(NaN);
-      this.campo01 ? this.Equipamentos.setCampo01(this.campo01) : this.Equipamentos.setCampo01('');
-      this.campo02 ? this.Equipamentos.setCampo02(this.campo02) : this.Equipamentos.setCampo02('');
-      this.campo03 ? this.Equipamentos.setCampo03(this.campo03) : this.Equipamentos.setCampo03('');
-      this.campo04 ? this.Equipamentos.setCampo04(this.campo04) : this.Equipamentos.setCampo04('');
+      this.ds_equipamento ? this.equipamento.setDsEquipamento(this.ds_equipamento) : this.equipamento.setDsEquipamento('');
+      this.observacao ? this.equipamento.setObservacao(this.observacao) : this.equipamento.setObservacao('');
+      this.valor ? this.equipamento.setValor(this.valor) : this.equipamento.setValor(NaN);
+      this.campo01 ? this.equipamento.setCampo01(this.campo01) : this.equipamento.setCampo01('');
+      this.campo02 ? this.equipamento.setCampo02(this.campo02) : this.equipamento.setCampo02('');
+      this.campo03 ? this.equipamento.setCampo03(this.campo03) : this.equipamento.setCampo03('');
+      this.campo04 ? this.equipamento.setCampo04(this.campo04) : this.equipamento.setCampo04('');
 
       let headers = new Headers(
       {
@@ -53,10 +53,10 @@ export class CadEquipamentoPage {
       });
       let options = new RequestOptions({ headers: headers });
   
-      if (this.Equipamentos.getCdEquipamento()) {
+      if (this.equipamento.getCdEquipamento()) {
   
-        this.http.patch(this.util.equipamentoRotaPrincipal + this.Equipamentos.getCdEquipamento(), 
-                        this.Equipamentos, 
+        this.http.patch(this.util.equipamentoRotaPrincipal + this.equipamento.getCdEquipamento(), 
+                        this.equipamento, 
                         options)
         .toPromise()
         .then(data => {
@@ -73,7 +73,7 @@ export class CadEquipamentoPage {
       } else {
       
         this.http.post(this.util.equipamentoRotaPrincipal, 
-                      this.Equipamentos, 
+                      this.equipamento, 
                       options)
         .toPromise()
         .then(data => {
@@ -90,7 +90,7 @@ export class CadEquipamentoPage {
 
     } else {
 
-      this.inputDsequipamento.setFocus();
+      this.inputDsEquipamento.setFocus();
       this.util.msgAlert('Informe a descrição do equipamento para salvar!');
 
     }
@@ -98,7 +98,7 @@ export class CadEquipamentoPage {
   }
 
   getEquipamento() {
-    this.equipamentos = new Array<Equipamentos>();
+    this.equipamentos = new Array<Equipamento>();
 
     this.http.get(this.util.equipamentoRotaPrincipal)
       .map(res => res.json())
@@ -107,7 +107,7 @@ export class CadEquipamentoPage {
         if (data) {
 
           data.forEach(element => {
-            let equipamento: Equipamentos = new Equipamentos();
+            let equipamento: Equipamento = new Equipamento();
             equipamento.setCdEquipamento(element.cd_equipamento);
             equipamento.setDsEquipamento(element.ds_equipamento);
             equipamento.setObservacao(element.observacao);
@@ -126,7 +126,7 @@ export class CadEquipamentoPage {
     });
   }
 
-  removerEquipamento(i: number, item: Equipamentos) {
+  removerEquipamento(i: number, item: Equipamento) {
 
     let alert = this.alertCtrl.create({
       title: 'Confirmar exclusão',
@@ -169,8 +169,8 @@ export class CadEquipamentoPage {
     
   }
 
-  itemSelected(item: Equipamentos) {
-    this.Equipamentos = item;
+  itemSelected(item: Equipamento) {
+    this.equipamento = item;
     this.ds_equipamento = item.getDsEquipamento();
     this.observacao = item.getObservacao();
     this.valor = item.getValor();
@@ -179,11 +179,11 @@ export class CadEquipamentoPage {
     this.campo03 = item.getCampo03();
     this.campo04 = item.getCampo04();
 
-    this.inputDsequipamento.setFocus();
+    this.inputDsEquipamento.setFocus();
   }
 
   limpar() {
-    this.Equipamentos = new Equipamentos();
+    this.equipamento = new Equipamento();
     this.ds_equipamento = '';
     this.observacao = '';
     this.valor = NaN;
@@ -193,11 +193,11 @@ export class CadEquipamentoPage {
     this.campo04 = '';
   }
 
-  showIcon(item: Equipamentos) {
+  showIcon(item: Equipamento) {
     item.iconVisivel = true;
   }
 
-  hideIcon(item: Equipamentos) {
+  hideIcon(item: Equipamento) {
     item.iconVisivel = false;
   }
 

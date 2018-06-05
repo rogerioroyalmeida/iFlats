@@ -1,8 +1,8 @@
 
-export class Equipamentos { 
+export class Equipamento { 
 
-    private cd_Equipamento: number;
-    private ds_Equipamento: string;
+    private cd_equipamento: number;
+    private ds_equipamento: string;
     private dt_movimentacao: Date;
     
     private observacao: string;
@@ -18,19 +18,19 @@ export class Equipamentos {
     public checado: boolean = false;
 
     public getCdEquipamento() {
-        return this.cd_Equipamento;
+        return this.cd_equipamento;
     }
 
-    public setCdEquipamento(cd_Equipamento: number) {
-        this.cd_Equipamento = cd_Equipamento;
+    public setCdEquipamento(cd_equipamento: number) {
+        this.cd_equipamento = cd_equipamento;
     }
 
     public getDsEquipamento() {
-        return this.ds_Equipamento;
+        return this.ds_equipamento;
     }
 
-    public setDsEquipamento(ds_Equipamento: string) {
-        this.ds_Equipamento = ds_Equipamento;
+    public setDsEquipamento(ds_equipamento: string) {
+        this.ds_equipamento = ds_equipamento;
     }
 
     public getDtMovimentacao() {

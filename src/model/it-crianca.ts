@@ -1,6 +1,6 @@
 import { Flat } from './flat';
 
-export class ItCrianca extends Flat { 
+export class ItCrianca { 
 
     private cd_itcrianca: number;
     private ds_itcrianca: string;

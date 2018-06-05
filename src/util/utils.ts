@@ -7,7 +7,7 @@ export class Util {
     cdUsuarioLogado: string = '';
     usuarioIsAdm = false;
 
-    dominio = 'http://192.168.15.5:3000/iflats/';
+    dominio = 'http://192.168.15.7:3000/iflats/';
 
     usuariosRotaPrincipal = this.dominio + 'usuarios/';
     usuariosRotaLogin = this.usuariosRotaPrincipal + 'login';
@@ -34,7 +34,7 @@ export class Util {
     servicoRotaPrincipal = this.dominio + 'servico/';
     servicoRotaGetByUsuario = this.servicoRotaPrincipal + 'usuario/';
     
-    equipamentoRotaPrincipal = this.dominio + 'servico/';
+    equipamentoRotaPrincipal = this.dominio + 'equipamento/';
     equipamentoRotaGetByUsuario = this.equipamentoRotaPrincipal + 'usuario/';
 
 

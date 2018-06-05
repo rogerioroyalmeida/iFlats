@@ -1,6 +1,6 @@
 import { Flat } from './flat';
 
-export class ItInstalacao extends Flat { 
+export class ItInstalacao{ 
 
     private cd_itinstalacao: number;
     private ds_itinstalacao: string;

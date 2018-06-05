@@ -14,15 +14,15 @@
     <div padding margin novalidate style="border: 1px solid rgb(0, 0, 0);">
 
       <ion-grid>
-        <ion-row *ngFor="let item of equipamento; let i = index" [class.line-even]="i == 0 || ((i+1) % 2 != 0)" [class.line-odd]="i > 0 && ((i+1) % 2 == 0)" (mouseenter)="showIcon(item)" (mouseleave)="hideIcon(item)">
+        <ion-row *ngFor="let item of equipamentos; let i = index" [class.line-even]="i == 0 || ((i+1) % 2 != 0)" [class.line-odd]="i > 0 && ((i+1) % 2 == 0)" (mouseenter)="showIcon(item)" (mouseleave)="hideIcon(item)">
           <ion-col col-11>
             <button ion-item (click)="itemSelected(item)">
-              {{ item.getDsequipamento() }}
+              {{ item.getDsEquipamento() }}
             </button>
           </ion-col>
           <ion-col col-1 style="text-align: center; font-size: 20px">
             <button ion-button clear *ngIf="item.iconVisivel">
-              <ion-icon ios="ios-trash" md="md-trash" (click)="removerequipamento(i, item)" end></ion-icon>
+              <ion-icon ios="ios-trash" md="md-trash" (click)="removerEquipamento(i, item)" end></ion-icon>
             </button>
           </ion-col>
         </ion-row>
@@ -37,7 +37,7 @@
         <ion-row>
           <ion-col col-12>
             <ion-label stacked>Descrição</ion-label>
-            <ion-input type="text" placeholder="Digite a descrição do equipamento" #inputDsse name="ds_equipamento" [(ngModel)]="ds_equipamento" #dsequipamento="ngModel" required></ion-input>
+            <ion-input type="text" placeholder="Digite a descrição do equipamento" #inputDsEquipamento name="ds_equipamento" [(ngModel)]="ds_equipamento" #dsequipamento="ngModel" required></ion-input>
           </ion-col>
         </ion-row>
         <ion-row *ngIf="dsequipamento.errors && (dsequipamento.dirty || dsequipamento.touched)" class="text-danger" style="color: red; font-weight: bold;">

@@ -1,9 +1,9 @@
 import { Flat } from './flat';
 
-export class Servico extends Flat { 
+export class Servico{ 
 
-    private cd_Servico: number;
-    private ds_Servico: string;
+    private cd_servico: number;
+    private ds_servico: string;
     private dt_mov: Date;
     
     private observacao: string;
@@ -19,19 +19,19 @@ export class Servico extends Flat {
     public checado: boolean = false;
 
     public getCdServico() {
-        return this.cd_Servico;
+        return this.cd_servico;
     }
 
-    public setCdServico(cd_Servico: number) {
-        this.cd_Servico = cd_Servico;
+    public setCdServico(cd_servico: number) {
+        this.cd_servico = cd_servico;
     }
 
     public getDsServico() {
-        return this.ds_Servico;
+        return this.ds_servico;
     }
 
-    public setDsServico(ds_Servico: string) {
-        this.ds_Servico = ds_Servico;
+    public setDsServico(ds_servico: string) {
+        this.ds_servico = ds_servico;
     }
 
     public getDtMov() {
