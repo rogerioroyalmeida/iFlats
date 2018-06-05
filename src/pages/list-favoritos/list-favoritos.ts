@@ -5,6 +5,7 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Util } from '../../util/utils';
 import { EnviaMensagemFlatPage } from '../envia-mensagem-flat/envia-mensagem-flat';
+import { SolicReservaPage } from '../solic-reserva/solic-reserva';
 
 @IonicPage()
 @Component({
