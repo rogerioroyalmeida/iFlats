@@ -72,7 +72,7 @@ export class CadEquipamentoPage {
   
       } else {
       
-        this.http.post(this.util.equipamentoRotaPrincipal, 
+        this.http.post(this.util.equipamentoRotaPrincipal + this.util.cdUsuarioLogado, 
                       this.equipamento, 
                       options)
         .toPromise()

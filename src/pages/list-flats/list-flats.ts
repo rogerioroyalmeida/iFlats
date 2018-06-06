@@ -204,7 +204,7 @@ export class ListFlatsPage {
 
                 var dtIni = solicReserva.getDtInicial();
                 var dtFim = solicReserva.getDtFinal();
-                solicReserva.setStatus('N');
+                solicReserva.setStatus('R');
 
                 var datePartsIni = dtIni.split("-");
                 var jsDateIni = new Date(parseInt(datePartsIni[0]), parseInt(datePartsIni[1]) - 1, parseInt(datePartsIni[2].substr(0,2)));

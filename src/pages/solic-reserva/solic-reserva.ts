@@ -50,6 +50,7 @@ export class SolicReservaPage {
     this.solicReserva.setVlDiaria(this.flat.getVlBasicoDiaria());
     this.solicReserva.setVlEntrada(parseFloat(this.vlEntrada.toString()));
     this.solicReserva.setVlTotal(this.flat.getVlBasicoDiaria() * this.qtDias);
+    this.solicReserva.setStatus('A');
     
     let headers = new Headers(
     {

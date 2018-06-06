@@ -78,13 +78,22 @@ export class CadItCriancaPage {
   
       } else {
       
-        this.http.post(this.util.itCriancaRotaPrincipal, 
+        this.http.post(this.util.itCriancaRotaPrincipal + this.util.cdUsuarioLogado, 
                       this.itCrianca, 
                       options)
         .toPromise()
         .then(data => {
           console.log('API Response : ', data.json());
           this.util.msgAlert('Item criança salvo com sucesso!');
+
+          this.ds_itemCrianca = '';
+          this.observacao = '';
+          this.valor = NaN;
+          this.campo01 = '';
+          this.campo02 = '';
+          this.campo03 = '';
+          this.campo04 = '';
+
           // this.navCtrl.push(CadItCriancaPage);
           this.getItensCrianca();
         }).catch(error => {

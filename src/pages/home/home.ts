@@ -25,8 +25,8 @@ export class HomePage {
 
     this.listFlats = new Array<Flat>();
 
-    this.dt_inicio = new Date();
-    this.dt_fim = new Date();
+    // this.dt_inicio = new Date();
+    // this.dt_fim = new Date();
     this.destino = '';
 
     if(navParams.get('usuario')) {
@@ -41,7 +41,7 @@ export class HomePage {
       this.listFlats = new Array<Flat>();
 
       // this.util.cadFlatsRotaGetByFiltros + this.destino + '/' + this.dt_inicio + '/' + this.dt_fim
-      this.http.get(this.util.cadFlatsRotaPrincipal)
+      this.http.get(this.util.cadFlatsRotaGetByFiltros + 'destino/' + this.destino + '/dtinicial/' + this.dt_inicio + '/dtfinal/' + this.dt_fim)
         .map(res => res.json())
         .subscribe(data => {
 

@@ -72,7 +72,7 @@ export class CadServicoPage {
   
       } else {
       
-        this.http.post(this.util.servicoRotaPrincipal, 
+        this.http.post(this.util.servicoRotaPrincipal + this.util.cdUsuarioLogado, 
                       this.itservico, 
                       options)
         .toPromise()
