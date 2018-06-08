@@ -1,72 +1,22 @@
-import { Flat } from './flat';
+export class FlatInst { 
 
-export class FlatInst extends Flat { 
-
-    private codigoFlatInst: number;
-    private nome: string;
-    private codigoFlat: number;
-    
-    private dtCadastroFlatInst: Date;
-    private cdUsuarioCadastroFlatInst: number;
-
-    private dtAlteracaoFlatInst: Date;
-    private cdUsuarioAlteracaoFlatInst: number;
-
-    private snAtivoFlatInst: string;
-
-    public getCodigoFlatInst() {
-        return this.codigoFlatInst;
+    private cd_flat: number;
+    private cd_itinstalacao: number;
+  
+    public getCdFlat() {
+        return this.cd_flat;
     }
 
-    public getNome() {
-        return this.nome;
+    public setCdFlat(cd_flat : number) {
+        this.cd_flat = cd_flat;
     }
 
-    public setNome(nome: string) {
-        this.nome = nome;
+    public getCdItInstalacao() {
+        return this.cd_itinstalacao;
     }
 
-    public getCodigoFlat() {
-        return super.getCodigoFlat();
+    public setCdItInstalacao(cd_itinstalacao: number) {
+        this.cd_itinstalacao = cd_itinstalacao;
     }
 
-    public getDtCadastroFlatInst() {
-        return this.dtCadastroFlatInst;
-    }
-
-    public setDtCadastroFlatInst(dtCadastroFlatInst: Date) {
-        this.dtCadastroFlatInst = dtCadastroFlatInst;
-    }
-
-    public getCdUsuarioCadastroFlatInst() {
-        return this.cdUsuarioCadastroFlatInst;
-    }
-
-    public setCdUsuarioCadastroFlatInst(cdUsuarioCadastroFlatInst: number) {
-        this.cdUsuarioCadastroFlatInst = cdUsuarioCadastroFlatInst;
-    }
-
-    public getDtAlteracaoFlatInst() {
-        return this.dtAlteracaoFlatInst;
-    }
-
-    public setDtAlteracaoFlatInst(dtAlteracaoFlatInst: Date) {
-        this.dtAlteracaoFlatInst = dtAlteracaoFlatInst;
-    }
-
-    public getCdUsuarioAlteracaoFlatInst() {
-        return this.cdUsuarioAlteracaoFlatInst;
-    }
-
-    public setCdUsuarioAlteracaoFlatInst(cdUsuarioAlteracaoFlatInst: number) {
-        this.cdUsuarioAlteracaoFlatInst = cdUsuarioAlteracaoFlatInst;
-    }
-
-    public getSnAtivoFlatInst() {
-        return this.snAtivoFlatInst;
-    }
-
-    public setSnAtivoFlatInst(snAtivoFlatInst: string) {
-        this.snAtivoFlatInst = snAtivoFlatInst;
-    }
 }

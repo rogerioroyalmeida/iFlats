@@ -11,6 +11,8 @@ import { FlatEquip } from '../../model/flat-equip';
 import { FlatServ } from '../../model/flat-serv';
 import { ListFlatsPage } from '../list-flats/list-flats';
 import { Util } from '../../util/utils';
+import { ItInstalacao } from '../../model/it-instalacao';
+
 
 @IonicPage()
 @Component({
@@ -55,9 +57,15 @@ export class CadFlatsPage {
   listGeral = new Array<ItGeral>();
   listCozinha = new Array<ItCozinha>();
   listEntretenimento = new Array<ItEntretenimento>();
+  
+  listInstalacao = new Array<ItInstalacao>();
   listInst = new Array<FlatInst>();
+  
   listEquip = new Array<FlatEquip>();
   listServ = new Array<FlatServ>();
+
+
+
   newItem: string = "";
   focNomeGeral = false;
   focNomeCozinha = false;
@@ -68,9 +76,12 @@ export class CadFlatsPage {
   marcaTodosGerais = false;
   marcaTodosCozinha = false;
   marcaTodosEntretenimento = false;
+  marcaTodosInstalacao = false;
   labelMarcarTodosGerais = 'Marcar todos';
   labelMarcarTodosCozinha = 'Marcar todos';
   labelMarcarTodosEntretenimento = 'Marcar todos';
+  labelMarcarTodosInstalacao = 'Marcar todos';
+  
 
   exibeCaracteristica = false;
   textoInformacoes = 'Mostrar mais';
@@ -83,6 +94,8 @@ export class CadFlatsPage {
     this.getItensGeraisUsuario();
     this.getItensCozinhaUsuario();
     this.getItensEntretenimentoUsuario();
+    this.getItensInstalacaoUsuario();
+    
     
     let f: Flat = this.navParams.get('item');
 
@@ -116,6 +129,7 @@ export class CadFlatsPage {
       this.carregarItensGeraisFlat();
       this.carregarItensCozinhaFlat();
       this.carregarItensEntretenimentoFlat();
+      this.carregarItensInstalacaoFlat();
     }
 
   }
@@ -173,6 +187,7 @@ export class CadFlatsPage {
           this.salvarItensGeraisFlat();
           this.salvarItensCozinhaFlat();
           this.salvarItensEntretenimentoFlat();
+          this.salvarItensInstalacaoFlat();
           this.util.msgAlert('Flat atualizado com sucesso!');
           this.navCtrl.push(ListFlatsPage);
         }).catch(error => {
@@ -192,6 +207,7 @@ export class CadFlatsPage {
           this.salvarItensGeraisFlat();
           this.salvarItensCozinhaFlat();
           this.salvarItensEntretenimentoFlat();
+          this.salvarItensInstalacaoFlat();
           this.util.msgAlert('Flat salvo com sucesso!');
           this.navCtrl.push(ListFlatsPage);
         }).catch(error => {
@@ -203,6 +219,9 @@ export class CadFlatsPage {
     }
   }
 
+  ////////////////////////////////////////////////////////////////
+  ////////////////////////////Itens Geral/////////////////////////
+  ////////////////////////////////////////////////////////////////
   getItensGeraisUsuario() {
     
     this.http.get(this.util.itGeralRotaGetByUsuario + this.util.cdUsuarioLogado)
@@ -309,6 +328,9 @@ export class CadFlatsPage {
     });
 
   }
+  ////////////////////////////////////////////////////////////////
+  ////////////////////////////Itens Cozinha///////////////////////
+  ////////////////////////////////////////////////////////////////
 
   getItensCozinhaUsuario() {
     
@@ -419,7 +441,9 @@ export class CadFlatsPage {
     });
 
   }
-
+  ///////////////////////////////////////////////////////////////////////
+  ////////////////////////////Itens Entreterimento///////////////////////
+  ///////////////////////////////////////////////////////////////////////
   getItensEntretenimentoUsuario() {
     
     this.http.get(this.util.itEntretenimentoRotaPrincipal + this.util.cdUsuarioLogado)
@@ -530,6 +554,121 @@ export class CadFlatsPage {
 
   }
 
+  ///////////////////////////////////////////////////////////////////////
+  ////////////////////////////Itens Instalacao///////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+  getItensInstalacaoUsuario() {
+    
+    this.http.get(this.util.itInstalacaoRotaPrincipal + this.util.cdUsuarioLogado)
+      .map(res => res.json())
+      .subscribe(data => {
+
+        if (data) {
+
+          data.forEach(element => {
+            let itinstalacao: ItInstalacao = new ItInstalacao();
+            itinstalacao.setCdIteminstalacao(element.cd_itinstalacao);
+            itinstalacao.setDsIteminstalacao(element.ds_itinstalacao);
+            itinstalacao.setObservacao(element.observacao);
+            itinstalacao.setValor(element.valor);
+            itinstalacao.setCampo01(element.campo01);
+            itinstalacao.setCampo02(element.campo02);
+            itinstalacao.setCampo03(element.campo03);
+            itinstalacao.setCampo04(element.campo04);
+            
+            this.listInstalacao.push(itinstalacao);
+          });
+
+          console.log('list itens_instalacao usuario: ', data);
+
+        }
+    });
+
+  }
+
+  salvarItensInstalacaoFlat() {
+
+    // CHAMA O DELETE PARA APAGAR TODOS OS ITEM_INSTALACAO DO FLAT
+    let headers = new Headers(
+    {
+      'Content-Type' : 'application/json'
+    });
+    let options = new RequestOptions({ headers: headers });
+
+    this.http.delete(this.util.flatItInstalacaoRotaPrincipal + this.codigo, 
+                      options)
+      .toPromise()
+      .then(data => {
+        console.log('API Response : ', data.json());
+
+        // VARRE A LISTA DE TODOS OS ITEM_INSTALACAO PARA VERIFICAR SOMENTE OS MARCADOS E INSERIR NO BANCO
+        this.listInstalacao.forEach(element => {
+          if (element.checado) {
+
+            //let flatInst: FlatInst = new FlatInst();
+            //flatInst.setCdFlat(this.codigo);
+            //flatInst.setCdItInstalacao(element.getCdIteminstalacao());
+            let flatInst = {cd_flat: this.codigo, cd_itinstalacao: element.getCdIteminstalacao()};
+
+            // CHAMA O POST PARA CADASTRAR OS NOVOS ITENS ENTRETENIMENTO SELECIONADOS
+            this.http.post(this.util.flatItInstalacaoRotaPrincipal, 
+                            flatInst, 
+                            options)
+                      .toPromise()
+                      .then(data => {
+                        console.log('API Response : ', data.json());
+                      }).catch(error => {
+                        console.error('API Error : ', error.status);
+                        console.error('API Error : ', JSON.stringify(error));
+                      });
+
+          }
+        });
+
+      }).catch(error => {
+        console.error('API Error : ', error.status);
+        console.error('API Error : ', JSON.stringify(error));
+      });
+
+  }
+
+  marcarTodosItensInstalacao() {
+    this.listInstalacao.forEach(element => {
+      element.checado = this.marcaTodosInstalacao;
+    });
+
+    if (this.marcaTodosInstalacao) {
+      this.labelMarcarTodosInstalacao = 'Desmarcar todos';
+    } else {
+      this.labelMarcarTodosInstalacao = 'Marcar todos';
+    }
+  }
+
+  carregarItensInstalacaoFlat() {
+
+    this.http.get(this.util.flatItInstalacaoRotaPrincipal + this.codigo)
+      .map(res => res.json())
+      .subscribe(data => {
+
+        if (data) {
+
+          data.forEach(element => {
+            let flatItInstalacao: {cd_flat: number, cd_itinstalacao: number} = {cd_flat: element.cd_flat, cd_itinstalacao: element.cd_itinstalacao};
+
+            let itInstalacao: ItInstalacao = this.listInstalacao.find(x => x.getCdIteminstalacao() == flatItInstalacao.cd_itinstalacao);
+            if (itInstalacao)
+              itInstalacao.checado = true;
+            
+          });
+
+          console.log('list flats_itinstalacao: ', data);
+
+        }
+    });
+
+  }
+
+  ////////////////////////////
   exibCarac() {
     if(this.exibeCaracteristica) {
       this.exibeCaracteristica = false;
