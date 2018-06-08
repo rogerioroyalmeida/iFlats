@@ -401,35 +401,68 @@
           </ion-row>
         </ion-grid>
 
-        <h5 padding style="font-weight: bold;">Equipamento</h5>
+        <h5 padding style="font-weight: bold;">Equipamentos</h5>
 
-        <ion-list>
-          <ion-item *ngFor="let item of listEquip" (ionFocus)="focNomeEquip = true" (ionBlur)="focNomeEquip = false">
-            <ion-input value="{{item.nome}}" placeholder="Digite"></ion-input>
-          </ion-item>
-          <ion-item *ngIf="focNomeEquip">
-            Ex: Bicicleta, Salão de jardim, Espriguiçadeiras
-          </ion-item>
-          <ion-item>
-            <button ion-button (click)="saveNewEquip()">Nova</button>
-          </ion-item>
-        </ion-list>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label>{{ labelMarcarTodosEquipamento }}</ion-label>
+                <ion-checkbox (click)="marcarTodosItensEquipamento()" [(ngModel)]="marcaTodosEquipamento" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col *ngFor="let item of listEquipamento">
+              <ion-item>
+                <ion-label>{{ item.getDsEquipamento() }}</ion-label>
+                <ion-checkbox [(ngModel)]="item.checado" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
 
         <h5 padding style="font-weight: bold;">Serviços</h5>
 
-        <ion-list>
-          <ion-item *ngFor="let item of listServ" (ionFocus)="focNomeServ = true" (ionBlur)="focNomeServ = false">
-            <ion-input value="{{item.nome}}" placeholder="Digite"></ion-input>
-          </ion-item>
-          <ion-item *ngIf="focNomeServ">
-            Ex: Aluguel de roupa de cama, Caseiro, Limpeza incluída
-          </ion-item>
-          <ion-item>
-            <button ion-button (click)="saveNewServ()">Nova</button>
-          </ion-item>
-        </ion-list>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label>{{ labelMarcarTodosServico }}</ion-label>
+                <ion-checkbox (click)="marcarTodosItensServico()" [(ngModel)]="marcaTodosServico" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col *ngFor="let item of listServico">
+              <ion-item>
+                <ion-label>{{ item.getDsServico() }}</ion-label>
+                <ion-checkbox [(ngModel)]="item.checado" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
 
-        <h5 padding style="font-weight: bold;">Criança</h5>
+        <h5 padding style="font-weight: bold;">Itens de Crianças</h5>
+
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label>{{ labelMarcarTodosCrianca }}</ion-label>
+                <ion-checkbox (click)="marcarTodosItensCrianca()" [(ngModel)]="marcaTodosCrianca" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col *ngFor="let item of listCrianca">
+              <ion-item>
+                <ion-label>{{ item.getDsItemcrianca() }}</ion-label>
+                <ion-checkbox [(ngModel)]="item.checado" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
 
       </div>
 

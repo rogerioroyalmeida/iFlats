@@ -28,6 +28,7 @@ export class ListFlatsPage {
   public flats: Array<Flat>;
   public listSolicitacoes: Array<SolicReserva>;
   public listFlatsReservados: Array<Reserva>;
+  public observacao: string = '';
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
@@ -173,6 +174,17 @@ export class ListFlatsPage {
     let alert = this.alertCtrl.create({
       title: 'Aceitar solicitação',
       message: 'Tem certeza que deseja reservar este flat no período solicitado?',
+      inputs: [
+        {
+          type: 'string',
+          name: 'obs',
+          placeholder: 'Digite a observação',
+          label: 'Observação',
+          id: 'obs',
+          value: this.observacao,
+          max: 4000
+        }
+      ],
       buttons: [
         {
           text: 'Cancelar',
@@ -194,7 +206,7 @@ export class ListFlatsPage {
 
             reserva.setCdSolicitacaoReserva(solicReserva.getCdSolicReserva());
             reserva.setVlRestante(solicReserva.getVlTotal() - solicReserva.getVlEntrada());
-            reserva.setObservacao('');
+            reserva.setObservacao(this.observacao);
 
             this.http.post(this.util.reservaRotaPrincipal,
                               reserva, 
@@ -206,12 +218,12 @@ export class ListFlatsPage {
                 var dtFim = solicReserva.getDtFinal();
                 solicReserva.setStatus('R');
 
-                var datePartsIni = dtIni.split("-");
-                var jsDateIni = new Date(parseInt(datePartsIni[0]), parseInt(datePartsIni[1]) - 1, parseInt(datePartsIni[2].substr(0,2)));
-                solicReserva.setDtInicial(jsDateIni.toISOString());
-                var datePartsFim = dtFim.split("-");
-                var jsDateFim = new Date(parseInt(datePartsFim[0]), parseInt(datePartsFim[1]) - 1, parseInt(datePartsFim[2].substr(0,2)));
-                solicReserva.setDtFinal(jsDateFim.toISOString());
+                var datePartsIni = dtIni.split("/");
+                var jsDateIni = new Date(parseInt(datePartsIni[2]), parseInt(datePartsIni[1]) - 1, parseInt(datePartsIni[0]));
+                solicReserva.setDtInicial(datePartsIni[2] + '-' + (parseInt(datePartsIni[1]) - 1).toString() + '-' + datePartsIni[0]);
+                var datePartsFim = dtFim.split("/");
+                var jsDateFim = new Date(parseInt(datePartsFim[2]), parseInt(datePartsFim[1]) - 1, parseInt(datePartsFim[0]));
+                solicReserva.setDtFinal(datePartsFim[2] + '-' + (parseInt(datePartsFim[1]) - 1).toString() + '-' + datePartsFim[0]);
 
                 this.http.patch(this.util.solicReservaRotaPrincipal + solicReserva.getCdSolicReserva(),
                                   solicReserva, 

@@ -12,6 +12,9 @@ import { FlatServ } from '../../model/flat-serv';
 import { ListFlatsPage } from '../list-flats/list-flats';
 import { Util } from '../../util/utils';
 import { ItInstalacao } from '../../model/it-instalacao';
+import { Equipamento } from '../../model/equipamento';
+import { Servico } from '../../model/servico';
+import { ItCrianca } from '../../model/it-crianca';
 
 
 @IonicPage()
@@ -51,20 +54,17 @@ export class CadFlatsPage {
 
   */
 
-
-
   flat: Flat = new Flat();
   listGeral = new Array<ItGeral>();
   listCozinha = new Array<ItCozinha>();
   listEntretenimento = new Array<ItEntretenimento>();
-  
   listInstalacao = new Array<ItInstalacao>();
-  listInst = new Array<FlatInst>();
-  
-  listEquip = new Array<FlatEquip>();
-  listServ = new Array<FlatServ>();
-
-
+  listEquipamento = new Array<Equipamento>();
+  listServico = new Array<Servico>();
+  listCrianca = new Array<ItCrianca>();
+  //listInst = new Array<FlatInst>();
+  //listEquip = new Array<FlatEquip>();
+  //listServ = new Array<FlatServ>();
 
   newItem: string = "";
   focNomeGeral = false;
@@ -77,11 +77,16 @@ export class CadFlatsPage {
   marcaTodosCozinha = false;
   marcaTodosEntretenimento = false;
   marcaTodosInstalacao = false;
+  marcaTodosEquipamento = false;
+  marcaTodosServico = false;
+  marcaTodosCrianca = false;
   labelMarcarTodosGerais = 'Marcar todos';
   labelMarcarTodosCozinha = 'Marcar todos';
   labelMarcarTodosEntretenimento = 'Marcar todos';
   labelMarcarTodosInstalacao = 'Marcar todos';
-  
+  labelMarcarTodosEquipamento = 'Marcar todos';
+  labelMarcarTodosServico = 'Marcar todos';
+  labelMarcarTodosCrianca = 'Marcar todos';
 
   exibeCaracteristica = false;
   textoInformacoes = 'Mostrar mais';
@@ -95,7 +100,9 @@ export class CadFlatsPage {
     this.getItensCozinhaUsuario();
     this.getItensEntretenimentoUsuario();
     this.getItensInstalacaoUsuario();
-    
+    this.getItensEquipamentoUsuario();
+    this.getItensServicoUsuario();
+    this.getItensCriancaUsuario();
     
     let f: Flat = this.navParams.get('item');
 
@@ -130,6 +137,9 @@ export class CadFlatsPage {
       this.carregarItensCozinhaFlat();
       this.carregarItensEntretenimentoFlat();
       this.carregarItensInstalacaoFlat();
+      this.carregarItensEquipamentoFlat();
+      this.carregarItensServicoFlat();
+      this.carregarItensCriancaFlat();
     }
 
   }
@@ -188,6 +198,9 @@ export class CadFlatsPage {
           this.salvarItensCozinhaFlat();
           this.salvarItensEntretenimentoFlat();
           this.salvarItensInstalacaoFlat();
+          this.salvarItensEquipamentoFlat();
+          this.salvarItensServicoFlat();
+          this.salvarItensCriancaFlat();
           this.util.msgAlert('Flat atualizado com sucesso!');
           this.navCtrl.push(ListFlatsPage);
         }).catch(error => {
@@ -208,6 +221,9 @@ export class CadFlatsPage {
           this.salvarItensCozinhaFlat();
           this.salvarItensEntretenimentoFlat();
           this.salvarItensInstalacaoFlat();
+          this.salvarItensEquipamentoFlat();
+          this.salvarItensServicoFlat();
+          this.salvarItensCriancaFlat();
           this.util.msgAlert('Flat salvo com sucesso!');
           this.navCtrl.push(ListFlatsPage);
         }).catch(error => {
@@ -446,7 +462,7 @@ export class CadFlatsPage {
   ///////////////////////////////////////////////////////////////////////
   getItensEntretenimentoUsuario() {
     
-    this.http.get(this.util.itEntretenimentoRotaPrincipal + this.util.cdUsuarioLogado)
+    this.http.get(this.util.itEntretenimentoRotaGetByUsuario + this.util.cdUsuarioLogado)
       .map(res => res.json())
       .subscribe(data => {
 
@@ -559,7 +575,7 @@ export class CadFlatsPage {
   ///////////////////////////////////////////////////////////////////////
   getItensInstalacaoUsuario() {
     
-    this.http.get(this.util.itInstalacaoRotaPrincipal + this.util.cdUsuarioLogado)
+    this.http.get(this.util.itInstalacaoRotaGetByUsuario + this.util.cdUsuarioLogado)
       .map(res => res.json())
       .subscribe(data => {
 
@@ -610,7 +626,7 @@ export class CadFlatsPage {
             //flatInst.setCdItInstalacao(element.getCdIteminstalacao());
             let flatInst = {cd_flat: this.codigo, cd_itinstalacao: element.getCdIteminstalacao()};
 
-            // CHAMA O POST PARA CADASTRAR OS NOVOS ITENS ENTRETENIMENTO SELECIONADOS
+            // CHAMA O POST PARA CADASTRAR OS NOVOS ITENS INSTALACAO SELECIONADOS
             this.http.post(this.util.flatItInstalacaoRotaPrincipal, 
                             flatInst, 
                             options)
@@ -662,6 +678,339 @@ export class CadFlatsPage {
           });
 
           console.log('list flats_itinstalacao: ', data);
+
+        }
+    });
+
+  }
+
+  ///////////////////////////////////////////////////////////////////////
+  ////////////////////////////Itens Equipamento//////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+  getItensEquipamentoUsuario() {
+    
+    this.http.get(this.util.equipamentoRotaGetByUsuario + this.util.cdUsuarioLogado)
+      .map(res => res.json())
+      .subscribe(data => {
+
+        if (data) {
+
+          data.forEach(element => {
+            let equipamento: Equipamento = new Equipamento();
+            equipamento.setCdEquipamento(element.cd_equipamento);
+            equipamento.setDsEquipamento(element.ds_equipamento);
+            equipamento.setObservacao(element.observacao);
+            equipamento.setValor(element.valor);
+            equipamento.setCampo01(element.campo01);
+            equipamento.setCampo02(element.campo02);
+            equipamento.setCampo03(element.campo03);
+            equipamento.setCampo04(element.campo04);
+            
+            this.listEquipamento.push(equipamento);
+          });
+
+          console.log('list equipamentos usuario: ', data);
+
+        }
+    });
+
+  }
+
+  salvarItensEquipamentoFlat() {
+
+    // CHAMA O DELETE PARA APAGAR TODOS OS ITEM_EQUIPAMENTO DO FLAT
+    let headers = new Headers(
+    {
+      'Content-Type' : 'application/json'
+    });
+    let options = new RequestOptions({ headers: headers });
+
+    this.http.delete(this.util.flatItEquipamentoRotaPrincipal + this.codigo, 
+                      options)
+      .toPromise()
+      .then(data => {
+        console.log('API Response : ', data.json());
+
+        // VARRE A LISTA DE TODOS OS ITEM_EQUIPAMENTO PARA VERIFICAR SOMENTE OS MARCADOS E INSERIR NO BANCO
+        this.listEquipamento.forEach(element => {
+          if (element.checado) {
+
+            let flatEquip = {cd_flat: this.codigo, cd_equipamento: element.getCdEquipamento()};
+
+            // CHAMA O POST PARA CADASTRAR OS NOVOS ITENS EQUIPAMENTO SELECIONADOS
+            this.http.post(this.util.flatItEquipamentoRotaPrincipal, 
+                            flatEquip, 
+                            options)
+                      .toPromise()
+                      .then(data => {
+                        console.log('API Response : ', data.json());
+                      }).catch(error => {
+                        console.error('API Error : ', error.status);
+                        console.error('API Error : ', JSON.stringify(error));
+                      });
+
+          }
+        });
+
+      }).catch(error => {
+        console.error('API Error : ', error.status);
+        console.error('API Error : ', JSON.stringify(error));
+      });
+
+  }
+
+  marcarTodosItensEquipamento() {
+    this.listEquipamento.forEach(element => {
+      element.checado = this.marcaTodosEquipamento;
+    });
+
+    if (this.marcaTodosEquipamento) {
+      this.labelMarcarTodosEquipamento = 'Desmarcar todos';
+    } else {
+      this.labelMarcarTodosEquipamento = 'Marcar todos';
+    }
+  }
+
+  carregarItensEquipamentoFlat() {
+
+    this.http.get(this.util.flatItEquipamentoRotaPrincipal + this.codigo)
+      .map(res => res.json())
+      .subscribe(data => {
+
+        if (data) {
+
+          data.forEach(element => {
+            let flatItEquipamento: {cd_flat: number, cd_equipamento: number} = {cd_flat: element.cd_flat, cd_equipamento: element.cd_equipamento};
+
+            let itEquipamento: Equipamento = this.listEquipamento.find(x => x.getCdEquipamento() == flatItEquipamento.cd_equipamento);
+            if (itEquipamento)
+            itEquipamento.checado = true;
+            
+          });
+
+          console.log('list flats_equipamento: ', data);
+
+        }
+    });
+
+  }
+
+  ///////////////////////////////////////////////////////////////////////
+  ////////////////////////////Itens Servico//////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+  getItensServicoUsuario() {
+    
+    this.http.get(this.util.servicoRotaGetByUsuario + this.util.cdUsuarioLogado)
+      .map(res => res.json())
+      .subscribe(data => {
+
+        if (data) {
+
+          data.forEach(element => {
+            let servico: Servico = new Servico();
+            servico.setCdServico(element.cd_servico);
+            servico.setDsServico(element.ds_servico);
+            servico.setObservacao(element.observacao);
+            servico.setValor(element.valor);
+            servico.setCampo01(element.campo01);
+            servico.setCampo02(element.campo02);
+            servico.setCampo03(element.campo03);
+            servico.setCampo04(element.campo04);
+            
+            this.listServico.push(servico);
+          });
+
+          console.log('list servico usuario: ', data);
+
+        }
+    });
+
+  }
+
+  salvarItensServicoFlat() {
+
+    // CHAMA O DELETE PARA APAGAR TODOS OS ITEM_SERVICO DO FLAT
+    let headers = new Headers(
+    {
+      'Content-Type' : 'application/json'
+    });
+    let options = new RequestOptions({ headers: headers });
+
+    this.http.delete(this.util.flatItServicoRotaPrincipal + this.codigo, 
+                      options)
+      .toPromise()
+      .then(data => {
+        console.log('API Response : ', data.json());
+
+        // VARRE A LISTA DE TODOS OS ITEM_SERVICO PARA VERIFICAR SOMENTE OS MARCADOS E INSERIR NO BANCO
+        this.listServico.forEach(element => {
+          if (element.checado) {
+
+            let flatServ = {cd_flat: this.codigo, cd_servico: element.getCdServico()};
+
+            // CHAMA O POST PARA CADASTRAR OS NOVOS ITENS SERVICO SELECIONADOS
+            this.http.post(this.util.flatItServicoRotaPrincipal, 
+                            flatServ, 
+                            options)
+                      .toPromise()
+                      .then(data => {
+                        console.log('API Response : ', data.json());
+                      }).catch(error => {
+                        console.error('API Error : ', error.status);
+                        console.error('API Error : ', JSON.stringify(error));
+                      });
+
+          }
+        });
+
+      }).catch(error => {
+        console.error('API Error : ', error.status);
+        console.error('API Error : ', JSON.stringify(error));
+      });
+
+  }
+
+  marcarTodosItensServico() {
+    this.listServico.forEach(element => {
+      element.checado = this.marcaTodosServico;
+    });
+
+    if (this.marcaTodosServico) {
+      this.labelMarcarTodosServico = 'Desmarcar todos';
+    } else {
+      this.labelMarcarTodosServico = 'Marcar todos';
+    }
+  }
+
+  carregarItensServicoFlat() {
+
+    this.http.get(this.util.flatItServicoRotaPrincipal + this.codigo)
+      .map(res => res.json())
+      .subscribe(data => {
+
+        if (data) {
+
+          data.forEach(element => {
+            let flatItServico: {cd_flat: number, cd_servico: number} = {cd_flat: element.cd_flat, cd_servico: element.cd_servico};
+
+            let itServico: Servico = this.listServico.find(x => x.getCdServico() == flatItServico.cd_servico);
+            if (itServico)
+            itServico.checado = true;
+            
+          });
+
+          console.log('list flats_servico: ', data);
+
+        }
+    });
+
+  }
+
+  ///////////////////////////////////////////////////////////////////////
+  ////////////////////////////Itens Crianca//////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+  getItensCriancaUsuario() {
+    
+    this.http.get(this.util.itCriancaRotaGetByUsuario + this.util.cdUsuarioLogado)
+      .map(res => res.json())
+      .subscribe(data => {
+
+        if (data) {
+
+          data.forEach(element => {
+            let itcrianca: ItCrianca = new ItCrianca();
+            itcrianca.setCdItemcrianca(element.cd_itcrianca);
+            itcrianca.setDsItemcrianca(element.ds_itcrianca);
+            itcrianca.setObservacao(element.observacao);
+            itcrianca.setValor(element.valor);
+            itcrianca.setCampo01(element.campo01);
+            itcrianca.setCampo02(element.campo02);
+            itcrianca.setCampo03(element.campo03);
+            itcrianca.setCampo04(element.campo04);
+            
+            this.listCrianca.push(itcrianca);
+          });
+
+          console.log('list itens_crianca usuario: ', data);
+
+        }
+    });
+
+  }
+
+  salvarItensCriancaFlat() {
+
+    // CHAMA O DELETE PARA APAGAR TODOS OS ITEM_CRIANCA DO FLAT
+    let headers = new Headers(
+    {
+      'Content-Type' : 'application/json'
+    });
+    let options = new RequestOptions({ headers: headers });
+
+    this.http.delete(this.util.flatItCriancaRotaPrincipal + this.codigo, 
+                      options)
+      .toPromise()
+      .then(data => {
+        console.log('API Response : ', data.json());
+
+        // VARRE A LISTA DE TODOS OS ITEM_CRIANCA PARA VERIFICAR SOMENTE OS MARCADOS E INSERIR NO BANCO
+        this.listCrianca.forEach(element => {
+          if (element.checado) {
+
+            let flatCri = {cd_flat: this.codigo, cd_itcrianca: element.getCdItemcrianca()};
+
+            // CHAMA O POST PARA CADASTRAR OS NOVOS ITENS CRIANCA SELECIONADOS
+            this.http.post(this.util.flatItCriancaRotaPrincipal, 
+                            flatCri, 
+                            options)
+                      .toPromise()
+                      .then(data => {
+                        console.log('API Response : ', data.json());
+                      }).catch(error => {
+                        console.error('API Error : ', error.status);
+                        console.error('API Error : ', JSON.stringify(error));
+                      });
+
+          }
+        });
+
+      }).catch(error => {
+        console.error('API Error : ', error.status);
+        console.error('API Error : ', JSON.stringify(error));
+      });
+
+  }
+
+  marcarTodosItensCrianca() {
+    this.listCrianca.forEach(element => {
+      element.checado = this.marcaTodosCrianca;
+    });
+
+    if (this.marcaTodosCrianca) {
+      this.labelMarcarTodosCrianca = 'Desmarcar todos';
+    } else {
+      this.labelMarcarTodosCrianca = 'Marcar todos';
+    }
+  }
+
+  carregarItensCriancaFlat() {
+
+    this.http.get(this.util.flatItCriancaRotaPrincipal + this.codigo)
+      .map(res => res.json())
+      .subscribe(data => {
+
+        if (data) {
+
+          data.forEach(element => {
+            let flatItCrianca: {cd_flat: number, cd_itcrianca: number} = {cd_flat: element.cd_flat, cd_itcrianca: element.cd_itcrianca};
+
+            let itCrianca: ItCrianca = this.listCrianca.find(x => x.getCdItemcrianca() == flatItCrianca.cd_itcrianca);
+            if (itCrianca)
+            itCrianca.checado = true;
+            
+          });
+
+          console.log('list flats_itcrianca: ', data);
 
         }
     });
