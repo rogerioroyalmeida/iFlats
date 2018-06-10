@@ -3,7 +3,15 @@ import { Pessoa } from './pessoa';
 export class UsuarioAdmin extends Pessoa { 
 
     private qtdflats: number;
-    private cnpj: number;
+    private cd_usuario: number;
+
+    public getCdUsuario() {
+        return this.cd_usuario;
+    }
+
+    public setCdUsuario(cd_usuario: number) {
+        this.cd_usuario = cd_usuario;
+    }
 
     public setQtdflats(qtdflats: number) {
         this.qtdflats = qtdflats;
@@ -11,14 +19,6 @@ export class UsuarioAdmin extends Pessoa {
 
     public getQtdflats() {
         return this.qtdflats;
-    }
-
-    public setCnpj(cnpj: number) {
-        this.cnpj = cnpj;
-    }
-
-    public getCnpj() {
-        return this.cnpj;
     }
 
 }

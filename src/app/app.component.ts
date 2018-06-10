@@ -21,6 +21,7 @@ import { ListFavoritosPage } from '../pages/list-favoritos/list-favoritos';
 import { BuscaFlatsPage } from '../pages/busca-flats/busca-flats';
 import { Flat } from '../model/flat';
 import { ListSolicRealizPage } from '../pages/list-solic-realiz/list-solic-realiz';
+import { UsuarioAdmin } from '../model/usuarioadmin';
 
 @Component({
   templateUrl: 'app.html',
@@ -57,7 +58,35 @@ export class MyApp {
 
             this.util.cdUsuarioLogado = data[0].cd_usuario;
 
-            data[0].sn_adm == 'S' ? this.util.usuarioIsAdm = true : this.util.usuarioIsAdm = false;
+            if (data[0].sn_adm == 'S') {
+              this.util.usuarioIsAdm = true
+
+              this.util.usuarioAdmLogado = new UsuarioAdmin();
+              this.util.usuarioAdmLogado.setCdUsuario(data[0].cd_usuario);
+              this.util.usuarioAdmLogado.setDsNome(data[0].ds_nome);
+              this.util.usuarioAdmLogado.setDsSobreNome(data[0].ds_sobrenome);
+              this.util.usuarioAdmLogado.setEmail(data[0].email);
+              this.util.usuarioAdmLogado.setObservacao(data[0].observacao);
+              this.util.usuarioAdmLogado.setCampo01(data[0].campo01);
+              this.util.usuarioAdmLogado.setCampo02(data[0].campo02)
+              this.util.usuarioAdmLogado.setCampoReal(data[0].campo_real);
+
+              console.log('USUARIO LOGADO COM PERFIL ADMINISTRADOR', this.util.usuarioAdmLogado);
+            } else {
+              this.util.usuarioIsAdm = false;
+
+              this.util.usuarioLogado = new Usuario();
+              this.util.usuarioLogado.setCdUsuario(data[0].cd_usuario);
+              this.util.usuarioLogado.setDsNome(data[0].ds_nome);
+              this.util.usuarioLogado.setDsSobreNome(data[0].ds_sobrenome);
+              this.util.usuarioLogado.setEmail(data[0].email);
+              this.util.usuarioLogado.setObservacao(data[0].observacao);
+              this.util.usuarioLogado.setCampo01(data[0].campo01);
+              this.util.usuarioLogado.setCampo02(data[0].campo02)
+              this.util.usuarioLogado.setCampoReal(data[0].campo_real);
+
+              console.log('USUARIO LOGADO COM PERFIL COMUM', this.util.usuarioLogado);
+            } 
 
             console.log('get usuario: ', data);
         });

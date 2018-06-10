@@ -16,7 +16,6 @@ import { Util } from '../../util/utils';
 export class LoginPage {
 
   usuario: Usuario = new Usuario();
-  email: any;
   
   @ViewChild('form') form: NgForm;
 
@@ -33,13 +32,13 @@ export class LoginPage {
 
   signIn() {
     if (this.form.form.valid) {
+
       this.loginService.signIn(this.usuario)
         .then(() => {
-          this.email = this.usuario.getEmail();
 
-          this.loginBanco(this.email);
+          this.loginBanco(this.usuario.getEmail());
 
-          this.navCtrl.setRoot(HomePage, {usuario: this.usuario});
+          this.navCtrl.setRoot(HomePage);
         })
         .catch((error: any) => {
           if (error.code == 'auth/invalid-email') {

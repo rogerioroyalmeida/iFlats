@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 import { ToastController } from 'ionic-angular';
+import { Usuario } from '../model/usuario';
+import { UsuarioAdmin } from '../model/usuarioadmin';
 
 @Injectable()
 export class Util {
 
     cdUsuarioLogado: string = '';
     usuarioIsAdm = false;
+    usuarioLogado: Usuario;
+    usuarioAdmLogado: UsuarioAdmin;
 
     dominio = 'http://192.168.15.7:3000/iflats/';
 

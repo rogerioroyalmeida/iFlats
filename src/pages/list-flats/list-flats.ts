@@ -17,6 +17,7 @@ import { CadItCriancaPage } from '../cad-it-crianca/cad-it-crianca';
 import { CadItInstalacaoPage } from '../cad-it-instalacao/cad-it-instalacao';
 import { CadServicoPage } from '../cad-servico/cad-servico';
 import { CadEquipamentoPage } from '../cad-equipamento/cad-equipamento';
+import { Mensagem } from '../../model/mensagem';
 
 @IonicPage()
 @Component({
@@ -28,7 +29,6 @@ export class ListFlatsPage {
   public flats: Array<Flat>;
   public listSolicitacoes: Array<SolicReserva>;
   public listFlatsReservados: Array<Reserva>;
-  public observacao: string = '';
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
@@ -79,6 +79,8 @@ export class ListFlatsPage {
 
             this.flats.push(flat);
           });
+
+          this.util.usuarioAdmLogado.setQtdflats(this.flats.length);
 
           console.log('list flats: ', data);
 
@@ -181,7 +183,6 @@ export class ListFlatsPage {
           placeholder: 'Digite a observação',
           label: 'Observação',
           id: 'obs',
-          value: this.observacao,
           max: 4000
         }
       ],
@@ -195,7 +196,7 @@ export class ListFlatsPage {
         },
         {
           text: 'Reservar',
-          handler: () => {
+          handler: data => {
             let headers = new Headers(
             {
               'Content-Type' : 'application/json'
@@ -206,7 +207,7 @@ export class ListFlatsPage {
 
             reserva.setCdSolicitacaoReserva(solicReserva.getCdSolicReserva());
             reserva.setVlRestante(solicReserva.getVlTotal() - solicReserva.getVlEntrada());
-            reserva.setObservacao(this.observacao);
+            reserva.setObservacao(data.obs);
 
             this.http.post(this.util.reservaRotaPrincipal,
                               reserva, 
@@ -233,6 +234,7 @@ export class ListFlatsPage {
                       this.listSolicitacoes.splice(i, 1);
                       console.log('API Response : ', data.json());
                       this.buscarSolicitacoesReserva();
+                      this.enviarMsgLocatario('A', solicReserva);
                       // this.navCtrl.push(CadItCozinhaPage);
                     }).catch(error => {
                       console.error('API Error : ', error.status);
@@ -294,6 +296,7 @@ export class ListFlatsPage {
                   console.log('API Response : ', data.json());
                   this.util.msgAlert('Solicitação negada!');
                   this.buscarSolicitacoesReserva();
+                  this.enviarMsgLocatario('N', solicReserva);
                   // this.navCtrl.push(CadItCozinhaPage);
                 }).catch(error => {
                   console.error('API Error : ', error.status);
@@ -387,5 +390,76 @@ export class ListFlatsPage {
     this.navCtrl.push(CadEquipamentoPage);
   }
   
+  enviarMsgLocatario(tpMsg: string, solicReserva: SolicReserva) {
+
+    let newMsg: Mensagem = new Mensagem();
+    let nmUsuarioDestinatario = '';
+
+    this.http.get(this.util.usuarioRotaGetByCodigo + solicReserva.getCdUsuario())
+          .map(res => res.json())
+          .subscribe(data => {
+
+            nmUsuarioDestinatario = data[0].ds_nome;
+
+        });
+
+    newMsg.setCdFlat(solicReserva.getCdFlat());
+    newMsg.setAnexo01('');
+    newMsg.setAnexo02('');
+    newMsg.setCdUsuarioEmissario(solicReserva.getCdUsuarioResponsavel());
+    newMsg.setNmUsuarioEmissario(this.util.usuarioAdmLogado.getDsNome());
+    newMsg.setCdUsuarioDestinatario(solicReserva.getCdUsuario());
+    newMsg.setNmUsuarioDestinatario(nmUsuarioDestinatario);
+    newMsg.setStatus('N');
+    newMsg.status2 = 'pending';
+    newMsg.setTime(Date.now());
+
+    if (tpMsg === 'A') {
+
+      newMsg.setDsMensagem('Olá, sou o dono do flat ' + solicReserva.getCdFlat() + ' e acabei de aceitar sua solicitação de reserva de número ' + solicReserva.getCdSolicReserva() + '. A reserva encontra-se confirmada no período de ' + solicReserva.getDtInicial() + ' e ' + solicReserva.getDtFinal() + '.Boa viagem!');
+
+      let headers = new Headers(
+      {
+        'Content-Type' : 'application/json'
+      });
+      let options = new RequestOptions({ headers: headers });
+  
+      this.http.post(this.util.mensagemRotaPrincipal, 
+                    newMsg, 
+                    options)
+      .toPromise()
+      .then(data => {
+        console.log('API Response : ', data.json());
+        newMsg.setCdMensagem(data.json().insertId);
+      }).catch(error => {
+        console.error('API Error : ', error.status);
+        console.error('API Error : ', JSON.stringify(error));
+      });
+
+    } else if (tpMsg === 'N') {
+
+      newMsg.setDsMensagem('Olá, sou o dono do flat ' + solicReserva.getCdFlat() + ' e não foi possível aceitar sua solicitação de reserva e foi cancelada. Por favor tente novamente.');
+
+      let headers = new Headers(
+      {
+        'Content-Type' : 'application/json'
+      });
+      let options = new RequestOptions({ headers: headers });
+  
+      this.http.post(this.util.mensagemRotaPrincipal, 
+                    newMsg, 
+                    options)
+      .toPromise()
+      .then(data => {
+        console.log('API Response : ', data.json());
+        newMsg.setCdMensagem(data.json().insertId);
+      }).catch(error => {
+        console.error('API Error : ', error.status);
+        console.error('API Error : ', JSON.stringify(error));
+      });
+
+    }
+
+  }
 
 }

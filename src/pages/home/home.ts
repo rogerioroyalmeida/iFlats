@@ -15,7 +15,6 @@ import 'rxjs/add/operator/map';
 })
 export class HomePage {
 
-  usuario: Usuario = new Usuario();
   dt_inicio: Date;
   dt_fim: Date;
   destino: string;
@@ -28,10 +27,6 @@ export class HomePage {
     // this.dt_inicio = new Date();
     // this.dt_fim = new Date();
     this.destino = '';
-
-    if(navParams.get('usuario')) {
-      this.usuario = navParams.get('usuario');
-    }
 
   }
 
