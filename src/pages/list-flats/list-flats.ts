@@ -462,4 +462,74 @@ export class ListFlatsPage {
 
   }
 
+  cancelarReserva(item: Reserva, i: number) {
+
+    let headers = new Headers(
+    {
+      'Content-Type' : 'application/json'
+    });
+    let options = new RequestOptions({ headers: headers });
+
+    this.http.delete(this.util.reservaRotaPrincipal + item.getCdReserva(), 
+                      options)
+      .toPromise()
+      .then(data => {
+        this.listFlatsReservados.splice(i, 1);
+        console.log('API Response : ', data.json());
+
+        this.http.get(this.util.solicReservaRotaPrincipal + item.getCdSolicitacaoReserva())
+          .map(res => res.json())
+          .subscribe(data => {
+
+            if (data) {
+
+              let solicReserva: SolicReserva = new SolicReserva();
+              solicReserva.setCdSolicReserva(data[0].cd_solic_reserva);
+              solicReserva.setCdFlat(data[0].cd_flat);
+              solicReserva.setCdUsuario(data[0].cd_usuario);
+              solicReserva.setCdUsuarioResponsavel(data[0].cd_usuario_responsavel);
+              solicReserva.setDtInicial(moment(data[0].dt_inicial).format('DD/MM/YYYY'));
+              solicReserva.setDtFinal(moment(data[0].dt_final).format('DD/MM/YYYY'));
+              solicReserva.setNrDias(data[0].nr_dias);
+              solicReserva.setNrPessoas(data[0].nr_pessoas);
+              solicReserva.setVlDiaria(data[0].vl_diaria);
+              solicReserva.setVlEntrada(data[0].vl_entrada);
+              solicReserva.setVlTotal(data[0].vl_total);
+
+              let headers = new Headers(
+              {
+                'Content-Type' : 'application/json'
+              });
+              let options = new RequestOptions({ headers: headers });
+  
+              var dtIni = solicReserva.getDtInicial();
+              var dtFim = solicReserva.getDtFinal();
+              solicReserva.setStatus('C');
+  
+              solicReserva.setDtInicial(dtIni.substr(0, 10));
+              solicReserva.setDtFinal(dtFim.substr(0, 10));
+  
+              this.http.patch(this.util.solicReservaRotaPrincipal + solicReserva.getCdSolicReserva(),
+                                solicReserva, 
+                                options)
+                  .toPromise()
+                  .then(data => {
+                    this.listSolicitacoes.splice(i, 1);
+                    console.log('API Response : ', data.json());
+                    this.util.msgAlert('Reserva cancelada!');
+                    this.buscarSolicitacoesReserva();
+                    this.enviarMsgLocatario('N', solicReserva);
+                    // this.navCtrl.push(CadItCozinhaPage);
+                  }).catch(error => {
+                    console.error('API Error : ', error.status);
+                    console.error('API Error : ', JSON.stringify(error));
+                    this.util.msgAlert('Não foi possível cancelar a reserva!');
+                  });
+
+            }
+        });
+
+      });
+  }
+
 }

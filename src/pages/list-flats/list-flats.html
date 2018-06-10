@@ -133,6 +133,9 @@
         <ion-col>
 
         </ion-col>
+        <ion-col>
+
+        </ion-col>
       </ion-row>
       <ion-row *ngFor="let item of listFlatsReservados; let i = index">
         <ion-col>
@@ -148,8 +151,13 @@
           {{ item.getObservacao() }}
         </ion-col>
         <ion-col>
-          <button ion-button clear>
-            <ion-icon ios="ios-eye" md="md-eye" (click)="chamarTelaDetalheReserva(item)"></ion-icon>
+          <button ion-button clear (click)="chamarTelaDetalheReserva(item)">
+            <ion-icon ios="ios-eye" md="md-eye"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button clear (click)="cancelarReserva(item, i)">
+            <ion-icon ios="ios-close-circle" md="md-close-circle"></ion-icon>
           </button>
         </ion-col>
       </ion-row>
