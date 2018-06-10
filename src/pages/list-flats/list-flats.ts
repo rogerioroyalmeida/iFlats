@@ -327,8 +327,8 @@ export class ListFlatsPage {
             solicReserva.setCdFlat(element.cd_flat);
             solicReserva.setCdUsuario(element.cd_usuario);
             solicReserva.setCdUsuarioResponsavel(element.cd_usuario_responsavel);
-            solicReserva.setDtInicial(moment(data[0].dt_inicial).format('DD/MM/YYYY'));
-            solicReserva.setDtFinal(moment(data[0].dt_final).format('DD/MM/YYYY'));
+            solicReserva.setDtInicial(moment(element.dt_inicial).format('DD/MM/YYYY'));
+            solicReserva.setDtFinal(moment(element.dt_final).format('DD/MM/YYYY'));
             solicReserva.setNrDias(element.nr_dias);
             solicReserva.setNrPessoas(element.nr_pessoas);
             solicReserva.setVlDiaria(element.vl_diaria);

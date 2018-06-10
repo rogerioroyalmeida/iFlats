@@ -58,27 +58,29 @@ export class BuscaFlatsPage {
 
   setFavorito(item: Flat) {
 
-    if(this.util.cdUsuarioLogado) {
-      // CHAMA O DELETE PARA APAGAR O FLAT FAVORITO DO USUARIO
-      let headers = new Headers(
-      {
-        'Content-Type' : 'application/json'
-      });
-      let options = new RequestOptions({ headers: headers });
+    let headers = new Headers(
+    {
+      'Content-Type' : 'application/json'
+    });
+    let options = new RequestOptions({ headers: headers });
 
-      this.http.delete(this.util.favoritosRotaPrincipal + item.getCodigoFlat() + '/' + this.util.cdUsuarioLogado, 
-                        options)
+    if(this.util.cdUsuarioLogado) {
+
+      if (item.isFavorito) {
+
+        // CHAMA O DELETE PARA APAGAR O FLAT FAVORITO DO USUARIO
+        this.http.delete(this.util.favoritosRotaPrincipal + item.getCodigoFlat() + '/' + this.util.cdUsuarioLogado, 
+              options)
         .toPromise()
         .then(data => {
           console.log('API Response : ', data.json());
+          item.isFavorito = false;
+          this.util.msgAlert('Flat removido da lista de favoritos!');
         }).catch(error => {
           console.error('API Error : ', error.status);
           console.error('API Error : ', JSON.stringify(error));
         });
 
-      if (item.isFavorito) {
-        item.isFavorito = false;
-        this.util.msgAlert('Flat removido da lista de favoritos!');
       } else {
 
         this.http.post(this.util.favoritosRotaPrincipal, 

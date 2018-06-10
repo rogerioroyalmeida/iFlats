@@ -18,6 +18,11 @@ export class ListFavoritosPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, private util: Util) {
 
+    this.buscarFlatsFavoritos();
+
+  }
+
+  buscarFlatsFavoritos() {
     this.flatsFavoritos = new Array<Flat>();
 
     this.http.get(this.util.favoritosRotaGetFlatsByUsuario + this.util.cdUsuarioLogado)
@@ -68,7 +73,6 @@ export class ListFavoritosPage {
 
         }
     });
-
   }
 
   setFlatsFavoritos() {
@@ -98,27 +102,32 @@ export class ListFavoritosPage {
 
   setFavorito(item: Flat) {
 
+    let headers = new Headers(
+    {
+      'Content-Type' : 'application/json'
+    });
+    let options = new RequestOptions({ headers: headers });
+
     if(this.util.cdUsuarioLogado) {
+
+      if (item.isFavorito) {
+
       // CHAMA O DELETE PARA APAGAR O FLAT FAVORITO DO USUARIO
-      let headers = new Headers(
-      {
-        'Content-Type' : 'application/json'
-      });
-      let options = new RequestOptions({ headers: headers });
 
       this.http.delete(this.util.favoritosRotaPrincipal + item.getCodigoFlat() + '/' + this.util.cdUsuarioLogado, 
                         options)
         .toPromise()
         .then(data => {
           console.log('API Response : ', data.json());
+          this.buscarFlatsFavoritos();
+
+          item.isFavorito = false;
+          this.util.msgAlert('Flat removido da lista de favoritos!');
         }).catch(error => {
           console.error('API Error : ', error.status);
           console.error('API Error : ', JSON.stringify(error));
         });
-
-      if (item.isFavorito) {
-        item.isFavorito = false;
-        this.util.msgAlert('Flat removido da lista de favoritos!');
+        
       } else {
 
         this.http.post(this.util.favoritosRotaPrincipal, 
@@ -127,6 +136,7 @@ export class ListFavoritosPage {
         .toPromise()
         .then(data => {
           console.log('API Response : ', data.json());
+          this.buscarFlatsFavoritos();
           this.util.msgAlert('Flat favorito salvo com sucesso!');
           item.isFavorito = true;
         }).catch(error => {
@@ -139,6 +149,7 @@ export class ListFavoritosPage {
     } else {
       this.util.msgAlert('É necessário realizar login para selecionar favoritos!');
     }
+    
   }
 
   chamarTelaMensagens(item: Flat) {

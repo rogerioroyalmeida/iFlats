@@ -4,6 +4,7 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Util } from '../../util/utils';
 import { SolicReserva } from '../../model/solic-reserva';
+import * as moment from 'moment';
 
 
 @IonicPage()
@@ -31,8 +32,8 @@ export class ListSolicRealizPage {
               solicReserva.setCdFlat(element.cd_flat);
               solicReserva.setCdUsuario(element.cd_usuario);
               solicReserva.setCdUsuarioResponsavel(element.cd_usuario_responsavel);
-              solicReserva.setDtInicial(element.dt_inicial);
-              solicReserva.setDtFinal(element.dt_final);
+              solicReserva.setDtInicial(moment(element.dt_inicial).format('DD/MM/YYYY'));
+              solicReserva.setDtFinal(moment(element.dt_final).format('DD/MM/YYYY'));
               solicReserva.setNrDias(element.nr_dias);
               solicReserva.setNrPessoas(element.nr_pessoas);
               solicReserva.setVlDiaria(element.vl_diaria);

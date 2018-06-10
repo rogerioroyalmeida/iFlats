@@ -10,6 +10,8 @@
 
 <ion-content padding>
 
+  <div *ngIf="flatsFavoritos.length == 0">Você não possui flats favoritos</div>
+
     <ion-grid>
         <ion-row>
           <ion-col *ngFor="let item of flatsFavoritos">
